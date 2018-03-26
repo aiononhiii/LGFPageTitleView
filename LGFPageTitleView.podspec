@@ -13,5 +13,5 @@ s.platform     = :ios
 s.platform     = :ios, "8.0"
 s.source   = { :git => "https://github.com/aiononhiii/LGFPageTitleView.git", :tag => s.version }
 s.framework  = "UIKit"
-s.source_files = "LGFPageTitleView／LGFPageTitleView/**/*.{h,m}"
+s.source_files = "LGFPageTitleView/LGFPageTitleView/*.{h,m}"
 end

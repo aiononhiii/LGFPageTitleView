@@ -8,7 +8,7 @@ s.summary      = "LGFPageTitleView for ios" # 项目简介
 
 s.homepage     = "https://github.com/aiononhiii/LGFPageTitleView" # 你的主页
 s.source       = { :git => "https://github.com/aiononhiii/LGFPageTitleView.git", :tag => "1.0.0" }#你的仓库地址，不能用SSH地址
-s.source_files  = "LGFPageTitleView", "LGFPageTitleView/LGFPageTitleView/**/*.{h,m}"
+s.source_files  = "LGFPageTitleView", "LGFPageTitleView/**/*.{h,m}"
 s.requires_arc = true # 是否启用ARC
 s.platform     = :ios, "8.0" #平台及支持的最低版本
 s.frameworks   = "UIKit", "Foundation" #支持的框架

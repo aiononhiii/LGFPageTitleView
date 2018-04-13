@@ -2,7 +2,7 @@
 //  UIView+LGF.m
 //  LGFPageTitleView
 //
-//  Created by apple on 2018/3/23.
+//  Created by 来国锋 on 2018/3/23.
 //  Copyright © 2018年 apple. All rights reserved.
 //
 

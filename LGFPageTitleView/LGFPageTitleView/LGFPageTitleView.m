@@ -2,7 +2,7 @@
 //  LGFPageTitleView.m
 //  LGFPageTitleView
 //
-//  Created by apple on 2018/3/23.
+//  Created by 来国锋 on 2018/3/23.
 //  Copyright © 2018年 apple. All rights reserved.
 //
 
@@ -15,11 +15,14 @@
     NSInteger _un_select_index;
     // 将要选中下标
     NSInteger _select_index;
+    
+    // 外部分页控制器
+    UICollectionView *_page_view;
 }
+@property (weak, nonatomic) UIViewController *super_vc;
+@property (strong, nonatomic) UIView *super_view;
 // 所有标数组
 @property (strong, nonatomic) NSMutableArray *title_buttons;
-// 外部分页控制器
-@property (strong, nonatomic) UIScrollView *page_view;
 // 底部滚动条
 @property (strong, nonatomic) LGFTitleLine *title_line;
 // title 字体渐变色
@@ -96,26 +99,17 @@
 
 #pragma mark - 标view配置
 
-- (instancetype)initWithStyle:(LGFPageTitleStyle *)style super_view:(UIView *)super_view page_view:(UIScrollView *)page_view {
-    _style = style;
-    _page_view = page_view;
-    _style.page_title_view = self;
-    [_page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+- (instancetype)initWithStyle:(LGFPageTitleStyle *)style super_vc:(UIViewController *)super_vc super_view:(UIView *)super_view page_view:(UICollectionView *)page_view {
     [super_view setNeedsLayout];
     [super_view layoutIfNeeded];
+    _style = style;
+    _super_vc = super_vc;
+    _page_view = page_view;
+    [_page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    _style.page_title_view = self;
     self.frame = super_view.bounds;
-    // 标view 添加到相应父view
+    self.backgroundColor = super_view.backgroundColor;
     [super_view addSubview:self];
-    
-    // 标view 滚动区域配置
-    [self setContentSize:CGSizeMake([self addAllTitles], 0.0)];
-    
-    // 第一次滚动
-    [self autoScrollTitle];
-    
-    // 添加底部滚动线
-    [self addScrollLine];
-    
     return self;
 }
 
@@ -124,36 +118,78 @@
 - (void)addScrollLine {
     if (_style.is_show_line) {
         [self addSubview:self.title_line];
+        [self sendSubviewToBack:self.title_line];
     }
 }
 
 #pragma mark - 添加所有标
 
-- (CGFloat)addAllTitles {
+- (void)reloadAllTitles:(NSMutableArray *)titles {
+    if (titles.count == 0 || !titles) {
+        return;
+    }
+    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    _style.titles = titles;
     __block CGFloat contentWidth = 0.0;
+    [self.title_buttons removeAllObjects];
     [_style.titles enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         LGFTitleButton *title = [LGFTitleButton title:obj index:idx style:_style];
         [title addTarget:self action:@selector(autoTitleSelect:) forControlEvents:UIControlEventTouchUpInside];
         [self.title_buttons addObject:title];
         contentWidth += title.frame.size.width;
     }];
-    return contentWidth + (_style.title_spacing * 2);
+    // 标view 滚动区域配置
+    [self setContentSize:CGSizeMake(contentWidth + (_style.title_spacing * 2), 0.0)];
+    // 添加底部滚动线
+    [self addScrollLine];
+    [self selectTitleForIndex:0];
 }
 
 #pragma mark - 标点击事件
 
 - (void)autoTitleSelect:(LGFTitleButton *)sender {
-    _select_index = sender.tag;
+    [self selectTitleForTag:sender.tag];
+}
+
+#pragma mark - 滚动到指定tag位置
+
+- (void)selectTitleForTag:(NSInteger)index {
+    if (_style.titles.count == 0) {
+        return;
+    }
+    _select_index = index;
+    
+    // 外部分页控制器 滚动到对应下标
+    if ([_page_view numberOfItemsInSection:0] == 0 || [_page_view numberOfItemsInSection:0] <= index) {
+        return;
+    }
+    
+    [_page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    
     // 更新标view的UI
     [self adjustUIWhenBtnOnClickWithAnimate:true taped:YES];
-    // 外部分页控制器 滚动到对应下标
-    UICollectionView *page = (UICollectionView *)_page_view;
-    [page setContentOffset:CGPointMake(page.width * _select_index, 0.0) animated:NO];
+    
+    NSAssert([_super_vc canPerformAction:@selector(scrollViewDidEndDecelerating:) withSender:_super_vc], @"父视图控制器请添加--scrollViewDidEndDecelerating--方法");
+    [_super_vc performSelector:@selector(scrollViewDidEndDecelerating:) withObject:_page_view afterDelay:0.31];
+}
+
+#pragma mark - 滚动到指定index位置
+
+- (void)selectTitleForIndex:(NSInteger)index {
+    dispatch_async(dispatch_get_main_queue(),^{
+        if ([_page_view numberOfItemsInSection:0] != 0 || [_page_view numberOfItemsInSection:0] > index) {
+            [_page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+        }
+        [self autoScrollTitle];
+    });
 }
 
 #pragma mark - 标自动滚动
 
 - (void)autoScrollTitle {
+    if (_style.titles.count == 0) {
+        return;
+    }
     _select_index = (_page_view.contentOffset.x / _page_view.bounds.size.width);
     [self adjustUIWithProgress:1.0 oldIndex:_select_index currentIndex:_select_index];
     // 调整title位置 使其滚动到中间
@@ -189,6 +225,9 @@
 #pragma mark - 调整title位置 使其滚动到中间
 
 - (void)adjustTitleOffSetToSelectIndex:(NSInteger)select_index {
+    if (self.title_buttons.count == 0) {
+        return;
+    }
     _un_select_index = select_index;
     // 重置渐变/缩放效果附近其他item的缩放和颜色
     int index = 0;
@@ -196,8 +235,7 @@
         if (index != select_index) {
             [title setTitleColor:_style.un_select_color forState:UIControlStateNormal];
             title.currentTransformSx = 1.0;
-        }
-        else {
+        } else {
             [title setTitleColor:_style.select_color forState:UIControlStateNormal];
             if (_style.title_big_scale != 0) {
                 title.currentTransformSx = _style.title_big_scale;
@@ -223,6 +261,7 @@
 #pragma mark - 更新标view的UI(用于滚动外部分页控制器的时候)
 
 - (void)adjustUIWithProgress:(CGFloat)progress oldIndex:(NSInteger)oldIndex currentIndex:(NSInteger)currentIndex {
+    NSLog(@"%f", progress);
     // 判断是否满足UI更新条件
     if (oldIndex < 0 || oldIndex >= self.title_buttons.count || currentIndex < 0 || currentIndex >= self.title_buttons.count) { return;
     }
@@ -243,6 +282,16 @@
                                      blue:[self.un_select_colorRGBA[2] floatValue] - [self.deltaRGBA[2] floatValue] * progress
                                      alpha:[self.un_select_colorRGBA[3] floatValue] - [self.deltaRGBA[3] floatValue] * progress] forState:UIControlStateNormal];
     }
+    if (![_style.select_title_font isEqual:_style.un_select_title_font]) {
+        if (progress > 0.5) {
+            un_select_title.titleLabel.font = _style.un_select_title_font;
+            select_title.titleLabel.font = _style.select_title_font ?: _style.un_select_title_font;
+        } else {
+            un_select_title.titleLabel.font = _style.select_title_font ?: _style.un_select_title_font;
+            select_title.titleLabel.font = _style.un_select_title_font;
+        }
+    }
+    
     // 标缩放大小改变
     if (_style.title_big_scale != 0) {
         CGFloat deltaScale = _style.title_big_scale - 1.0;
@@ -265,8 +314,10 @@
             CGFloat select_title_x = select_title.x + ((select_title.width - _style.line_width) / 2);
             CGFloat un_select_title_x = un_select_title.x + ((un_select_title.width - _style.line_width) / 2);
             CGFloat xDistance = select_title_x - un_select_title_x;
-            self.title_line.x = un_select_title_x + xDistance * progress;
-            self.title_line.width = _style.line_width;
+            CGFloat xxDistance = select_title.x - un_select_title.x;
+            CGFloat wDistance = select_title.width - un_select_title.width;
+            self.title_line.x = _style.line_width > un_select_title.width + wDistance * progress ? un_select_title.x + xxDistance * progress : un_select_title_x + xDistance * progress;
+            self.title_line.width = _style.line_width > un_select_title.width + wDistance * progress ? un_select_title.width + wDistance * progress : _style.line_width;
         }
     }
 }

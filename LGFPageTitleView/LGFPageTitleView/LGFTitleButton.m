@@ -2,7 +2,7 @@
 //  LGFTitleButton.m
 //  LGFPageTitleView
 //
-//  Created by apple on 2018/3/23.
+//  Created by 来国锋 on 2018/3/23.
 //  Copyright © 2018年 apple. All rights reserved.
 //
 
@@ -41,6 +41,7 @@
 - (void)setStyle:(LGFPageTitleStyle *)style {
     _style = style;
     [self setTitleColor:style.un_select_color forState:UIControlStateNormal];
+    self.titleLabel.font = style.un_select_title_font;
 }
 
 - (void)setCurrentTransformSx:(CGFloat)currentTransformSx {

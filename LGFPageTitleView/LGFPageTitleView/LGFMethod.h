@@ -2,7 +2,7 @@
 //  LGFMethod.h
 //  LGFPageTitleView
 //
-//  Created by apple on 2018/3/24.
+//  Created by 来国锋 on 2018/3/24.
 //  Copyright © 2018年 apple. All rights reserved.
 //
 

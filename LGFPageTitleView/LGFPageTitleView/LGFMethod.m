@@ -2,7 +2,7 @@
 //  LGFMethod.m
 //  LGFPageTitleView
 //
-//  Created by apple on 2018/3/24.
+//  Created by 来国锋 on 2018/3/24.
 //  Copyright © 2018年 apple. All rights reserved.
 //
 
@@ -29,8 +29,6 @@
         rgbaComponents = [NSArray arrayWithObjects:@(components[0]), @(components[1]), @(components[2]), @(components[3]), nil];
     }
     return rgbaComponents;
-    
 }
-
 
 @end

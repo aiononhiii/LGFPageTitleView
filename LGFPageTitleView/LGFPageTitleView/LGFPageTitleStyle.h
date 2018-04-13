@@ -2,7 +2,7 @@
 //  LGFPageTitleStyle.h
 //  LGFPageTitleView
 //
-//  Created by apple on 2018/3/23.
+//  Created by 来国锋 on 2018/3/23.
 //  Copyright © 2018年 apple. All rights reserved.
 //
 
@@ -40,8 +40,10 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 @property (strong, nonatomic) UIColor *select_color;
 // 选中标 放大缩小倍数 默认 1.0(不放大缩小);
 @property (assign, nonatomic) CGFloat title_big_scale;
-// 标 字体 默认 [UIFont systemFontOfSize:14];
+// 标 选中字体 默认 [UIFont systemFontOfSize:14];
 @property (strong, nonatomic) UIFont *select_title_font;
+// 标 未选中字体 默认 和选中字体一样
+@property (strong, nonatomic) UIFont *un_select_title_font;
 // 标是否有滑动动画 默认 YES 有动画
 @property (assign, nonatomic) BOOL title_have_animation;
 // 标间距 默认 10.0
@@ -71,6 +73,5 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 // 当标总宽度小于View宽度时 是否居中显示 默认 NO - 不居中(从左边开始显示)
 //@property (assign, nonatomic) BOOL is_title_center;
 
-// 点击标切换外部分页控件时，外部分页控件是否需要动画切换 默认 - NO
-
 @end
+

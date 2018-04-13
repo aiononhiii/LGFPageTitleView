@@ -20,6 +20,7 @@
 		1837B80B2064E93600E69C4D /* LGFPageTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1837B80A2064E93500E69C4D /* LGFPageTitleView.xib */; };
 		1863A8522064EEF70085BE92 /* LGFTitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1863A8512064EEF70085BE92 /* LGFTitleButton.m */; };
 		1863A8552064F0EC0085BE92 /* LGFTitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 1863A8542064F0EC0085BE92 /* LGFTitleLine.m */; };
+		188954C520803D0E006F07A3 /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188954C420803D0E006F07A3 /* ChildViewController.m */; };
 		18E2E0B12065F90B00C6F253 /* LGFMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2E0B02065F90B00C6F253 /* LGFMethod.m */; };
 		18E2E0B42067256800C6F253 /* UIView+LGF.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E2E0B32067256700C6F253 /* UIView+LGF.m */; };
 /* End PBXBuildFile section */
@@ -67,6 +68,8 @@
 		1863A8512064EEF70085BE92 /* LGFTitleButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGFTitleButton.m; sourceTree = "<group>"; };
 		1863A8532064F0EC0085BE92 /* LGFTitleLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGFTitleLine.h; sourceTree = "<group>"; };
 		1863A8542064F0EC0085BE92 /* LGFTitleLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGFTitleLine.m; sourceTree = "<group>"; };
+		188954C320803D0E006F07A3 /* ChildViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildViewController.h; sourceTree = "<group>"; };
+		188954C420803D0E006F07A3 /* ChildViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
 		18E2E0AE2065DAD500C6F253 /* LGFTitles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGFTitles.h; sourceTree = "<group>"; };
 		18E2E0AF2065F90B00C6F253 /* LGFMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LGFMethod.h; sourceTree = "<group>"; };
 		18E2E0B02065F90B00C6F253 /* LGFMethod.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LGFMethod.m; sourceTree = "<group>"; };
@@ -127,6 +130,8 @@
 				1837B7C82064D67000E69C4D /* AppDelegate.m */,
 				1837B7CA2064D67000E69C4D /* ViewController.h */,
 				1837B7CB2064D67000E69C4D /* ViewController.m */,
+				188954C320803D0E006F07A3 /* ChildViewController.h */,
+				188954C420803D0E006F07A3 /* ChildViewController.m */,
 				1837B7CD2064D67000E69C4D /* Main.storyboard */,
 				1837B7D02064D67000E69C4D /* Assets.xcassets */,
 				1837B7D22064D67000E69C4D /* LaunchScreen.storyboard */,
@@ -316,6 +321,7 @@
 				1863A8552064F0EC0085BE92 /* LGFTitleLine.m in Sources */,
 				1837B7D72064D67000E69C4D /* main.m in Sources */,
 				18E2E0B42067256800C6F253 /* UIView+LGF.m in Sources */,
+				188954C520803D0E006F07A3 /* ChildViewController.m in Sources */,
 				1837B7C92064D67000E69C4D /* AppDelegate.m in Sources */,
 				1837B8092064D6E700E69C4D /* LGFPageTitleStyle.m in Sources */,
 			);
@@ -481,7 +487,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 96RN4L9K39;
 				INFOPLIST_FILE = LGFPageTitleView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -496,7 +502,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 96RN4L9K39;
 				INFOPLIST_FILE = LGFPageTitleView/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

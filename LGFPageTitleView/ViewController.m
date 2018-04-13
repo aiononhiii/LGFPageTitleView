@@ -7,50 +7,168 @@
 //
 
 #import "ViewController.h"
-#import "LGFPageTitleView.h"
+#import "ChildViewController.h"
 #import "LGFTitles.h"
 
-//pragma mark /-----------------  设置颜色  --------------------/
-#define UIColorRGB(R,G,B) [UIColor colorWithRed:R/255.0 green:G/255.0 blue:B/255.0 alpha:1.0]
-#define RGB(A,B,C,D) [UIColor colorWithRed:A/255.0f green:B/255.0f blue:C/255.0f alpha:D]
-//随机色
-#define RandomColor UIColorRGB(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
-
 @interface ViewController ()
-@property (weak, nonatomic) IBOutlet UIView *pageTitleView;
 @property (weak, nonatomic) IBOutlet UICollectionView *pageView;
-@property (strong, nonatomic) LGFPageTitleView *titleView;
-@property (strong, nonatomic) NSArray *childVCs;
+@property (strong, nonatomic) NSMutableArray *childVCs;
+
+@property (weak, nonatomic) IBOutlet UIView *oneTitleSuperView;
+@property (weak, nonatomic) IBOutlet UIView *twoTitleSuperView;
+@property (weak, nonatomic) IBOutlet UIView *threeTitleSuperView;
+
+@property (strong, nonatomic) LGFPageTitleView *oneTitleView;
+@property (strong, nonatomic) LGFPageTitleView *twoTitleView;
+@property (strong, nonatomic) LGFPageTitleView *threeTitleView;
+
+@property (strong, nonatomic) NSMutableArray *oneTitles;
+@property (strong, nonatomic) NSMutableArray *twoTitles;
+
 @end
 
 @implementation ViewController
 
+- (NSMutableArray *)oneTitles {
+    if (!_oneTitles) {
+        _oneTitles = [NSMutableArray arrayWithObjects:@"篮球", @"足球", @"乒乓球", @"羽毛球", @"排球", @"地球", @"月球", @"保龄球", @"什么什么什么球", @"台球", @"高尔夫球", @"橄榄球", @"雪碧", @"可乐", @"芬达", nil];
+    }
+    return _oneTitles;
+}
+
+- (NSMutableArray *)twoTitles {
+    if (!_twoTitles) {
+        _twoTitles = [NSMutableArray arrayWithObjects:@"鲨鱼", @"鲸鱼", @"小丑鱼", @"海龟", @"金枪鱼", @"沙丁鱼", @"河豚", @"包头鱼", @"草鱼", @"鳊鱼", nil];
+    }
+    return _twoTitles;
+}
+
+- (LGFPageTitleView *)oneTitleView {
+    if (!_oneTitleView) {
+        LGFPageTitleStyle *style = [LGFPageTitleStyle na];
+        style.title_big_scale = 1.3;
+        style.line_height = 2.0;
+        style.select_color = RGB(210, 29, 89, 1.0);
+        style.line_width_type = EqualTitleSTR;
+        _oneTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.oneTitleSuperView page_view:self.pageView];
+    }
+    return _oneTitleView;
+}
+
+- (LGFPageTitleView *)twoTitleView {
+    if (!_twoTitleView) {
+        LGFPageTitleStyle *style = [LGFPageTitleStyle na];
+        style.title_big_scale = 1.0;
+        style.line_height = 2.0;
+        style.line_width = 10;
+        style.line_color = RGB(255, 255, 255, 1.0);
+        style.un_select_color = RGB(0, 0, 0, 1.0);
+        style.select_color = RGB(255, 255, 255, 1.0);
+        style.line_width_type = FixedWith;
+        _twoTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.twoTitleSuperView page_view:self.pageView];
+    }
+    return _twoTitleView;
+}
+
+- (LGFPageTitleView *)threeTitleView {
+    if (!_threeTitleView) {
+        LGFPageTitleStyle *style = [LGFPageTitleStyle na];
+        style.title_big_scale = 1.0;
+        style.line_height = 100.0;
+        style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
+        style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Light" size:20];
+        style.line_color = RGB(258, 143, 145, 1.0);
+        style.un_select_color = RGB(258, 143, 145, 1.0);
+        style.select_color = RGB(255, 255, 255, 1.0);
+        style.line_width_type = EqualTitle;
+        _threeTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.threeTitleSuperView page_view:self.pageView];
+    }
+    return _threeTitleView;
+}
+
+- (NSMutableArray *)childVCs {
+    if (!_childVCs) {
+        _childVCs = [NSMutableArray new];
+    }
+    return _childVCs;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
-    _childVCs = @[@"我", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河"];
     
-    LGFPageTitleStyle *style = [LGFPageTitleStyle na];
-    style.titles = @[@"我", @"地球", @"太阳系", @"宇宙银宇宙银宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地宇宙银宇宙银宇宙银宇宙银宇宙银宇宙银宇宙银宇宙银球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河宇宙银宇宙银宇宙银", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇银河", @"地", @"太阳宇宙银宇宙银宇宙银宇宙银系", @"宇宙银河", @"球", @"太系", @"宇宙银宇宙银宇宙银宇宙银宇宙银", @"地球", @"太阳系", @"宇宙银河", @"地球", @"太阳系", @"宇宙银河"];
-    style.title_big_scale = 1.1;
-    style.line_height = 2.0;
-    style.line_width = 30;
-    style.select_color = RGB(210, 29, 89, 1.0);
-    style.line_width_type = FixedWith;
-    
-    _titleView = [[LGFPageTitleView na] initWithStyle:style super_view:_pageTitleView page_view:_pageView];
-    
+    // 添加子控制器
+    for (NSString *title in self.oneTitles) {
+        ChildViewController *vc = [ChildViewController GETSBVC];
+        vc.title = title;
+        [self addChildViewController:vc];
+        [self.childVCs addObject:vc];
+    }
+    // 刷新数据源
+    [self.pageView reloadData];
+    // 刷新title数组
+    [self.oneTitleView reloadAllTitles:self.oneTitles];
+    [self.oneTitleView selectTitleForIndex:10];
+    [self.twoTitleView reloadAllTitles:self.oneTitles];
+    [self.twoTitleView selectTitleForIndex:10];
+    [self.threeTitleView reloadAllTitles:self.oneTitles];
+    [self.threeTitleView selectTitleForIndex:10];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Collection View DataSource And Delegate
+/**
+ 如何切换数据源 代码和展示
+ */
+- (IBAction)more:(UIButton *)sender {
+    // 改变子控制器数据源前首先释放之前的子控制器
+    [self.childViewControllers makeObjectsPerformSelector:@selector(removeFromParentViewController)];
+    // 清空子控制器数据源数组
+    [self.childVCs removeAllObjects];
+    
+    if (sender.selected) {
+        // 重新添加子控制器
+        for (NSString *title in self.oneTitles) {
+            ChildViewController *vc = [ChildViewController GETSBVC];
+            vc.title = title;
+            [self addChildViewController:vc];
+            [self.childVCs addObject:vc];
+        }
+        // 重新刷新数据源
+        [self.pageView reloadData];
+        // 刷新title数组
+        [self.oneTitleView reloadAllTitles:self.oneTitles];
+        [self.oneTitleView selectTitleForIndex:10];
+        [self.twoTitleView reloadAllTitles:self.oneTitles];
+        [self.twoTitleView selectTitleForIndex:10];
+        [self.threeTitleView reloadAllTitles:self.oneTitles];
+        [self.threeTitleView selectTitleForIndex:10];
+    } else {
+        // 重新添加子控制器
+        for (NSString *title in self.twoTitles) {
+            ChildViewController *vc = [ChildViewController GETSBVC];
+            vc.title = title;
+            [self addChildViewController:vc];
+            [self.childVCs addObject:vc];
+        }
+        // 重新刷新数据源
+        [self.pageView reloadData];
+        // 刷新title数组
+        [self.oneTitleView reloadAllTitles:self.twoTitles];
+        [self.oneTitleView selectTitleForIndex:3];
+        [self.twoTitleView reloadAllTitles:self.twoTitles];
+        [self.twoTitleView selectTitleForIndex:3];
+        [self.threeTitleView reloadAllTitles:self.twoTitles];
+        [self.threeTitleView selectTitleForIndex:3];
+    }
+    sender.selected = !sender.selected;
+}
+
+#pragma mark - Collection View 数据源 和 代理方法
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return _childVCs.count;
+    return self.childVCs.count;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
@@ -59,17 +177,25 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"testcell" forIndexPath:indexPath];
-    cell.backgroundColor = RandomColor;
+    // 在cell上添加子控制器
+    [cell.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    ChildViewController *vc = self.childVCs[indexPath.item];
+    vc.view.frame = cell.bounds;
+    [cell addSubview:vc.view];
     return cell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    // 在此代理方法中作子控制器首次加载数据的操作 防止多余未出现的控制器加载数据而导致的卡顿 (只对将要出现的cell上的子控制器作加载数据操作，其余只加载控制器)
+    ChildViewController *vc = self.childVCs[indexPath.item];
+    [vc loadData];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    // 必须设置
-    [_titleView autoScrollTitle];
+    // titleview与pageview分离关联关键方法,必须设置 (此方法作用:关联titleview和外部pageview, 使其可以联动)
+    [self.oneTitleView autoScrollTitle];
+    [self.twoTitleView autoScrollTitle];
+    [self.threeTitleView autoScrollTitle];
 }
 
 @end

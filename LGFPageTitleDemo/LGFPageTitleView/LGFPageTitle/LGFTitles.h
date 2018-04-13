@@ -15,7 +15,7 @@
 #import "LGFTitleLine.h"
 #import "LGFMethod.h"
 #import "UIView+LGF.h"
-
+  
 //********************** 帮助 ***************************
 //本控件是一个特殊的分页控件，实现了title和page的分离，方便一些喜欢自由搭配的产品，主要为一些复杂的页面布局而打造
 //本控件具体用法请参考该项目 https://github.com/aiononhiii/LGFPageTitleView

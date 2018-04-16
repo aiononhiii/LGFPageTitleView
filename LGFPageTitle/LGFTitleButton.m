@@ -93,7 +93,7 @@
         self.left_image_height.constant = MIN(style.left_image_height ?: 0.0, style.page_title_view.height);
         [self.left_image setImage:[UIImage imageNamed:style.un_select_image_names[self.title_button.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
     } else {
-        LGFLog(@"如果要显示左边图标，请给 left_image_width 赋值")
+        LGFLog(@"如果要显示左边图标，请给 left_image_width 赋值");
     }
     
     if (style.right_image_width > 0.0) {
@@ -103,7 +103,7 @@
         self.right_image_height.constant = MIN(style.right_image_height ?: 0.0, style.page_title_view.height);
         [self.right_image setImage:[UIImage imageNamed:style.un_select_image_names[self.title_button.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
     } else {
-        LGFLog(@"如果要显示右边图标，请给 left_image_width 赋值")
+        LGFLog(@"如果要显示右边图标，请给 left_image_width 赋值");
     }
     
     [self setNeedsLayout];

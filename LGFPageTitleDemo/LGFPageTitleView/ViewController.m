@@ -17,13 +17,17 @@
 @property (weak, nonatomic) IBOutlet UIView *oneTitleSuperView;
 @property (weak, nonatomic) IBOutlet UIView *twoTitleSuperView;
 @property (weak, nonatomic) IBOutlet UIView *threeTitleSuperView;
+@property (weak, nonatomic) IBOutlet UIView *fourTitleSuperView;
 
 @property (strong, nonatomic) LGFPageTitleView *oneTitleView;
 @property (strong, nonatomic) LGFPageTitleView *twoTitleView;
 @property (strong, nonatomic) LGFPageTitleView *threeTitleView;
+@property (strong, nonatomic) LGFPageTitleView *fourTitleView;
 
 @property (strong, nonatomic) NSMutableArray *oneTitles;
 @property (strong, nonatomic) NSMutableArray *twoTitles;
+
+@property (strong, nonatomic) NSMutableArray *oneTitleImages;
 
 @end
 
@@ -36,6 +40,13 @@
     return _oneTitles;
 }
 
+- (NSMutableArray *)oneTitleImages {
+    if (!_oneTitleImages) {
+        _oneTitleImages = [NSMutableArray arrayWithObjects:@"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"", nil];
+    }
+    return _oneTitleImages;
+}
+
 - (NSMutableArray *)twoTitles {
     if (!_twoTitles) {
         _twoTitles = [NSMutableArray arrayWithObjects:@"鲨鱼", @"鲸鱼", @"小丑鱼", @"海龟", @"金枪鱼", @"沙丁鱼", @"河豚", @"包头鱼", @"草鱼", @"鳊鱼", nil];
@@ -46,10 +57,18 @@
 - (LGFPageTitleView *)oneTitleView {
     if (!_oneTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
-        style.title_big_scale = 1.3;
+        style.title_big_scale = 1.0;
         style.line_height = 2.0;
+        style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
+        style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Light" size:14];
+        style.line_color = RGB(150, 150, 150, 1.0);
         style.select_color = RGB(210, 29, 89, 1.0);
-        style.line_width_type = EqualTitleSTR;
+        style.title_image_bundel = Bundle;
+        style.left_image_width = 30;
+        style.title_spacing = 5;
+        style.same_select_image_name = @"yidingyue1";
+        style.same_un_select_image_name = @"weidingyue";
+        style.line_width_type = EqualTitleSTRAndImage;
         _oneTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.oneTitleSuperView page_view:self.pageView];
     }
     return _oneTitleView;
@@ -60,7 +79,7 @@
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
         style.title_big_scale = 1.0;
         style.line_height = 2.0;
-        style.line_width = 10;
+        style.line_width = 5.0;
         style.line_color = RGB(255, 255, 255, 1.0);
         style.un_select_color = RGB(0, 0, 0, 1.0);
         style.select_color = RGB(255, 255, 255, 1.0);
@@ -73,17 +92,37 @@
 - (LGFPageTitleView *)threeTitleView {
     if (!_threeTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
-        style.title_big_scale = 1.0;
-        style.line_height = 100.0;
+        style.title_big_scale = 1.2;
+        style.line_height = 3.0;
         style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
         style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Light" size:20];
         style.line_color = RGB(258, 143, 145, 1.0);
         style.un_select_color = RGB(258, 143, 145, 1.0);
         style.select_color = RGB(255, 255, 255, 1.0);
-        style.line_width_type = EqualTitle;
+        style.line_width_type = EqualTitleSTR;
+        style.same_select_image_name = @"yidingyue1";
+        style.same_un_select_image_name = @"weidingyue";
+        style.title_image_bundel = Bundle;
+        style.right_image_width = 15.0;
+        style.title_spacing = 10.0;
         _threeTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.threeTitleSuperView page_view:self.pageView];
     }
     return _threeTitleView;
+}
+
+- (LGFPageTitleView *)fourTitleView {
+    if (!_fourTitleView) {
+        LGFPageTitleStyle *style = [LGFPageTitleStyle na];
+        style.is_show_line = NO;
+        style.title_big_scale = 0.7;
+        style.title_spacing = 5.0;
+        style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+        style.un_select_color = RGB(240, 240, 20, 1.0);
+        style.select_color = RGB(255, 255, 255, 1.0);
+        style.line_width_type = EqualTitle;
+        _fourTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.fourTitleSuperView page_view:self.pageView];
+    }
+    return _fourTitleView;
 }
 
 - (NSMutableArray *)childVCs {
@@ -112,6 +151,8 @@
     [self.twoTitleView selectTitleForIndex:10];
     [self.threeTitleView reloadAllTitles:self.oneTitles];
     [self.threeTitleView selectTitleForIndex:10];
+    [self.fourTitleView reloadAllTitles:self.oneTitles];
+    [self.fourTitleView selectTitleForIndex:10];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -144,6 +185,8 @@
         [self.twoTitleView selectTitleForIndex:10];
         [self.threeTitleView reloadAllTitles:self.oneTitles];
         [self.threeTitleView selectTitleForIndex:10];
+        [self.fourTitleView reloadAllTitles:self.oneTitles];
+        [self.fourTitleView selectTitleForIndex:10];
     } else {
         // 重新添加子控制器
         for (NSString *title in self.twoTitles) {
@@ -161,6 +204,8 @@
         [self.twoTitleView selectTitleForIndex:3];
         [self.threeTitleView reloadAllTitles:self.twoTitles];
         [self.threeTitleView selectTitleForIndex:3];
+        [self.fourTitleView reloadAllTitles:self.twoTitles];
+        [self.fourTitleView selectTitleForIndex:3];
     }
     sender.selected = !sender.selected;
 }
@@ -196,6 +241,7 @@
     [self.oneTitleView autoScrollTitle];
     [self.twoTitleView autoScrollTitle];
     [self.threeTitleView autoScrollTitle];
+    [self.fourTitleView autoScrollTitle];
 }
 
 @end

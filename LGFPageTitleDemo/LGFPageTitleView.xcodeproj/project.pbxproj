@@ -16,13 +16,13 @@
 		1837B7E12064D67000E69C4D /* LGFPageTitleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1837B7E02064D67000E69C4D /* LGFPageTitleViewTests.m */; };
 		1837B7EC2064D67000E69C4D /* LGFPageTitleViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1837B7EB2064D67000E69C4D /* LGFPageTitleViewUITests.m */; };
 		188954C520803D0E006F07A3 /* ChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188954C420803D0E006F07A3 /* ChildViewController.m */; };
-		18BE60902080963900EF87B3 /* LGFMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE60832080963900EF87B3 /* LGFMethod.m */; };
-		18BE60912080963900EF87B3 /* LGFPageTitleStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE60852080963900EF87B3 /* LGFPageTitleStyle.m */; };
-		18BE60922080963900EF87B3 /* LGFPageTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE60872080963900EF87B3 /* LGFPageTitleView.m */; };
-		18BE60932080963900EF87B3 /* LGFPageTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BE60882080963900EF87B3 /* LGFPageTitleView.xib */; };
-		18BE60942080963900EF87B3 /* LGFTitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE608A2080963900EF87B3 /* LGFTitleButton.m */; };
-		18BE60952080963900EF87B3 /* LGFTitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE608C2080963900EF87B3 /* LGFTitleLine.m */; };
-		18BE60962080963900EF87B3 /* UIView+LGF.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE608F2080963900EF87B3 /* UIView+LGF.m */; };
+		18BE612420842FE100EF87B3 /* LGFMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE611720842FE100EF87B3 /* LGFMethod.m */; };
+		18BE612520842FE100EF87B3 /* LGFPageTitleStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE611920842FE100EF87B3 /* LGFPageTitleStyle.m */; };
+		18BE612620842FE100EF87B3 /* LGFPageTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE611B20842FE100EF87B3 /* LGFPageTitleView.m */; };
+		18BE612720842FE100EF87B3 /* LGFPageTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 18BE611C20842FE100EF87B3 /* LGFPageTitleView.xib */; };
+		18BE612820842FE100EF87B3 /* LGFTitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE611E20842FE100EF87B3 /* LGFTitleButton.m */; };
+		18BE612920842FE100EF87B3 /* LGFTitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE612020842FE100EF87B3 /* LGFTitleLine.m */; };
+		18BE612A20842FE100EF87B3 /* UIView+LGF.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE612320842FE100EF87B3 /* UIView+LGF.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,20 +61,20 @@
 		1837B7ED2064D67000E69C4D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		188954C320803D0E006F07A3 /* ChildViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChildViewController.h; sourceTree = "<group>"; };
 		188954C420803D0E006F07A3 /* ChildViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChildViewController.m; sourceTree = "<group>"; };
-		18BE60822080963900EF87B3 /* LGFMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFMethod.h; sourceTree = "<group>"; };
-		18BE60832080963900EF87B3 /* LGFMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFMethod.m; sourceTree = "<group>"; };
-		18BE60842080963900EF87B3 /* LGFPageTitleStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFPageTitleStyle.h; sourceTree = "<group>"; };
-		18BE60852080963900EF87B3 /* LGFPageTitleStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFPageTitleStyle.m; sourceTree = "<group>"; };
-		18BE60862080963900EF87B3 /* LGFPageTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFPageTitleView.h; sourceTree = "<group>"; };
-		18BE60872080963900EF87B3 /* LGFPageTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFPageTitleView.m; sourceTree = "<group>"; };
-		18BE60882080963900EF87B3 /* LGFPageTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LGFPageTitleView.xib; sourceTree = "<group>"; };
-		18BE60892080963900EF87B3 /* LGFTitleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFTitleButton.h; sourceTree = "<group>"; };
-		18BE608A2080963900EF87B3 /* LGFTitleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFTitleButton.m; sourceTree = "<group>"; };
-		18BE608B2080963900EF87B3 /* LGFTitleLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFTitleLine.h; sourceTree = "<group>"; };
-		18BE608C2080963900EF87B3 /* LGFTitleLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFTitleLine.m; sourceTree = "<group>"; };
-		18BE608D2080963900EF87B3 /* LGFTitles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFTitles.h; sourceTree = "<group>"; };
-		18BE608E2080963900EF87B3 /* UIView+LGF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LGF.h"; sourceTree = "<group>"; };
-		18BE608F2080963900EF87B3 /* UIView+LGF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LGF.m"; sourceTree = "<group>"; };
+		18BE611620842FE100EF87B3 /* LGFMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFMethod.h; sourceTree = "<group>"; };
+		18BE611720842FE100EF87B3 /* LGFMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFMethod.m; sourceTree = "<group>"; };
+		18BE611820842FE100EF87B3 /* LGFPageTitleStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFPageTitleStyle.h; sourceTree = "<group>"; };
+		18BE611920842FE100EF87B3 /* LGFPageTitleStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFPageTitleStyle.m; sourceTree = "<group>"; };
+		18BE611A20842FE100EF87B3 /* LGFPageTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFPageTitleView.h; sourceTree = "<group>"; };
+		18BE611B20842FE100EF87B3 /* LGFPageTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFPageTitleView.m; sourceTree = "<group>"; };
+		18BE611C20842FE100EF87B3 /* LGFPageTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LGFPageTitleView.xib; sourceTree = "<group>"; };
+		18BE611D20842FE100EF87B3 /* LGFTitleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFTitleButton.h; sourceTree = "<group>"; };
+		18BE611E20842FE100EF87B3 /* LGFTitleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFTitleButton.m; sourceTree = "<group>"; };
+		18BE611F20842FE100EF87B3 /* LGFTitleLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFTitleLine.h; sourceTree = "<group>"; };
+		18BE612020842FE100EF87B3 /* LGFTitleLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFTitleLine.m; sourceTree = "<group>"; };
+		18BE612120842FE100EF87B3 /* LGFTitles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFTitles.h; sourceTree = "<group>"; };
+		18BE612220842FE100EF87B3 /* UIView+LGF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LGF.h"; sourceTree = "<group>"; };
+		18BE612320842FE100EF87B3 /* UIView+LGF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LGF.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +125,7 @@
 		1837B7C62064D67000E69C4D /* LGFPageTitleView */ = {
 			isa = PBXGroup;
 			children = (
-				18BE60812080963900EF87B3 /* LGFPageTitle */,
+				18BE611520842FE100EF87B3 /* LGFPageTitle */,
 				1837B7C72064D67000E69C4D /* AppDelegate.h */,
 				1837B7C82064D67000E69C4D /* AppDelegate.m */,
 				1837B7CA2064D67000E69C4D /* ViewController.h */,
@@ -159,25 +159,26 @@
 			path = LGFPageTitleViewUITests;
 			sourceTree = "<group>";
 		};
-		18BE60812080963900EF87B3 /* LGFPageTitle */ = {
+		18BE611520842FE100EF87B3 /* LGFPageTitle */ = {
 			isa = PBXGroup;
 			children = (
-				18BE60822080963900EF87B3 /* LGFMethod.h */,
-				18BE60832080963900EF87B3 /* LGFMethod.m */,
-				18BE60842080963900EF87B3 /* LGFPageTitleStyle.h */,
-				18BE60852080963900EF87B3 /* LGFPageTitleStyle.m */,
-				18BE60862080963900EF87B3 /* LGFPageTitleView.h */,
-				18BE60872080963900EF87B3 /* LGFPageTitleView.m */,
-				18BE60882080963900EF87B3 /* LGFPageTitleView.xib */,
-				18BE60892080963900EF87B3 /* LGFTitleButton.h */,
-				18BE608A2080963900EF87B3 /* LGFTitleButton.m */,
-				18BE608B2080963900EF87B3 /* LGFTitleLine.h */,
-				18BE608C2080963900EF87B3 /* LGFTitleLine.m */,
-				18BE608D2080963900EF87B3 /* LGFTitles.h */,
-				18BE608E2080963900EF87B3 /* UIView+LGF.h */,
-				18BE608F2080963900EF87B3 /* UIView+LGF.m */,
+				18BE611620842FE100EF87B3 /* LGFMethod.h */,
+				18BE611720842FE100EF87B3 /* LGFMethod.m */,
+				18BE611820842FE100EF87B3 /* LGFPageTitleStyle.h */,
+				18BE611920842FE100EF87B3 /* LGFPageTitleStyle.m */,
+				18BE611A20842FE100EF87B3 /* LGFPageTitleView.h */,
+				18BE611B20842FE100EF87B3 /* LGFPageTitleView.m */,
+				18BE611C20842FE100EF87B3 /* LGFPageTitleView.xib */,
+				18BE611D20842FE100EF87B3 /* LGFTitleButton.h */,
+				18BE611E20842FE100EF87B3 /* LGFTitleButton.m */,
+				18BE611F20842FE100EF87B3 /* LGFTitleLine.h */,
+				18BE612020842FE100EF87B3 /* LGFTitleLine.m */,
+				18BE612120842FE100EF87B3 /* LGFTitles.h */,
+				18BE612220842FE100EF87B3 /* UIView+LGF.h */,
+				18BE612320842FE100EF87B3 /* UIView+LGF.m */,
 			);
-			path = LGFPageTitle;
+			name = LGFPageTitle;
+			path = ../../LGFPageTitle;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -286,7 +287,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				18BE60932080963900EF87B3 /* LGFPageTitleView.xib in Resources */,
+				18BE612720842FE100EF87B3 /* LGFPageTitleView.xib in Resources */,
 				1837B7D42064D67000E69C4D /* LaunchScreen.storyboard in Resources */,
 				1837B7D12064D67000E69C4D /* Assets.xcassets in Resources */,
 				1837B7CF2064D67000E69C4D /* Main.storyboard in Resources */,
@@ -316,12 +317,12 @@
 			files = (
 				1837B7CC2064D67000E69C4D /* ViewController.m in Sources */,
 				1837B7D72064D67000E69C4D /* main.m in Sources */,
-				18BE60952080963900EF87B3 /* LGFTitleLine.m in Sources */,
-				18BE60942080963900EF87B3 /* LGFTitleButton.m in Sources */,
-				18BE60962080963900EF87B3 /* UIView+LGF.m in Sources */,
-				18BE60922080963900EF87B3 /* LGFPageTitleView.m in Sources */,
-				18BE60902080963900EF87B3 /* LGFMethod.m in Sources */,
-				18BE60912080963900EF87B3 /* LGFPageTitleStyle.m in Sources */,
+				18BE612920842FE100EF87B3 /* LGFTitleLine.m in Sources */,
+				18BE612820842FE100EF87B3 /* LGFTitleButton.m in Sources */,
+				18BE612A20842FE100EF87B3 /* UIView+LGF.m in Sources */,
+				18BE612620842FE100EF87B3 /* LGFPageTitleView.m in Sources */,
+				18BE612420842FE100EF87B3 /* LGFMethod.m in Sources */,
+				18BE612520842FE100EF87B3 /* LGFPageTitleStyle.m in Sources */,
 				188954C520803D0E006F07A3 /* ChildViewController.m in Sources */,
 				1837B7C92064D67000E69C4D /* AppDelegate.m in Sources */,
 			);

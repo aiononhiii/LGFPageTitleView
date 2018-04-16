@@ -13,10 +13,12 @@ typedef NS_OPTIONS(NSUInteger, LGFPageLineAnimation) {
     LGFPageLineAnimationDefult = 1 << 0,
     //LGFPageLineAnimationRight = 1 << 1,
 };
+
 typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
     EqualTitleSTR = 1 << 0,// 宽度等于字体宽度
-    EqualTitle = 1 << 1,// 宽度等于标宽度
-    FixedWith = 1 << 2,// 宽度等于固定宽度
+    EqualTitleSTRAndImage = 1 << 1,// 宽度等于字体宽度 + 图标宽度
+    EqualTitle = 1 << 2,// 宽度等于标view宽度
+    FixedWith = 1 << 3,// 宽度等于固定宽度
 };
 
 @interface LGFPageTitleStyle : NSObject
@@ -26,6 +28,7 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 
 //------------------- 数据源设置
 
+// 标数组
 @property (strong, nonatomic) NSArray *titles;
 
 //------------------- 主view
@@ -49,9 +52,34 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 // 标间距 默认 10.0
 @property (assign, nonatomic) CGFloat title_spacing;
 
+//------------------- 标图片设置
+
+// 图片Bundle 如果图片不在本控件bundel里请设置
+@property (strong, nonatomic) NSBundle *title_image_bundel;
+// title_images 和 same_title_image 设置一个就行 如果都设置了默认取 same_title_image
+// 设置不同图标数组（必须和titles数组count保持一致,如果某一个标不想设置图标名字传空即可）
+// 选中图标数组和未选中图标数组如果只传了其中一个,将没有选中效果
+@property (strong, nonatomic) NSMutableArray *select_image_names;
+@property (strong, nonatomic) NSMutableArray *un_select_image_names;
+// 设置所有图标为相同
+@property (copy, nonatomic) NSString *same_select_image_name;
+@property (copy, nonatomic) NSString *same_un_select_image_name;
+
+// 标图片与标的间距 默认 0
+@property (assign, nonatomic) CGFloat image_spacing;
+// 以下属性只要有值，对应imageview就会显示出来
+// 左边标图片宽度 默认等于设置的高度
+@property (assign, nonatomic) CGFloat left_image_width;
+// 左边标图片高度 默认等于设置的高度
+@property (assign, nonatomic) CGFloat left_image_height;
+// 右边标图片宽度 默认等于设置的高度
+@property (assign, nonatomic) CGFloat right_image_width;
+// 右边标图片高度 默认等于设置的宽度
+@property (assign, nonatomic) CGFloat right_image_height;
+
 //------------------- 标底部线设置
 
-// 是否显示标底部滚动线 默认 YES
+// 是否显示标底部滚动线 默认 YES 显示
 @property (assign, nonatomic) BOOL is_show_line;
 // 标底部滚动线 颜色 默认 blueColor
 @property (strong, nonatomic) UIColor *line_color;

@@ -103,13 +103,14 @@
     [super_view setNeedsLayout];
     [super_view layoutIfNeeded];
     self.style = style;
-    _super_vc = super_vc;
+    self.super_vc = super_vc;
     self.page_view = page_view;
-    [self.page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    self.un_select_index = 0;
     self.style.page_title_view = self;
     self.frame = super_view.bounds;
     self.backgroundColor = super_view.backgroundColor;
     [super_view addSubview:self];
+    [self.page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
     return self;
 }
 
@@ -134,7 +135,7 @@
     [self.title_buttons removeAllObjects];
     [self.style.titles enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         LGFTitleButton *title = [LGFTitleButton title:obj index:idx style:self.style];
-        [title addTarget:self action:@selector(autoTitleSelect:) forControlEvents:UIControlEventTouchUpInside];
+        [title.title_button addTarget:self action:@selector(autoTitleSelect:) forControlEvents:UIControlEventTouchUpInside];
         [self.title_buttons addObject:title];
         contentWidth += title.frame.size.width;
     }];
@@ -164,12 +165,12 @@
         return;
     }
     
-    [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-    
     // 更新标view的UI
     [self adjustUIWhenBtnOnClickWithAnimate:true taped:YES];
     
-    NSAssert([_super_vc canPerformAction:@selector(scrollViewDidEndDecelerating:) withSender:_super_vc], @"父视图控制器请添加--scrollViewDidEndDecelerating--方法");
+    [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.select_index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+    
+    NSAssert([_super_vc canPerformAction:@selector(scrollViewDidEndDecelerating:) withSender:_super_vc], @"父视图分页控制器请添加--scrollViewDidEndDecelerating--方法");
     [_super_vc performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.page_view afterDelay:0.31];
 }
 
@@ -191,7 +192,7 @@
         return;
     }
     self.select_index = (self.page_view.contentOffset.x / (NSInteger)self.page_view.bounds.size.width);
-    [self adjustUIWithProgress:1.0 oldIndex:self.select_index currentIndex:self.select_index];
+    [self adjustUIWithProgress:1.0 oldIndex:self.un_select_index currentIndex:self.select_index];
     // 调整title位置 使其滚动到中间
     [self adjustTitleOffSetToSelectIndex:self.select_index];
     LGFLog(@"当前选中:%@", self.style.titles[self.select_index]);
@@ -233,10 +234,10 @@
     int index = 0;
     for (LGFTitleButton *title in self.title_buttons) {
         if (index != select_index) {
-            [title setTitleColor:self.style.un_select_color forState:UIControlStateNormal];
+            [title.title_button setTitleColor:self.style.un_select_color forState:UIControlStateNormal];
             title.currentTransformSx = 1.0;
         } else {
-            [title setTitleColor:self.style.select_color forState:UIControlStateNormal];
+            [title.title_button setTitleColor:self.style.select_color forState:UIControlStateNormal];
             if (self.style.title_big_scale != 0) {
                 title.currentTransformSx = self.style.title_big_scale;
             }
@@ -261,8 +262,8 @@
 #pragma mark - 更新标view的UI(用于滚动外部分页控制器的时候)
 
 - (void)adjustUIWithProgress:(CGFloat)progress oldIndex:(NSInteger)oldIndex currentIndex:(NSInteger)currentIndex {
-    NSLog(@"%f", progress);
-    NSLog(@"%f", self.page_view.bounds.size.width);
+    LGFLog(@"%f", progress);
+    LGFLog(@"%f", self.page_view.bounds.size.width);
     // 判断是否满足UI更新条件
     if (oldIndex < 0 || oldIndex >= self.title_buttons.count || currentIndex < 0 || currentIndex >= self.title_buttons.count) { return;
     }
@@ -270,26 +271,56 @@
     // 取得 前一个选中的标 和 将要选中的标
     LGFTitleButton *un_select_title = (LGFTitleButton *)self.title_buttons[oldIndex];
     LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[currentIndex];
+    LGFLog(@"%ld", un_select_title.tag);
+    LGFLog(@"%ld", select_title.tag);
     // 标颜色渐变
     if (self.style.select_color != self.style.un_select_color) {
-        [un_select_title setTitleColor:[UIColor
+        [un_select_title.title_button setTitleColor:[UIColor
                                         colorWithRed:[self.select_colorRGBA[0] floatValue] + [self.deltaRGBA[0] floatValue] * progress
                                         green:[self.select_colorRGBA[1] floatValue] + [self.deltaRGBA[1] floatValue] * progress
                                         blue:[self.select_colorRGBA[2] floatValue] + [self.deltaRGBA[2] floatValue] * progress
                                         alpha:[self.select_colorRGBA[3] floatValue] + [self.deltaRGBA[3] floatValue] * progress] forState:UIControlStateNormal];
-        [select_title setTitleColor:[UIColor
+        [select_title.title_button setTitleColor:[UIColor
                                      colorWithRed:[self.un_select_colorRGBA[0] floatValue] - [self.deltaRGBA[0] floatValue] * progress
                                      green:[self.un_select_colorRGBA[1] floatValue] - [self.deltaRGBA[1] floatValue] * progress
                                      blue:[self.un_select_colorRGBA[2] floatValue] - [self.deltaRGBA[2] floatValue] * progress
                                      alpha:[self.un_select_colorRGBA[3] floatValue] - [self.deltaRGBA[3] floatValue] * progress] forState:UIControlStateNormal];
     }
+    
+    // 字体改变
     if (![self.style.select_title_font isEqual:self.style.un_select_title_font]) {
         if (progress > 0.5) {
-            un_select_title.titleLabel.font = self.style.un_select_title_font;
-            select_title.titleLabel.font = self.style.select_title_font ?: self.style.un_select_title_font;
+            un_select_title.title_button.titleLabel.font = self.style.un_select_title_font;
+            select_title.title_button.titleLabel.font = self.style.select_title_font ?: self.style.un_select_title_font;
         } else {
-            un_select_title.titleLabel.font = self.style.select_title_font ?: self.style.un_select_title_font;
-            select_title.titleLabel.font = self.style.un_select_title_font;
+            un_select_title.title_button.titleLabel.font = self.style.select_title_font ?: self.style.un_select_title_font;
+            select_title.title_button.titleLabel.font = self.style.un_select_title_font;
+        }
+    }
+    
+    // 左边图标选中
+    if (self.style.left_image_width > 0.0) {
+        if (self.style.select_image_names && self.style.select_image_names.count > 0 && self.style.un_select_image_names && self.style.un_select_image_names.count > 0) {
+            if (progress > 0.5) {
+                [un_select_title.left_image setImage:[UIImage imageNamed:self.style.un_select_image_names[oldIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.left_image setImage:[UIImage imageNamed:self.style.select_image_names[currentIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            } else {
+                [un_select_title.left_image setImage:[UIImage imageNamed:self.style.select_image_names[oldIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.left_image setImage:[UIImage imageNamed:self.style.un_select_image_names[currentIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            }
+        }
+    }
+    
+    // 右边图标选中
+    if (self.style.right_image_width > 0.0) {
+        if (self.style.select_image_names && self.style.select_image_names.count > 0 && self.style.un_select_image_names && self.style.un_select_image_names.count > 0) {
+            if (progress > 0.5) {
+                [un_select_title.right_image setImage:[UIImage imageNamed:self.style.un_select_image_names[oldIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.right_image setImage:[UIImage imageNamed:self.style.select_image_names[currentIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            } else {
+                [un_select_title.right_image setImage:[UIImage imageNamed:self.style.select_image_names[oldIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.right_image setImage:[UIImage imageNamed:self.style.un_select_image_names[currentIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            }
         }
     }
     
@@ -299,26 +330,32 @@
         un_select_title.currentTransformSx = self.style.title_big_scale - deltaScale * progress;
         select_title.currentTransformSx = 1.0 + deltaScale * progress;
     }
+    
     // 标底部滚动条 更新位置
-    if (self.title_line) {
+    if (self.title_line && self.style.is_show_line) {
         if (self.style.line_width_type == EqualTitle) {
             CGFloat xDistance = select_title.x - un_select_title.x;
             CGFloat wDistance = select_title.width - un_select_title.width;
             self.title_line.x = un_select_title.x + xDistance * progress;
             self.title_line.width = un_select_title.width + wDistance * progress;
-        } else if (self.style.line_width_type == EqualTitleSTR) {
+        } else if (self.style.line_width_type == EqualTitleSTRAndImage) {
             CGFloat xDistance = select_title.x - un_select_title.x;
             CGFloat wDistance = select_title.width - un_select_title.width;
             self.title_line.x = self.style.title_spacing * self.style.title_big_scale + un_select_title.x + xDistance * progress;
             self.title_line.width = un_select_title.width + wDistance * progress - (self.style.title_spacing * 2) * self.style.title_big_scale;
-        } else if (self.style.line_width_type == FixedWith){
+        } else if (self.style.line_width_type == EqualTitleSTR) {
+            CGFloat xDistance = select_title.x - un_select_title.x;
+            CGFloat wDistance = (select_title.title_button.width - un_select_title.title_button.width) * self.style.title_big_scale;
+            self.title_line.x = self.style.title_spacing * self.style.title_big_scale + un_select_title.x + xDistance * progress;
+            self.title_line.width = (un_select_title.title_button.width * self.style.title_big_scale) + wDistance * progress - (self.style.title_spacing * 2) * self.style.title_big_scale;
+        } else if (self.style.line_width_type == FixedWith) {
             CGFloat select_title_x = select_title.x + ((select_title.width - self.style.line_width) / 2);
             CGFloat un_select_title_x = un_select_title.x + ((un_select_title.width - self.style.line_width) / 2);
             CGFloat xDistance = select_title_x - un_select_title_x;
             CGFloat xxDistance = select_title.x - un_select_title.x;
             CGFloat wDistance = select_title.width - un_select_title.width;
             self.title_line.x = self.style.line_width > un_select_title.width + wDistance * progress ? un_select_title.x + xxDistance * progress : un_select_title_x + xDistance * progress;
-            self.title_line.width = self.style.line_width > un_select_title.width + wDistance * progress ? un_select_title.width + wDistance * progress : self.style.line_width;
+            self.title_line.width = MIN(self.style.line_width, un_select_title.width + wDistance * progress);
         }
     }
 }
@@ -327,7 +364,7 @@
 
 - (void)adjustUIWhenBtnOnClickWithAnimate:(BOOL)animated taped:(BOOL)taped {
     // 判断是否满足UI更新条件
-    if (self.select_index == self.un_select_index && taped) { return; }
+//    if (self.select_index == self.un_select_index && taped) { return; }
     // 取得 前一个选中的标 和 将要选中的标
     LGFTitleButton *un_select_title = (LGFTitleButton *)self.title_buttons[self.un_select_index];
     LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[self.select_index];
@@ -335,30 +372,55 @@
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:animatedTime animations:^{
         // 标颜色渐变
-        [un_select_title setTitleColor:self.style.un_select_color forState:UIControlStateNormal];
-        [select_title setTitleColor:self.style.select_color forState:UIControlStateNormal];
+        [un_select_title.title_button setTitleColor:weakSelf.style.un_select_color forState:UIControlStateNormal];
+        [select_title.title_button setTitleColor:weakSelf.style.select_color forState:UIControlStateNormal];
+        
+        // 字体改变
+        if (![weakSelf.style.select_title_font isEqual:weakSelf.style.un_select_title_font]) {
+            un_select_title.title_button.titleLabel.font = weakSelf.style.un_select_title_font;
+            select_title.title_button.titleLabel.font = weakSelf.style.select_title_font ?: weakSelf.style.un_select_title_font;
+        }
+        
+        // 左边图标选中
+        if (weakSelf.style.left_image_width > 0.0) {
+            if (weakSelf.style.select_image_names && weakSelf.style.select_image_names.count > 0 && weakSelf.style.un_select_image_names && weakSelf.style.un_select_image_names.count > 0) {
+                [un_select_title.left_image setImage:[UIImage imageNamed:weakSelf.style.un_select_image_names[weakSelf.un_select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.left_image setImage:[UIImage imageNamed:weakSelf.style.select_image_names[weakSelf.select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            }
+        }
+        
+        // 右边图标选中
+        if (weakSelf.style.right_image_width > 0.0) {
+            if (weakSelf.style.select_image_names && weakSelf.style.select_image_names.count > 0 && weakSelf.style.un_select_image_names && weakSelf.style.un_select_image_names.count > 0) {
+                [un_select_title.right_image setImage:[UIImage imageNamed:weakSelf.style.un_select_image_names[weakSelf.un_select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.right_image setImage:[UIImage imageNamed:weakSelf.style.select_image_names[weakSelf.select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            }
+        }
+        
         // 标缩放大小改变
         if (weakSelf.style.title_big_scale != 0) {
             un_select_title.currentTransformSx = 1.0;
             select_title.currentTransformSx = weakSelf.style.title_big_scale;
         }
+        
         // 标底部滚动条 更新位置
-        if (weakSelf.title_line) {
-            if (self.title_line) {
-                if (self.style.line_width_type == EqualTitle) {
-                    weakSelf.title_line.x = select_title.x;
-                    weakSelf.title_line.width = select_title.width;
-                } else if (self.style.line_width_type == EqualTitleSTR) {
-                    weakSelf.title_line.x = self.style.title_spacing * self.style.title_big_scale + select_title.x;
-                    weakSelf.title_line.width = select_title.width - (self.style.title_spacing * 2) * self.style.title_big_scale;
-                } else if (self.style.line_width_type == FixedWith){
-                    weakSelf.title_line.x = select_title.x + ((select_title.width - self.style.line_width) / 2);
-                    weakSelf.title_line.width = self.style.line_width;
-                }
+        if (weakSelf.title_line && weakSelf.style.is_show_line) {
+            if (weakSelf.style.line_width_type == EqualTitle) {
+                weakSelf.title_line.x = select_title.x;
+                weakSelf.title_line.width = select_title.width;
+            } else if (self.style.line_width_type == EqualTitleSTRAndImage) {
+                weakSelf.title_line.x = weakSelf.style.title_spacing * weakSelf.style.title_big_scale + select_title.x;
+                weakSelf.title_line.width = select_title.width - (weakSelf.style.title_spacing * 2) * weakSelf.style.title_big_scale;
+            } else if (weakSelf.style.line_width_type == EqualTitleSTR) {
+                weakSelf.title_line.x = weakSelf.style.title_spacing * weakSelf.style.title_big_scale + select_title.x;
+                weakSelf.title_line.width = (select_title.title_button.width * weakSelf.style.title_big_scale) - (weakSelf.style.title_spacing * 2) * weakSelf.style.title_big_scale;
+            } else if (weakSelf.style.line_width_type == FixedWith){
+                weakSelf.title_line.x = weakSelf.style.line_width > select_title.width ? select_title.x : select_title.x + ((select_title.width - weakSelf.style.line_width) / 2);
+                weakSelf.title_line.width = MIN(weakSelf.style.line_width, select_title.width);
             }
         }
     } completion:^(BOOL finished) {
-        [weakSelf adjustTitleOffSetToSelectIndex:self.select_index];
+        [weakSelf adjustTitleOffSetToSelectIndex:weakSelf.select_index];
     }];
     // 下标反转
     self.un_select_index = self.select_index;

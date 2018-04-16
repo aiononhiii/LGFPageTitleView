@@ -82,10 +82,18 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YLt-09-j9u">
                                 <rect key="frame" x="37" y="237" width="300" height="60"/>
-                                <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.60856541450777202" green="0.00795256886749688" blue="0.36681229605224785" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="7ID-L2-Rh7"/>
                                     <constraint firstAttribute="height" constant="60" id="B3q-LJ-1Wv"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lEm-Dn-2e9">
+                                <rect key="frame" x="175" y="90" width="200" height="40"/>
+                                <color key="backgroundColor" red="0.10460177902215369" green="0.76730488989637302" blue="0.708455644779583" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="3e7-GR-0kT"/>
+                                    <constraint firstAttribute="height" constant="40" id="EPc-Bj-1yF"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -95,7 +103,9 @@
                             <constraint firstItem="YLt-09-j9u" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" multiplier="0.8" id="5K8-AR-Ncp"/>
                             <constraint firstItem="CSp-ZW-QYx" firstAttribute="top" secondItem="5Nf-LW-aHm" secondAttribute="bottom" id="6Er-Oi-umr"/>
                             <constraint firstItem="gx9-Pt-kGK" firstAttribute="top" secondItem="CSp-ZW-QYx" secondAttribute="bottom" id="Cb0-Uf-AdH"/>
+                            <constraint firstAttribute="trailing" secondItem="lEm-Dn-2e9" secondAttribute="trailing" id="Ct6-Wq-0Ld"/>
                             <constraint firstItem="CSp-ZW-QYx" firstAttribute="leading" secondItem="eEm-9f-0YM" secondAttribute="trailing" id="GLd-4V-NdN"/>
+                            <constraint firstItem="lEm-Dn-2e9" firstAttribute="top" secondItem="eEm-9f-0YM" secondAttribute="bottom" constant="20" id="IC0-Kc-YbV"/>
                             <constraint firstItem="gx9-Pt-kGK" firstAttribute="top" secondItem="eEm-9f-0YM" secondAttribute="bottom" id="L4I-Gh-bg0"/>
                             <constraint firstItem="eEm-9f-0YM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LTU-U5-gib"/>
                             <constraint firstItem="eEm-9f-0YM" firstAttribute="top" secondItem="5Nf-LW-aHm" secondAttribute="bottom" id="PiG-b9-Rye"/>
@@ -111,6 +121,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="fourTitleSuperView" destination="lEm-Dn-2e9" id="tSZ-jL-D4E"/>
                         <outlet property="oneTitleSuperView" destination="eEm-9f-0YM" id="IlK-3O-5Q8"/>
                         <outlet property="pageView" destination="gx9-Pt-kGK" id="2eI-Gl-ZUn"/>
                         <outlet property="threeTitleSuperView" destination="YLt-09-j9u" id="xba-2Q-epp"/>

@@ -8,12 +8,25 @@
 
 #import "LGFTitleLine.h"
 
+@interface LGFTitleLine()
+@property (strong, nonatomic) UIImageView *line_back_imageview;
+@end
 @implementation LGFTitleLine
 
 + (instancetype)style:(LGFPageTitleStyle *)style {
     LGFTitleLine *line = [Bundle loadNibNamed:NSStringFromClass([LGFPageTitleView class]) owner:self options:nil][2];
+    line.clipsToBounds = YES;
     line.style = style;
     return line;
+}
+
+- (UIImageView *)line_back_imageview {
+    if (!_line_back_imageview) {
+        _line_back_imageview = [[UIImageView alloc] initWithFrame:self.bounds];
+        _line_back_imageview.clipsToBounds = YES;
+        _line_back_imageview.contentMode = UIViewContentModeScaleToFill;
+    }
+    return _line_back_imageview;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -29,6 +42,10 @@
     self.y = Y;
     self.height = H;
     self.alpha = style.line_alpha;
+    self.layer.cornerRadius = style.line_cornerRadius;
+    if (style.line_back_image && self.subviews.count == 0) {
+        [self setImage:style.line_back_image];
+    }
 }
 
 @end

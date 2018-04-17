@@ -33,7 +33,11 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 
 //------------------- 主view
 
-@property (strong, nonatomic) UIScrollView *page_title_view;
+@property (weak, nonatomic) UIScrollView *page_title_view;
+
+//------------------- 主view在父控件上的frame 默认等于父控件
+
+@property (assign, nonatomic) CGRect page_title_view_frame;
 
 //------------------- 标设置
 
@@ -78,7 +82,10 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 @property (assign, nonatomic) CGFloat right_image_height;
 
 //------------------- 标底部线设置
-
+// 标底部线圆角弧度 默认 0 没有弧度
+@property (assign, nonatomic) CGFloat line_cornerRadius;
+// 标背景图片 默认 无图
+@property (strong, nonatomic) UIImage *line_back_image;
 // 是否显示标底部滚动线 默认 YES 显示
 @property (assign, nonatomic) BOOL is_show_line;
 // 标底部滚动线 颜色 默认 blueColor

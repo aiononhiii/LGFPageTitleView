@@ -25,6 +25,8 @@
         self.line_height = 1.0;
         self.line_alpha = 1.0;
         self.line_bottom = 0.0;
+        self.line_cornerRadius = 0.0;
+        self.line_back_image = nil;
         self.line_animation = LGFPageLineAnimationDefult;
         self.line_width_type = EqualTitleSTR;
         //        self.is_title_center = NO;

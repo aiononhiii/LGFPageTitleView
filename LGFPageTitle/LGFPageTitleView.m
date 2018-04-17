@@ -12,9 +12,11 @@
 // 外部父视图控制器
 @property (weak, nonatomic) UIViewController *super_vc;
 // 外部父控件（用于确定添加的位置）
-@property (strong, nonatomic) UIView *super_view;
+@property (weak, nonatomic) UIView *super_view;
 // 外部分页控制器
-@property (strong, nonatomic) UICollectionView *page_view;
+@property (weak, nonatomic) UICollectionView *page_view;
+// 底部滚动条
+@property (weak, nonatomic) LGFTitleLine *title_line;
 // 将要选中下标
 @property (assign, nonatomic) NSInteger select_index;
 // 前一个选中下标
@@ -23,8 +25,6 @@
 @property (assign, nonatomic) NSInteger old_off_set_x;
 // 所有标数组
 @property (strong, nonatomic) NSMutableArray *title_buttons;
-// 底部滚动条
-@property (strong, nonatomic) LGFTitleLine *title_line;
 // title 字体渐变色
 @property (strong, nonatomic) NSArray *deltaRGBA;
 @property (strong, nonatomic) NSArray *select_colorRGBA;
@@ -107,10 +107,18 @@
     self.page_view = page_view;
     self.un_select_index = 0;
     self.style.page_title_view = self;
-    self.frame = super_view.bounds;
-    self.backgroundColor = super_view.backgroundColor;
-    [super_view addSubview:self];
     [self.page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    NSAssert(super_vc, @"请在initWithStyle方法中传入父视图控制器! 否则将无法联动控件");
+    NSAssert(page_view, @"请在initWithStyle方法中传入分页控件! 否则将无法联动控件");
+    if (super_view) {
+        if (CGRectEqualToRect(self.style.page_title_view_frame, CGRectZero)) {
+            self.frame = super_view.bounds;
+        } else {
+            self.frame = style.page_title_view_frame;
+        }
+        self.backgroundColor = super_view.backgroundColor;
+        [super_view addSubview:self];
+    }
     return self;
 }
 
@@ -125,17 +133,17 @@
 
 #pragma mark - 添加所有标
 
-- (void)reloadAllTitles:(NSMutableArray *)titles {
-    if (titles.count == 0 || !titles) {
+- (void)reloadAllTitles {
+    if (self.style.titles.count == 0 || !self.style.titles) {
         return;
     }
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    self.style.titles = titles;
-    __block CGFloat contentWidth = 0.0;
     [self.title_buttons removeAllObjects];
+    __block CGFloat contentWidth = 0.0;
     [self.style.titles enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         LGFTitleButton *title = [LGFTitleButton title:obj index:idx style:self.style];
-        [title.title_button addTarget:self action:@selector(autoTitleSelect:) forControlEvents:UIControlEventTouchUpInside];
+        UITapGestureRecognizer *tapRecognize = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(autoTitleSelect:)];
+        [title addGestureRecognizer:tapRecognize];
         [self.title_buttons addObject:title];
         contentWidth += title.frame.size.width;
     }];
@@ -148,8 +156,9 @@
 
 #pragma mark - 标点击事件
 
-- (void)autoTitleSelect:(LGFTitleButton *)sender {
-    [self selectTitleForTag:sender.tag];
+- (void)autoTitleSelect:(UITapGestureRecognizer *)sender {
+    LGFTitleButton *view = (LGFTitleButton *)sender.view;
+    [self selectTitleForTag:view.title_button.tag];
 }
 
 #pragma mark - 滚动到指定tag位置
@@ -179,7 +188,7 @@
 - (void)selectTitleForIndex:(NSInteger)index {
     dispatch_async(dispatch_get_main_queue(),^{
         if ([self.page_view numberOfItemsInSection:0] != 0 || [self.page_view numberOfItemsInSection:0] > index) {
-            [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index < 0 || index - 1 > self.style.titles.count ? 0 : index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
         }
         [self autoScrollTitle];
     });
@@ -364,7 +373,7 @@
 
 - (void)adjustUIWhenBtnOnClickWithAnimate:(BOOL)animated taped:(BOOL)taped {
     // 判断是否满足UI更新条件
-//    if (self.select_index == self.un_select_index && taped) { return; }
+    if (self.select_index == self.un_select_index && taped) { return; }
     // 取得 前一个选中的标 和 将要选中的标
     LGFTitleButton *un_select_title = (LGFTitleButton *)self.title_buttons[self.un_select_index];
     LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[self.select_index];
@@ -440,6 +449,10 @@
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self removeFromSuperview];
     [self.page_view removeObserver:self forKeyPath:@"contentOffset"];
+    self.title_buttons = nil;
+    self.deltaRGBA = nil;
+    self.select_colorRGBA = nil;
+    self.un_select_colorRGBA = nil;
     LGFLog(@"LGFPageTitleView_____________dealloc_已销毁");
 }
 

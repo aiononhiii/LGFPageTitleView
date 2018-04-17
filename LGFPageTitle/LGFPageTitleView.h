@@ -38,10 +38,8 @@
 
 /**
  刷新所有标
- 
- @param titles 标数组
  */
-- (void)reloadAllTitles:(NSMutableArray *)titles;
+- (void)reloadAllTitles;
 
 /**
  滚动到指定index位置
@@ -54,7 +52,7 @@
  配置
  
  @param style 配置用模型
- @param super_view 父控件
+ @param super_view 父控件 如果想自定义pagetitle的frame 请传nil
  @param page_view 外部分页控件
  @return LGFPageTitleView
  */

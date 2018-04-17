@@ -24,27 +24,50 @@
 @property (strong, nonatomic) LGFPageTitleView *threeTitleView;
 @property (strong, nonatomic) LGFPageTitleView *fourTitleView;
 
+// 加在NavigationBar上的
+@property (weak, nonatomic) IBOutlet UIView *naviTitleSuperView;
+@property (strong, nonatomic) LGFPageTitleView *naviTitleView;
+
 @property (strong, nonatomic) NSMutableArray *oneTitles;
 @property (strong, nonatomic) NSMutableArray *twoTitles;
 
-@property (strong, nonatomic) NSMutableArray *oneTitleImages;
-
+@property (strong, nonatomic) NSMutableArray *oneTitleUnSelectImages;
+@property (strong, nonatomic) NSMutableArray *oneTitleSelectImages;
 @end
 
 @implementation ViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    // 添加在NavigationBar上的view请在进入页面时添加 防止其展现在别的页面
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    // 添加在NavigationBar上的view请在离开页面时移除 防止其展现在别的页面
+    [self.naviTitleView removeFromSuperview];
+}
+
 - (NSMutableArray *)oneTitles {
     if (!_oneTitles) {
-        _oneTitles = [NSMutableArray arrayWithObjects:@"篮球", @"足球", @"乒乓球", @"羽毛球", @"排球", @"地球", @"月球", @"保龄球", @"什么什么什么球", @"台球", @"高尔夫球", @"橄榄球", @"雪碧", @"可乐", @"芬达", nil];
+        _oneTitles = [NSMutableArray arrayWithObjects:@"鹈鹕", @"鳄鱼", @"鲸鱼", @"狮子", @"巨嘴鸟", @"麋鹿", @"绵羊", @"螃蟹", @"鸵鸟", @"大象", @"蛇", @"鱼", @"公鸡", @"长颈鹿", @"猪", nil];
     }
     return _oneTitles;
 }
 
-- (NSMutableArray *)oneTitleImages {
-    if (!_oneTitleImages) {
-        _oneTitleImages = [NSMutableArray arrayWithObjects:@"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"yidingyue1", @"", nil];
+- (NSMutableArray *)oneTitleUnSelectImages {
+    if (!_oneTitleUnSelectImages) {
+        _oneTitleUnSelectImages = [NSMutableArray arrayWithObjects:@"鹈鹕-2", @"鳄鱼-2", @"鲸鱼-2", @"狮子-2", @"巨嘴鸟-2", @"麋鹿-2", @"绵羊-2", @"螃蟹-2", @"鸵鸟-2", @"大象-2", @"蛇-2", @"鱼-2", @"公鸡-2", @"长颈鹿-2", @"猪-2", nil];
     }
-    return _oneTitleImages;
+    return _oneTitleUnSelectImages;
+}
+
+
+- (NSMutableArray *)oneTitleSelectImages {
+    if (!_oneTitleSelectImages) {
+        _oneTitleSelectImages = [NSMutableArray arrayWithObjects:@"鹈鹕", @"鳄鱼", @"鲸鱼", @"狮子", @"巨嘴鸟", @"麋鹿", @"绵羊", @"螃蟹", @"鸵鸟", @"大象", @"蛇", @"鱼", @"公鸡", @"长颈鹿", @"猪", nil];
+    }
+    return _oneTitleSelectImages;
 }
 
 - (NSMutableArray *)twoTitles {
@@ -57,17 +80,19 @@
 - (LGFPageTitleView *)oneTitleView {
     if (!_oneTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
-        style.title_big_scale = 1.0;
-        style.line_height = 2.0;
+        style.title_big_scale = 1.1;
+        style.line_height = 5.0;
+        style.line_bottom = 1.0;
+        style.line_cornerRadius = style.line_height / 2;
         style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
         style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Light" size:14];
-        style.line_color = RGB(150, 150, 150, 1.0);
+        style.line_color = RGB(155, 150, 255, 1.0);
         style.select_color = RGB(210, 29, 89, 1.0);
         style.title_image_bundel = Bundle;
         style.left_image_width = 30;
-        style.title_spacing = 5;
-        style.same_select_image_name = @"yidingyue1";
-        style.same_un_select_image_name = @"weidingyue";
+        style.title_spacing = 8;
+        style.un_select_image_names = self.oneTitleUnSelectImages;
+        style.select_image_names = self.oneTitleSelectImages;
         style.line_width_type = EqualTitleSTRAndImage;
         _oneTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.oneTitleSuperView page_view:self.pageView];
     }
@@ -92,7 +117,7 @@
 - (LGFPageTitleView *)threeTitleView {
     if (!_threeTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
-        style.title_big_scale = 1.2;
+        style.title_big_scale = 1.0;
         style.line_height = 3.0;
         style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
         style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Light" size:20];
@@ -113,9 +138,13 @@
 - (LGFPageTitleView *)fourTitleView {
     if (!_fourTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
-        style.is_show_line = NO;
         style.title_big_scale = 0.7;
         style.title_spacing = 5.0;
+        style.line_height = 34.0;
+        style.line_bottom = 3.0;
+        style.line_cornerRadius = 3.0;
+        style.line_color = RGB(255, 255, 255, 1.0);
+        style.line_back_image = [UIImage imageNamed:@"狮子" inBundle:Bundle compatibleWithTraitCollection:nil];
         style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
         style.un_select_color = RGB(240, 240, 20, 1.0);
         style.select_color = RGB(255, 255, 255, 1.0);
@@ -123,6 +152,25 @@
         _fourTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.fourTitleSuperView page_view:self.pageView];
     }
     return _fourTitleView;
+}
+
+- (LGFPageTitleView *)naviTitleView {
+    if (!_naviTitleView) {
+        LGFPageTitleStyle *style = [LGFPageTitleStyle na];
+        style.title_big_scale = 1.0;
+        style.is_show_line = NO;
+        style.un_select_color = RGB(50, 50, 50, 1.0);
+        style.select_color = RGB(255, 55, 55, 1.0);
+        style.un_select_title_font = [UIFont systemFontOfSize:18];
+        style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+        style.line_width_type = FixedWith;
+        style.page_title_view_frame = CGRectMake(80, 0, self.navigationController.navigationBar.width - 80, self.navigationController.navigationBar.height);
+        // 如果想自定义pagetitle的frame 请传nil
+        _naviTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.navigationController.navigationBar page_view:self.pageView];
+        [self.navigationController.navigationBar addSubview:self.naviTitleView];
+        
+    }
+    return _naviTitleView;
 }
 
 - (NSMutableArray *)childVCs {
@@ -145,14 +193,25 @@
     // 刷新数据源
     [self.pageView reloadData];
     // 刷新title数组
-    [self.oneTitleView reloadAllTitles:self.oneTitles];
+    self.oneTitleView.style.titles = self.oneTitles;
+    [self.oneTitleView reloadAllTitles];
     [self.oneTitleView selectTitleForIndex:10];
-    [self.twoTitleView reloadAllTitles:self.oneTitles];
+    
+    self.twoTitleView.style.titles = self.oneTitles;
+    [self.twoTitleView reloadAllTitles];
     [self.twoTitleView selectTitleForIndex:10];
-    [self.threeTitleView reloadAllTitles:self.oneTitles];
+    
+    self.threeTitleView.style.titles = self.oneTitles;
+    [self.threeTitleView reloadAllTitles];
     [self.threeTitleView selectTitleForIndex:10];
-    [self.fourTitleView reloadAllTitles:self.oneTitles];
+    
+    self.fourTitleView.style.titles = self.oneTitles;
+    [self.fourTitleView reloadAllTitles];
     [self.fourTitleView selectTitleForIndex:10];
+    
+    self.naviTitleView.style.titles = self.oneTitles;
+    [self.naviTitleView reloadAllTitles];
+    [self.naviTitleView selectTitleForIndex:10];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -167,7 +226,6 @@
     [self.childViewControllers makeObjectsPerformSelector:@selector(removeFromParentViewController)];
     // 清空子控制器数据源数组
     [self.childVCs removeAllObjects];
-    
     if (sender.selected) {
         // 重新添加子控制器
         for (NSString *title in self.oneTitles) {
@@ -179,14 +237,25 @@
         // 重新刷新数据源
         [self.pageView reloadData];
         // 刷新title数组
-        [self.oneTitleView reloadAllTitles:self.oneTitles];
+        self.oneTitleView.style.titles = self.oneTitles;
+        [self.oneTitleView reloadAllTitles];
         [self.oneTitleView selectTitleForIndex:10];
-        [self.twoTitleView reloadAllTitles:self.oneTitles];
+        
+        self.twoTitleView.style.titles = self.oneTitles;
+        [self.twoTitleView reloadAllTitles];
         [self.twoTitleView selectTitleForIndex:10];
-        [self.threeTitleView reloadAllTitles:self.oneTitles];
+        
+        self.threeTitleView.style.titles = self.oneTitles;
+        [self.threeTitleView reloadAllTitles];
         [self.threeTitleView selectTitleForIndex:10];
-        [self.fourTitleView reloadAllTitles:self.oneTitles];
+        
+        self.fourTitleView.style.titles = self.oneTitles;
+        [self.fourTitleView reloadAllTitles];
         [self.fourTitleView selectTitleForIndex:10];
+        
+        self.naviTitleView.style.titles = self.oneTitles;
+        [self.naviTitleView reloadAllTitles];
+        [self.naviTitleView selectTitleForIndex:10];
     } else {
         // 重新添加子控制器
         for (NSString *title in self.twoTitles) {
@@ -198,14 +267,25 @@
         // 重新刷新数据源
         [self.pageView reloadData];
         // 刷新title数组
-        [self.oneTitleView reloadAllTitles:self.twoTitles];
+        self.oneTitleView.style.titles = self.twoTitles;
+        [self.oneTitleView reloadAllTitles];
         [self.oneTitleView selectTitleForIndex:3];
-        [self.twoTitleView reloadAllTitles:self.twoTitles];
+        
+        self.twoTitleView.style.titles = self.twoTitles;
+        [self.twoTitleView reloadAllTitles];
         [self.twoTitleView selectTitleForIndex:3];
-        [self.threeTitleView reloadAllTitles:self.twoTitles];
+        
+        self.threeTitleView.style.titles = self.twoTitles;
+        [self.threeTitleView reloadAllTitles];
         [self.threeTitleView selectTitleForIndex:3];
-        [self.fourTitleView reloadAllTitles:self.twoTitles];
+        
+        self.fourTitleView.style.titles = self.twoTitles;
+        [self.fourTitleView reloadAllTitles];
         [self.fourTitleView selectTitleForIndex:3];
+        
+        self.naviTitleView.style.titles = self.twoTitles;
+        [self.naviTitleView reloadAllTitles];
+        [self.naviTitleView selectTitleForIndex:3];
     }
     sender.selected = !sender.selected;
 }
@@ -242,6 +322,12 @@
     [self.twoTitleView autoScrollTitle];
     [self.threeTitleView autoScrollTitle];
     [self.fourTitleView autoScrollTitle];
+    
+    [self.naviTitleView autoScrollTitle];
+}
+
+- (void)dealloc {
+    LGFLog(@"LGFPageTitle已经全部释放 ----- dealloc");
 }
 
 @end

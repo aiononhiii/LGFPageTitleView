@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LGFTitles.h"
 
-@interface LGFTitleLine : UIView
+@interface LGFTitleLine : UIImageView
 
 /**
  配置用模型

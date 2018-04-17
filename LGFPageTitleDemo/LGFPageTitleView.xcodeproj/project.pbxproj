@@ -23,6 +23,7 @@
 		18BE612820842FE100EF87B3 /* LGFTitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE611E20842FE100EF87B3 /* LGFTitleButton.m */; };
 		18BE612920842FE100EF87B3 /* LGFTitleLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE612020842FE100EF87B3 /* LGFTitleLine.m */; };
 		18BE612A20842FE100EF87B3 /* UIView+LGF.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE612320842FE100EF87B3 /* UIView+LGF.m */; };
+		18BE61332085A39000EF87B3 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18BE61322085A39000EF87B3 /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,8 @@
 		18BE612120842FE100EF87B3 /* LGFTitles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFTitles.h; sourceTree = "<group>"; };
 		18BE612220842FE100EF87B3 /* UIView+LGF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+LGF.h"; sourceTree = "<group>"; };
 		18BE612320842FE100EF87B3 /* UIView+LGF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+LGF.m"; sourceTree = "<group>"; };
+		18BE61312085A39000EF87B3 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		18BE61322085A39000EF87B3 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +131,8 @@
 				18BE611520842FE100EF87B3 /* LGFPageTitle */,
 				1837B7C72064D67000E69C4D /* AppDelegate.h */,
 				1837B7C82064D67000E69C4D /* AppDelegate.m */,
+				18BE61312085A39000EF87B3 /* MainViewController.h */,
+				18BE61322085A39000EF87B3 /* MainViewController.m */,
 				1837B7CA2064D67000E69C4D /* ViewController.h */,
 				1837B7CB2064D67000E69C4D /* ViewController.m */,
 				188954C320803D0E006F07A3 /* ChildViewController.h */,
@@ -315,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18BE61332085A39000EF87B3 /* MainViewController.m in Sources */,
 				1837B7CC2064D67000E69C4D /* ViewController.m in Sources */,
 				1837B7D72064D67000E69C4D /* main.m in Sources */,
 				18BE612920842FE100EF87B3 /* LGFTitleLine.m in Sources */,

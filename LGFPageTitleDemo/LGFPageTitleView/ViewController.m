@@ -90,7 +90,7 @@
         style.select_color = RGB(210, 29, 89, 1.0);
         style.title_image_bundel = Bundle;
         style.left_image_width = 30;
-        style.title_spacing = 8;
+        style.title_left_right_spacing = 8;
         style.un_select_image_names = self.oneTitleUnSelectImages;
         style.select_image_names = self.oneTitleSelectImages;
         style.line_width_type = EqualTitleSTRAndImage;
@@ -119,17 +119,20 @@
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
         style.title_big_scale = 1.0;
         style.line_height = 3.0;
-        style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:20];
-        style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Light" size:20];
+        style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+        style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Light" size:18];
         style.line_color = RGB(258, 143, 145, 1.0);
         style.un_select_color = RGB(258, 143, 145, 1.0);
         style.select_color = RGB(255, 255, 255, 1.0);
-        style.line_width_type = EqualTitleSTR;
+        style.line_width_type = EqualTitleSTRAndImage;
         style.same_select_image_name = @"yidingyue1";
         style.same_un_select_image_name = @"weidingyue";
         style.title_image_bundel = Bundle;
-        style.right_image_width = 15.0;
-        style.title_spacing = 10.0;
+        style.top_image_height = 20.0;
+        style.left_image_width = 20.0;
+        style.right_image_width = 20.0;
+        style.bottom_image_height = 20.0;
+        style.title_left_right_spacing = 10.0;
         _threeTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.threeTitleSuperView page_view:self.pageView];
     }
     return _threeTitleView;
@@ -139,7 +142,7 @@
     if (!_fourTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
         style.title_big_scale = 0.7;
-        style.title_spacing = 5.0;
+        style.title_left_right_spacing = 5.0;
         style.line_height = 34.0;
         style.line_bottom = 3.0;
         style.line_cornerRadius = 3.0;

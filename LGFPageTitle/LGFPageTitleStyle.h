@@ -53,8 +53,10 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 @property (strong, nonatomic) UIFont *un_select_title_font;
 // 标是否有滑动动画 默认 YES 有动画
 @property (assign, nonatomic) BOOL title_have_animation;
-// 标间距 默认 10.0
-@property (assign, nonatomic) CGFloat title_spacing;
+// 标左右间距 默认 5.0
+@property (assign, nonatomic) CGFloat title_left_right_spacing;
+// 标上下间距 默认 5.0
+@property (assign, nonatomic) CGFloat title_top_bottom_spacing;
 
 //------------------- 标图片设置
 
@@ -72,11 +74,19 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 // 标图片与标的间距 默认 0
 @property (assign, nonatomic) CGFloat image_spacing;
 // 以下属性只要有值，对应imageview就会显示出来
-// 左边标图片宽度 默认等于设置的高度
+// 顶部标图片宽度 默认等于设置的高度 最大不超过标 view高度 * 0.5
+@property (assign, nonatomic) CGFloat top_image_width;
+// 顶部标图片高度 默认等于设置的宽度
+@property (assign, nonatomic) CGFloat top_image_height;
+// 底部标图片宽度 默认等于设置的高度 最大不超过标 view高度 * 0.5
+@property (assign, nonatomic) CGFloat bottom_image_width;
+// 底部标图片高度 默认等于设置的宽度
+@property (assign, nonatomic) CGFloat bottom_image_height;
+// 左边标图片宽度 默认等于设置的高度 最大不超过标 view高度 * 1
 @property (assign, nonatomic) CGFloat left_image_width;
-// 左边标图片高度 默认等于设置的高度
+// 左边标图片高度 默认等于设置的宽度
 @property (assign, nonatomic) CGFloat left_image_height;
-// 右边标图片宽度 默认等于设置的高度
+// 右边标图片宽度 默认等于设置的高度 最大不超过标 view高度 * 1
 @property (assign, nonatomic) CGFloat right_image_width;
 // 右边标图片高度 默认等于设置的宽度
 @property (assign, nonatomic) CGFloat right_image_height;

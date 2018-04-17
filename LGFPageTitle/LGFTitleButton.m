@@ -25,10 +25,10 @@
         UIView *subview = style.page_title_view.subviews[index - 1];
         title_x = subview.x + subview.width;
     } else {
-        title_x = button.style.title_spacing;
+        title_x = button.style.title_left_right_spacing;
     }
     // 设置每一个标宽度
-    button.frame = CGRectMake(title_x, 0, title_size.width + (button.style.title_spacing * 2) + (style.left_image_width > 0.0 ? button.style.title_spacing + button.left_image_spacing.constant + button.left_image_width.constant : 0.0) + (style.right_image_width > 0.0 ? button.style.title_spacing + button.right_image_spacing.constant + button.right_image_width.constant : 0.0), style.page_title_view.height);
+    button.frame = CGRectMake(title_x, 0, title_size.width + (style.title_left_right_spacing * 2) + (style.left_image_width > 0.0 ? style.title_left_right_spacing + style.image_spacing + button.left_image_width.constant : 0.0) + (style.right_image_width > 0.0 ? style.title_left_right_spacing + style.image_spacing + button.right_image_width.constant : 0.0), style.page_title_view.height);
     [style.page_title_view addSubview:button];
     return button;
 }
@@ -87,7 +87,7 @@
     
     // 只要有宽度，允许左右两边都设置图片
     if (style.left_image_width > 0.0) {
-        self.left_image_left.constant = style.title_spacing;
+        self.left_image_left.constant = style.title_left_right_spacing;
         self.left_image_spacing.constant = style.image_spacing;
         self.left_image_width.constant = MIN(style.left_image_width ?: 0.0, style.page_title_view.height);
         self.left_image_height.constant = MIN(style.left_image_height ?: 0.0, style.page_title_view.height);
@@ -97,13 +97,33 @@
     }
     
     if (style.right_image_width > 0.0) {
-        self.right_image_right.constant = style.title_spacing;
+        self.right_image_right.constant = style.title_left_right_spacing;
         self.right_image_spacing.constant = style.image_spacing;
         self.right_image_width.constant = MIN(style.right_image_width ?: 0.0, style.page_title_view.height);
         self.right_image_height.constant = MIN(style.right_image_height ?: 0.0, style.page_title_view.height);
         [self.right_image setImage:[UIImage imageNamed:style.un_select_image_names[self.title_button.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
     } else {
-        LGFLog(@"如果要显示右边图标，请给 left_image_width 赋值");
+        LGFLog(@"如果要显示右边图标，请给 right_image_width 赋值");
+    }
+    
+    if (style.top_image_height > 0.0) {
+        self.top_image_top.constant = style.title_top_bottom_spacing;
+        self.top_image_spacing.constant = style.image_spacing;
+        self.top_image_width.constant = MIN(style.top_image_width ?: 0.0, style.page_title_view.width);
+        self.top_image_height.constant = MIN(style.top_image_height ?: 0.0, style.page_title_view.height / 2);
+        [self.top_image setImage:[UIImage imageNamed:style.un_select_image_names[self.title_button.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
+    } else {
+        LGFLog(@"如果要显示顶部图标，请给 top_image_height 赋值");
+    }
+    
+    if (style.bottom_image_height > 0.0) {
+        self.bottom_image_bottom.constant = style.title_top_bottom_spacing;
+        self.bottom_image_spacing.constant = style.image_spacing;
+        self.bottom_image_width.constant = MIN(style.bottom_image_width ?: 0.0, style.page_title_view.width);
+        self.bottom_image_height.constant = MIN(style.bottom_image_height ?: 0.0, style.page_title_view.height / 2);
+        [self.bottom_image setImage:[UIImage imageNamed:style.un_select_image_names[self.title_button.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
+    } else {
+        LGFLog(@"如果要显示底部图标，请给 bottom_image_height 赋值");
     }
     
     [self setNeedsLayout];

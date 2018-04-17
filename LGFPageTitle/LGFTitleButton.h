@@ -16,8 +16,20 @@
  */
 @property (weak, nonatomic) IBOutlet UIButton *title_button;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *top_image_spacing;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottom_image_spacing;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *left_image_spacing;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *right_image_spacing;
+
+@property (weak, nonatomic) IBOutlet UIImageView *top_image;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *top_image_top;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *top_image_width;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *top_image_height;
+
+@property (weak, nonatomic) IBOutlet UIImageView *bottom_image;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottom_image_bottom;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottom_image_width;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottom_image_height;
 
 @property (weak, nonatomic) IBOutlet UIImageView *left_image;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *left_image_left;
@@ -56,4 +68,5 @@
  @return LGFTitleButton
  */
 + (instancetype)title:(NSString *)title index:(NSInteger)index style:(LGFPageTitleStyle *)style;
+
 @end

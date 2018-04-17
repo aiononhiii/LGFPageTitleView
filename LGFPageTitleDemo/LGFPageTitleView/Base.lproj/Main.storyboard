@@ -83,7 +83,7 @@
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gx9-Pt-kGK">
-                                <rect key="frame" x="50" y="344" width="275" height="273"/>
+                                <rect key="frame" x="50" y="364" width="275" height="253"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="go9-Bf-Pel">
                                     <size key="itemSize" width="375" height="597"/>
@@ -125,14 +125,14 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YLt-09-j9u">
-                                <rect key="frame" x="0.0" y="144" width="375" height="60"/>
+                                <rect key="frame" x="0.0" y="144" width="375" height="80"/>
                                 <color key="backgroundColor" red="0.60856541450777202" green="0.00795256886749688" blue="0.36681229605224785" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="B3q-LJ-1Wv"/>
+                                    <constraint firstAttribute="height" constant="80" id="B3q-LJ-1Wv"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lEm-Dn-2e9">
-                                <rect key="frame" x="0.0" y="204" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="224" width="375" height="40"/>
                                 <color key="backgroundColor" red="0.10460177902215369" green="0.76730488989637302" blue="0.708455644779583" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="EPc-Bj-1yF"/>

@@ -18,7 +18,8 @@
         self.title_big_scale = 1.0;
         self.un_select_title_font = [UIFont systemFontOfSize:14];
         self.title_have_animation = YES;
-        self.title_spacing = 10.0;
+        self.title_left_right_spacing = 5.0;
+        self.title_top_bottom_spacing = 5.0;
         self.is_show_line = YES;
         self.line_color = [UIColor blueColor];
         self.line_width = 0;
@@ -68,6 +69,20 @@
     }
 }
 
+- (void)setTop_image_height:(CGFloat)top_image_height {
+    _top_image_height = top_image_height;
+    if (!_top_image_width || _top_image_width == 0.0) {
+        _top_image_width = top_image_height;
+    }
+}
+
+- (void)setBottom_image_height:(CGFloat)bottom_image_height {
+    _bottom_image_height = bottom_image_height;
+    if (!_bottom_image_width || _bottom_image_width == 0.0) {
+        _bottom_image_width = bottom_image_height;
+    }
+}
+
 - (void)setLeft_image_height:(CGFloat)left_image_height {
     _left_image_height = left_image_height;
     if (!_left_image_width || _left_image_width == 0.0) {
@@ -79,6 +94,20 @@
     _right_image_height = right_image_height;
     if (!_right_image_width || _right_image_width == 0.0) {
         _right_image_width = right_image_height;
+    }
+}
+
+- (void)setTop_image_width:(CGFloat)top_image_width {
+    _top_image_width = top_image_width;
+    if (!_top_image_height || _top_image_height == 0.0) {
+        _top_image_height = top_image_width;
+    }
+}
+
+- (void)setBottom_image_width:(CGFloat)bottom_image_width {
+    _bottom_image_width = bottom_image_width;
+    if (!_bottom_image_height || _bottom_image_height == 0.0) {
+        _bottom_image_height = bottom_image_width;
     }
 }
 

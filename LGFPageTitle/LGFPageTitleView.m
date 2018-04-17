@@ -148,7 +148,7 @@
         contentWidth += title.frame.size.width;
     }];
     // 标view 滚动区域配置
-    [self setContentSize:CGSizeMake(contentWidth + (self.style.title_spacing * 2), 0.0)];
+    [self setContentSize:CGSizeMake(contentWidth + (self.style.title_left_right_spacing * 2), 0.0)];
     // 添加底部滚动线
     [self addScrollLine];
     [self selectTitleForIndex:0];
@@ -333,6 +333,32 @@
         }
     }
     
+    // 顶部图标选中
+    if (self.style.top_image_height > 0.0) {
+        if (self.style.select_image_names && self.style.select_image_names.count > 0 && self.style.un_select_image_names && self.style.un_select_image_names.count > 0) {
+            if (progress > 0.5) {
+                [un_select_title.top_image setImage:[UIImage imageNamed:self.style.un_select_image_names[oldIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.top_image setImage:[UIImage imageNamed:self.style.select_image_names[currentIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            } else {
+                [un_select_title.top_image setImage:[UIImage imageNamed:self.style.select_image_names[oldIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.top_image setImage:[UIImage imageNamed:self.style.un_select_image_names[currentIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            }
+        }
+    }
+    
+    // 底部图标选中
+    if (self.style.bottom_image_height > 0.0) {
+        if (self.style.select_image_names && self.style.select_image_names.count > 0 && self.style.un_select_image_names && self.style.un_select_image_names.count > 0) {
+            if (progress > 0.5) {
+                [un_select_title.bottom_image setImage:[UIImage imageNamed:self.style.un_select_image_names[oldIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.bottom_image setImage:[UIImage imageNamed:self.style.select_image_names[currentIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            } else {
+                [un_select_title.bottom_image setImage:[UIImage imageNamed:self.style.select_image_names[oldIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.bottom_image setImage:[UIImage imageNamed:self.style.un_select_image_names[currentIndex] inBundle:self.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            }
+        }
+    }
+    
     // 标缩放大小改变
     if (self.style.title_big_scale != 0) {
         CGFloat deltaScale = self.style.title_big_scale - 1.0;
@@ -350,13 +376,13 @@
         } else if (self.style.line_width_type == EqualTitleSTRAndImage) {
             CGFloat xDistance = select_title.x - un_select_title.x;
             CGFloat wDistance = select_title.width - un_select_title.width;
-            self.title_line.x = self.style.title_spacing * self.style.title_big_scale + un_select_title.x + xDistance * progress;
-            self.title_line.width = un_select_title.width + wDistance * progress - (self.style.title_spacing * 2) * self.style.title_big_scale;
+            self.title_line.x = self.style.title_left_right_spacing * self.style.title_big_scale + un_select_title.x + xDistance * progress;
+            self.title_line.width = un_select_title.width + wDistance * progress - (self.style.title_left_right_spacing * 2) * self.style.title_big_scale;
         } else if (self.style.line_width_type == EqualTitleSTR) {
             CGFloat xDistance = select_title.x - un_select_title.x;
             CGFloat wDistance = (select_title.title_button.width - un_select_title.title_button.width) * self.style.title_big_scale;
-            self.title_line.x = self.style.title_spacing * self.style.title_big_scale + un_select_title.x + xDistance * progress;
-            self.title_line.width = (un_select_title.title_button.width * self.style.title_big_scale) + wDistance * progress - (self.style.title_spacing * 2) * self.style.title_big_scale;
+            self.title_line.x = self.style.title_left_right_spacing * self.style.title_big_scale + un_select_title.x + xDistance * progress;
+            self.title_line.width = (un_select_title.title_button.width * self.style.title_big_scale) + wDistance * progress - (self.style.title_left_right_spacing * 2) * self.style.title_big_scale;
         } else if (self.style.line_width_type == FixedWith) {
             CGFloat select_title_x = select_title.x + ((select_title.width - self.style.line_width) / 2);
             CGFloat un_select_title_x = un_select_title.x + ((un_select_title.width - self.style.line_width) / 2);
@@ -406,6 +432,22 @@
             }
         }
         
+        // 顶部图标选中
+        if (weakSelf.style.top_image_height > 0.0) {
+            if (weakSelf.style.select_image_names && weakSelf.style.select_image_names.count > 0 && weakSelf.style.un_select_image_names && weakSelf.style.un_select_image_names.count > 0) {
+                [un_select_title.top_image setImage:[UIImage imageNamed:weakSelf.style.un_select_image_names[weakSelf.un_select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.top_image setImage:[UIImage imageNamed:weakSelf.style.select_image_names[weakSelf.select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            }
+        }
+        
+        // 底部图标选中
+        if (self.style.bottom_image_height > 0.0) {
+            if (weakSelf.style.select_image_names && weakSelf.style.select_image_names.count > 0 && weakSelf.style.un_select_image_names && weakSelf.style.un_select_image_names.count > 0) {
+                [un_select_title.bottom_image setImage:[UIImage imageNamed:weakSelf.style.un_select_image_names[weakSelf.un_select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
+                [select_title.bottom_image setImage:[UIImage imageNamed:weakSelf.style.select_image_names[weakSelf.select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
+            }
+        }
+        
         // 标缩放大小改变
         if (weakSelf.style.title_big_scale != 0) {
             un_select_title.currentTransformSx = 1.0;
@@ -418,11 +460,11 @@
                 weakSelf.title_line.x = select_title.x;
                 weakSelf.title_line.width = select_title.width;
             } else if (self.style.line_width_type == EqualTitleSTRAndImage) {
-                weakSelf.title_line.x = weakSelf.style.title_spacing * weakSelf.style.title_big_scale + select_title.x;
-                weakSelf.title_line.width = select_title.width - (weakSelf.style.title_spacing * 2) * weakSelf.style.title_big_scale;
+                weakSelf.title_line.x = weakSelf.style.title_left_right_spacing * weakSelf.style.title_big_scale + select_title.x;
+                weakSelf.title_line.width = select_title.width - (weakSelf.style.title_left_right_spacing * 2) * weakSelf.style.title_big_scale;
             } else if (weakSelf.style.line_width_type == EqualTitleSTR) {
-                weakSelf.title_line.x = weakSelf.style.title_spacing * weakSelf.style.title_big_scale + select_title.x;
-                weakSelf.title_line.width = (select_title.title_button.width * weakSelf.style.title_big_scale) - (weakSelf.style.title_spacing * 2) * weakSelf.style.title_big_scale;
+                weakSelf.title_line.x = weakSelf.style.title_left_right_spacing * weakSelf.style.title_big_scale + select_title.x;
+                weakSelf.title_line.width = (select_title.title_button.width * weakSelf.style.title_big_scale) - (weakSelf.style.title_left_right_spacing * 2) * weakSelf.style.title_big_scale;
             } else if (weakSelf.style.line_width_type == FixedWith){
                 weakSelf.title_line.x = weakSelf.style.line_width > select_title.width ? select_title.x : select_title.x + ((select_title.width - weakSelf.style.line_width) / 2);
                 weakSelf.title_line.width = MIN(weakSelf.style.line_width, select_title.width);

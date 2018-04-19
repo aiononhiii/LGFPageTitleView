@@ -18,8 +18,8 @@
         self.title_big_scale = 1.0;
         self.un_select_title_font = [UIFont systemFontOfSize:14];
         self.title_have_animation = YES;
-        self.title_left_right_spacing = 5.0;
-        self.title_top_bottom_spacing = 5.0;
+        self.title_left_right_spacing = 0.0;
+        self.title_fixed_width = 0.0;
         self.is_show_line = YES;
         self.line_color = [UIColor blueColor];
         self.line_width = 0;
@@ -32,13 +32,33 @@
         self.line_width_type = EqualTitleSTR;
         //        self.is_title_center = NO;
         
-        self.image_spacing = 0.0;
+        self.top_image_spacing = 0.0;
+        self.bottom_image_spacing = 0.0;
+        self.left_image_spacing = 0.0;
+        self.right_image_spacing = 0.0;
+        
         self.left_image_height = 0.0;
         self.left_image_width = 0.0;
         self.right_image_height = 0.0;
         self.right_image_width = 0.0;
     }
     return self;
+}
+
+- (void)setTop_image_spacing:(CGFloat)top_image_spacing {
+    _top_image_spacing = top_image_spacing;
+}
+
+- (void)setBottom_image_spacing:(CGFloat)bottom_image_spacing {
+    _bottom_image_spacing = bottom_image_spacing;
+}
+
+- (void)setLeft_image_spacing:(CGFloat)left_image_spacing {
+    _left_image_spacing = left_image_spacing;
+}
+
+- (void)setRight_image_spacing:(CGFloat)right_image_spacing {
+    _right_image_spacing = right_image_spacing;
 }
 
 - (void)setSelect_image_names:(NSMutableArray *)select_image_names {

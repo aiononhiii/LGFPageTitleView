@@ -14,7 +14,11 @@
 /**
  标按钮
  */
-@property (weak, nonatomic) IBOutlet UIButton *title_button;
+@property (weak, nonatomic) IBOutlet UIButton *title;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_width;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_height;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_center_x;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_center_y;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *top_image_spacing;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottom_image_spacing;
@@ -22,22 +26,18 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *right_image_spacing;
 
 @property (weak, nonatomic) IBOutlet UIImageView *top_image;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *top_image_top;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *top_image_width;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *top_image_height;
 
 @property (weak, nonatomic) IBOutlet UIImageView *bottom_image;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottom_image_bottom;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottom_image_width;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottom_image_height;
 
 @property (weak, nonatomic) IBOutlet UIImageView *left_image;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *left_image_left;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *left_image_width;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *left_image_height;
 
 @property (weak, nonatomic) IBOutlet UIImageView *right_image;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *right_image_right;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *right_image_width;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *right_image_height;
 

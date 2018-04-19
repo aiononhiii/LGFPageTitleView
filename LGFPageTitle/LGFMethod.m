@@ -18,7 +18,7 @@
                    NSStringDrawingUsesFontLeading
                                  attributes:dict
                                     context:nil].size;
-    return CGSizeMake(size.width, size.height);
+    return CGSizeMake(size.width + 1, size.height);
 }
 
 + (NSArray *)getColorRGBA:(UIColor *)color {

@@ -23,31 +23,35 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OT8-FR-WL0">
-                    <rect key="frame" x="0.0" y="0.0" width="225" height="130"/>
+                    <rect key="frame" x="112.5" y="65" width="0.0" height="0.0"/>
+                    <constraints>
+                        <constraint firstAttribute="width" id="Nmm-Xe-9lh"/>
+                        <constraint firstAttribute="height" id="s0g-9T-Psh"/>
+                    </constraints>
                 </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oDr-FA-TxX">
-                    <rect key="frame" x="0.0" y="65" width="0.0" height="0.0"/>
+                    <rect key="frame" x="112.5" y="65" width="0.0" height="0.0"/>
                     <constraints>
-                        <constraint firstAttribute="width" id="4SV-aU-LGb"/>
-                        <constraint firstAttribute="height" id="CtE-3Z-Tfe"/>
+                        <constraint firstAttribute="width" id="Mox-Vp-n1e"/>
+                        <constraint firstAttribute="height" id="btZ-er-hv3"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QxB-h4-50x">
-                    <rect key="frame" x="225" y="65" width="0.0" height="0.0"/>
+                    <rect key="frame" x="112.5" y="65" width="0.0" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="width" id="Mn5-FP-z6U"/>
                         <constraint firstAttribute="height" id="eLY-Nb-dF1"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SfD-et-6uo">
-                    <rect key="frame" x="112" y="0.0" width="0.0" height="0.0"/>
+                    <rect key="frame" x="112" y="65" width="0.0" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="height" id="7yO-aa-fgy"/>
                         <constraint firstAttribute="width" id="aDX-3z-Uoo"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cBo-x1-pVh">
-                    <rect key="frame" x="112.5" y="130" width="0.0" height="0.0"/>
+                    <rect key="frame" x="112.5" y="65" width="0.0" height="0.0"/>
                     <constraints>
                         <constraint firstAttribute="width" id="Dnv-9e-t82"/>
                         <constraint firstAttribute="height" id="MTV-11-h1e"/>
@@ -58,39 +62,37 @@
             <constraints>
                 <constraint firstItem="cBo-x1-pVh" firstAttribute="centerX" secondItem="rZZ-Bw-cq2" secondAttribute="centerX" id="ET8-Ad-8XR"/>
                 <constraint firstItem="SfD-et-6uo" firstAttribute="centerX" secondItem="rZZ-Bw-cq2" secondAttribute="centerX" id="Fmd-6F-5kj"/>
-                <constraint firstItem="oDr-FA-TxX" firstAttribute="leading" secondItem="rZZ-Bw-cq2" secondAttribute="leading" id="Hcw-FT-GKJ"/>
+                <constraint firstItem="OT8-FR-WL0" firstAttribute="leading" secondItem="oDr-FA-TxX" secondAttribute="trailing" id="KTa-tl-qaI"/>
                 <constraint firstItem="QxB-h4-50x" firstAttribute="leading" secondItem="OT8-FR-WL0" secondAttribute="trailing" id="NhS-RZ-8gf"/>
                 <constraint firstItem="cBo-x1-pVh" firstAttribute="top" secondItem="OT8-FR-WL0" secondAttribute="bottom" id="QI9-hG-QUC"/>
-                <constraint firstItem="SfD-et-6uo" firstAttribute="top" secondItem="rZZ-Bw-cq2" secondAttribute="top" id="XXu-ta-4fM"/>
-                <constraint firstItem="OT8-FR-WL0" firstAttribute="leading" secondItem="oDr-FA-TxX" secondAttribute="trailing" id="b8i-VA-pUy"/>
                 <constraint firstItem="OT8-FR-WL0" firstAttribute="top" secondItem="SfD-et-6uo" secondAttribute="bottom" id="cEd-Wa-KPd"/>
                 <constraint firstItem="oDr-FA-TxX" firstAttribute="centerY" secondItem="rZZ-Bw-cq2" secondAttribute="centerY" id="dTf-GO-P7O"/>
-                <constraint firstAttribute="bottom" secondItem="cBo-x1-pVh" secondAttribute="bottom" id="h8e-Sz-h7n"/>
+                <constraint firstItem="OT8-FR-WL0" firstAttribute="centerY" secondItem="rZZ-Bw-cq2" secondAttribute="centerY" id="mMQ-9L-dYX"/>
                 <constraint firstItem="QxB-h4-50x" firstAttribute="centerY" secondItem="rZZ-Bw-cq2" secondAttribute="centerY" id="mTf-mn-q34"/>
-                <constraint firstAttribute="trailing" secondItem="QxB-h4-50x" secondAttribute="trailing" id="oEg-Ce-OXg"/>
+                <constraint firstItem="OT8-FR-WL0" firstAttribute="centerX" secondItem="rZZ-Bw-cq2" secondAttribute="centerX" id="pKd-fS-iLF"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="bottom_image" destination="cBo-x1-pVh" id="eWL-AO-gcl"/>
-                <outlet property="bottom_image_bottom" destination="h8e-Sz-h7n" id="WM3-1E-3Tw"/>
                 <outlet property="bottom_image_height" destination="MTV-11-h1e" id="q0a-wm-ahk"/>
-                <outlet property="bottom_image_spacing" destination="QI9-hG-QUC" id="YkV-Yu-1c3"/>
+                <outlet property="bottom_image_spacing" destination="QI9-hG-QUC" id="Yrc-2q-EG0"/>
                 <outlet property="bottom_image_width" destination="Dnv-9e-t82" id="6cX-Ba-UBp"/>
                 <outlet property="left_image" destination="oDr-FA-TxX" id="7dg-gC-hrh"/>
-                <outlet property="left_image_height" destination="CtE-3Z-Tfe" id="phy-Ya-ztI"/>
-                <outlet property="left_image_left" destination="Hcw-FT-GKJ" id="ubF-Fr-n9g"/>
-                <outlet property="left_image_spacing" destination="b8i-VA-pUy" id="gGm-ds-STl"/>
-                <outlet property="left_image_width" destination="4SV-aU-LGb" id="gqP-bN-FqW"/>
+                <outlet property="left_image_height" destination="btZ-er-hv3" id="zIU-nB-fS2"/>
+                <outlet property="left_image_spacing" destination="KTa-tl-qaI" id="Hgw-Ci-XxH"/>
+                <outlet property="left_image_width" destination="Mox-Vp-n1e" id="S2w-rY-urR"/>
                 <outlet property="right_image" destination="QxB-h4-50x" id="cz6-C4-PaS"/>
                 <outlet property="right_image_height" destination="eLY-Nb-dF1" id="IxZ-vu-OyQ"/>
-                <outlet property="right_image_right" destination="oEg-Ce-OXg" id="UzB-JC-UgA"/>
-                <outlet property="right_image_spacing" destination="NhS-RZ-8gf" id="YEH-iO-a1i"/>
+                <outlet property="right_image_spacing" destination="NhS-RZ-8gf" id="qIl-31-JKX"/>
                 <outlet property="right_image_width" destination="Mn5-FP-z6U" id="xKk-DX-RUN"/>
-                <outlet property="title_button" destination="OT8-FR-WL0" id="kpT-pg-kDu"/>
+                <outlet property="title" destination="OT8-FR-WL0" id="6Is-Gf-jPq"/>
+                <outlet property="title_center_x" destination="pKd-fS-iLF" id="UJP-YN-MFP"/>
+                <outlet property="title_center_y" destination="mMQ-9L-dYX" id="06L-SD-xUW"/>
+                <outlet property="title_height" destination="s0g-9T-Psh" id="p5s-qr-hLq"/>
+                <outlet property="title_width" destination="Nmm-Xe-9lh" id="3IC-fM-034"/>
                 <outlet property="top_image" destination="SfD-et-6uo" id="hkg-Gf-mMw"/>
                 <outlet property="top_image_height" destination="7yO-aa-fgy" id="0Kq-LX-Er3"/>
-                <outlet property="top_image_spacing" destination="cEd-Wa-KPd" id="RQ2-sH-uuE"/>
-                <outlet property="top_image_top" destination="XXu-ta-4fM" id="fcm-Es-smy"/>
+                <outlet property="top_image_spacing" destination="cEd-Wa-KPd" id="aL8-OP-Zpg"/>
                 <outlet property="top_image_width" destination="aDX-3z-Uoo" id="aQP-DB-555"/>
             </connections>
             <point key="canvasLocation" x="-38.5" y="217"/>

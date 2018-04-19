@@ -11,4 +11,5 @@
 @interface ChildViewController : UIViewController
 + (instancetype)GETSBVC;
 - (void)loadData;
+@property (strong, nonatomic) NSMutableArray *datas;
 @end

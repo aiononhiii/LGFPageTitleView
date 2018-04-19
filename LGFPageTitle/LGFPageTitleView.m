@@ -92,7 +92,7 @@
 #pragma mark - 初始化标view
 
 + (instancetype)na {
-    LGFPageTitleView *pageTitleView = [Bundle loadNibNamed:NSStringFromClass([LGFPageTitleView class]) owner:self options:nil][0];
+    LGFPageTitleView *pageTitleView = [LGFBundle loadNibNamed:NSStringFromClass([LGFPageTitleView class]) owner:self options:nil][0];
     pageTitleView.delegate = pageTitleView;
     return pageTitleView;
 }
@@ -148,7 +148,7 @@
         contentWidth += title.frame.size.width;
     }];
     // 标view 滚动区域配置
-    [self setContentSize:CGSizeMake(contentWidth + (self.style.title_left_right_spacing * 2), 0.0)];
+    [self setContentSize:CGSizeMake(contentWidth + self.style.title_left_right_spacing * 2, 0.0)];
     // 添加底部滚动线
     [self addScrollLine];
     [self selectTitleForIndex:0];
@@ -158,7 +158,7 @@
 
 - (void)autoTitleSelect:(UITapGestureRecognizer *)sender {
     LGFTitleButton *view = (LGFTitleButton *)sender.view;
-    [self selectTitleForTag:view.title_button.tag];
+    [self selectTitleForTag:view.title.tag];
 }
 
 #pragma mark - 滚动到指定tag位置
@@ -243,10 +243,10 @@
     int index = 0;
     for (LGFTitleButton *title in self.title_buttons) {
         if (index != select_index) {
-            [title.title_button setTitleColor:self.style.un_select_color forState:UIControlStateNormal];
+            [title.title setTitleColor:self.style.un_select_color forState:UIControlStateNormal];
             title.currentTransformSx = 1.0;
         } else {
-            [title.title_button setTitleColor:self.style.select_color forState:UIControlStateNormal];
+            [title.title setTitleColor:self.style.select_color forState:UIControlStateNormal];
             if (self.style.title_big_scale != 0) {
                 title.currentTransformSx = self.style.title_big_scale;
             }
@@ -284,12 +284,12 @@
     LGFLog(@"%ld", select_title.tag);
     // 标颜色渐变
     if (self.style.select_color != self.style.un_select_color) {
-        [un_select_title.title_button setTitleColor:[UIColor
+        [un_select_title.title setTitleColor:[UIColor
                                         colorWithRed:[self.select_colorRGBA[0] floatValue] + [self.deltaRGBA[0] floatValue] * progress
                                         green:[self.select_colorRGBA[1] floatValue] + [self.deltaRGBA[1] floatValue] * progress
                                         blue:[self.select_colorRGBA[2] floatValue] + [self.deltaRGBA[2] floatValue] * progress
                                         alpha:[self.select_colorRGBA[3] floatValue] + [self.deltaRGBA[3] floatValue] * progress] forState:UIControlStateNormal];
-        [select_title.title_button setTitleColor:[UIColor
+        [select_title.title setTitleColor:[UIColor
                                      colorWithRed:[self.un_select_colorRGBA[0] floatValue] - [self.deltaRGBA[0] floatValue] * progress
                                      green:[self.un_select_colorRGBA[1] floatValue] - [self.deltaRGBA[1] floatValue] * progress
                                      blue:[self.un_select_colorRGBA[2] floatValue] - [self.deltaRGBA[2] floatValue] * progress
@@ -299,11 +299,11 @@
     // 字体改变
     if (![self.style.select_title_font isEqual:self.style.un_select_title_font]) {
         if (progress > 0.5) {
-            un_select_title.title_button.titleLabel.font = self.style.un_select_title_font;
-            select_title.title_button.titleLabel.font = self.style.select_title_font ?: self.style.un_select_title_font;
+            un_select_title.title.titleLabel.font = self.style.un_select_title_font;
+            select_title.title.titleLabel.font = self.style.select_title_font ?: self.style.un_select_title_font;
         } else {
-            un_select_title.title_button.titleLabel.font = self.style.select_title_font ?: self.style.un_select_title_font;
-            select_title.title_button.titleLabel.font = self.style.un_select_title_font;
+            un_select_title.title.titleLabel.font = self.style.select_title_font ?: self.style.un_select_title_font;
+            select_title.title.titleLabel.font = self.style.un_select_title_font;
         }
     }
     
@@ -370,19 +370,19 @@
     if (self.title_line && self.style.is_show_line) {
         if (self.style.line_width_type == EqualTitle) {
             CGFloat xDistance = select_title.x - un_select_title.x;
-            CGFloat wDistance = select_title.width - un_select_title.width;
+            CGFloat wDistance = (select_title.title.width - un_select_title.title.width) * self.style.title_big_scale;
             self.title_line.x = un_select_title.x + xDistance * progress;
             self.title_line.width = un_select_title.width + wDistance * progress;
         } else if (self.style.line_width_type == EqualTitleSTRAndImage) {
             CGFloat xDistance = select_title.x - un_select_title.x;
-            CGFloat wDistance = select_title.width - un_select_title.width;
-            self.title_line.x = self.style.title_left_right_spacing * self.style.title_big_scale + un_select_title.x + xDistance * progress;
-            self.title_line.width = un_select_title.width + wDistance * progress - (self.style.title_left_right_spacing * 2) * self.style.title_big_scale;
+            CGFloat wDistance = (select_title.title.width - un_select_title.title.width) * self.style.title_big_scale;
+            self.title_line.x = self.style.title_fixed_width > 0 ? un_select_title.x + xDistance * progress : (self.style.title_left_right_spacing * self.style.title_big_scale + un_select_title.x + xDistance * progress);
+            self.title_line.width = self.style.title_fixed_width > 0 ? un_select_title.width + (select_title.width - un_select_title.width) * progress : ((un_select_title.title.width + self.style.left_image_spacing + self.style.right_image_spacing + self.style.left_image_width + self.style.right_image_width) * self.style.title_big_scale + wDistance * progress);
         } else if (self.style.line_width_type == EqualTitleSTR) {
             CGFloat xDistance = select_title.x - un_select_title.x;
-            CGFloat wDistance = (select_title.title_button.width - un_select_title.title_button.width) * self.style.title_big_scale;
-            self.title_line.x = self.style.title_left_right_spacing * self.style.title_big_scale + un_select_title.x + xDistance * progress;
-            self.title_line.width = (un_select_title.title_button.width * self.style.title_big_scale) + wDistance * progress - (self.style.title_left_right_spacing * 2) * self.style.title_big_scale;
+            CGFloat wDistance = (select_title.title.width - un_select_title.title.width) * self.style.title_big_scale;
+            self.title_line.x = self.style.title_fixed_width > 0 ? un_select_title.x + xDistance * progress : (self.style.title_left_right_spacing + self.style.left_image_spacing + self.style.left_image_width) * self.style.title_big_scale + un_select_title.x + xDistance * progress;
+            self.title_line.width = self.style.title_fixed_width > 0 ? un_select_title.width + (select_title.width - un_select_title.width) * progress : (un_select_title.title.width * self.style.title_big_scale) + wDistance * progress;
         } else if (self.style.line_width_type == FixedWith) {
             CGFloat select_title_x = select_title.x + ((select_title.width - self.style.line_width) / 2);
             CGFloat un_select_title_x = un_select_title.x + ((un_select_title.width - self.style.line_width) / 2);
@@ -407,13 +407,13 @@
     __weak typeof(self) weakSelf = self;
     [UIView animateWithDuration:animatedTime animations:^{
         // 标颜色渐变
-        [un_select_title.title_button setTitleColor:weakSelf.style.un_select_color forState:UIControlStateNormal];
-        [select_title.title_button setTitleColor:weakSelf.style.select_color forState:UIControlStateNormal];
+        [un_select_title.title setTitleColor:weakSelf.style.un_select_color forState:UIControlStateNormal];
+        [select_title.title setTitleColor:weakSelf.style.select_color forState:UIControlStateNormal];
         
         // 字体改变
         if (![weakSelf.style.select_title_font isEqual:weakSelf.style.un_select_title_font]) {
-            un_select_title.title_button.titleLabel.font = weakSelf.style.un_select_title_font;
-            select_title.title_button.titleLabel.font = weakSelf.style.select_title_font ?: weakSelf.style.un_select_title_font;
+            un_select_title.title.titleLabel.font = weakSelf.style.un_select_title_font;
+            select_title.title.titleLabel.font = weakSelf.style.select_title_font ?: weakSelf.style.un_select_title_font;
         }
         
         // 左边图标选中
@@ -459,12 +459,12 @@
             if (weakSelf.style.line_width_type == EqualTitle) {
                 weakSelf.title_line.x = select_title.x;
                 weakSelf.title_line.width = select_title.width;
-            } else if (self.style.line_width_type == EqualTitleSTRAndImage) {
-                weakSelf.title_line.x = weakSelf.style.title_left_right_spacing * weakSelf.style.title_big_scale + select_title.x;
-                weakSelf.title_line.width = select_title.width - (weakSelf.style.title_left_right_spacing * 2) * weakSelf.style.title_big_scale;
+            } else if (weakSelf.style.line_width_type == EqualTitleSTRAndImage) {
+                weakSelf.title_line.x = weakSelf.style.title_fixed_width > 0.0 ? select_title.x : (weakSelf.style.title_left_right_spacing * weakSelf.style.title_big_scale + select_title.x);
+                weakSelf.title_line.width = weakSelf.style.title_fixed_width > 0.0 ? select_title.width : ((select_title.title.width + weakSelf.style.left_image_spacing + weakSelf.style.right_image_spacing + weakSelf.style.left_image_width + weakSelf.style.right_image_width) * weakSelf.style.title_big_scale);
             } else if (weakSelf.style.line_width_type == EqualTitleSTR) {
-                weakSelf.title_line.x = weakSelf.style.title_left_right_spacing * weakSelf.style.title_big_scale + select_title.x;
-                weakSelf.title_line.width = (select_title.title_button.width * weakSelf.style.title_big_scale) - (weakSelf.style.title_left_right_spacing * 2) * weakSelf.style.title_big_scale;
+                weakSelf.title_line.x = weakSelf.style.title_fixed_width > 0.0 ? select_title.x : ((weakSelf.style.title_left_right_spacing + weakSelf.style.left_image_spacing + weakSelf.style.left_image_width) * weakSelf.style.title_big_scale + select_title.x);
+                weakSelf.title_line.width = weakSelf.style.title_fixed_width > 0.0 ? select_title.width : (select_title.title.width * weakSelf.style.title_big_scale);
             } else if (weakSelf.style.line_width_type == FixedWith){
                 weakSelf.title_line.x = weakSelf.style.line_width > select_title.width ? select_title.x : select_title.x + ((select_title.width - weakSelf.style.line_width) / 2);
                 weakSelf.title_line.width = MIN(weakSelf.style.line_width, select_title.width);

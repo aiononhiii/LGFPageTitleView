@@ -40,23 +40,23 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 @property (assign, nonatomic) CGRect page_title_view_frame;
 
 //------------------- 标设置
-
+// 标固定宽度 默认等于 0.0 如果此属性大于 0.0 那么标宽度将为固定值
+// 如果设置此项（title_fixed_width） LGFTitleLineWidthType 将只支持 EqualTitleSTR 和 FixedWith
+@property (assign, nonatomic) CGFloat title_fixed_width;
 // 未选中标 字体颜色 默认 lightGrayColor 淡灰色 (对应select_color两个颜色一样则取消渐变效果)
 @property (strong, nonatomic) UIColor *un_select_color;
 // 选中标 字体颜色 默认 blackColor 黑色 (对应un_select_color两个颜色一样则取消渐变效果)
 @property (strong, nonatomic) UIColor *select_color;
-// 选中标 放大缩小倍数 默认 1.0(不放大缩小);
+// 选中标 放大缩小倍数 默认 1.0(不放大缩小)
 @property (assign, nonatomic) CGFloat title_big_scale;
-// 标 选中字体 默认 [UIFont systemFontOfSize:14];
+// 标 选中字体 默认 [UIFont systemFontOfSize:14]
 @property (strong, nonatomic) UIFont *select_title_font;
 // 标 未选中字体 默认 和选中字体一样
 @property (strong, nonatomic) UIFont *un_select_title_font;
 // 标是否有滑动动画 默认 YES 有动画
 @property (assign, nonatomic) BOOL title_have_animation;
-// 标左右间距 默认 5.0
+// 标左右间距 默认 0.0
 @property (assign, nonatomic) CGFloat title_left_right_spacing;
-// 标上下间距 默认 5.0
-@property (assign, nonatomic) CGFloat title_top_bottom_spacing;
 
 //------------------- 标图片设置
 
@@ -71,22 +71,28 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 @property (copy, nonatomic) NSString *same_select_image_name;
 @property (copy, nonatomic) NSString *same_un_select_image_name;
 
-// 标图片与标的间距 默认 0
-@property (assign, nonatomic) CGFloat image_spacing;
 // 以下属性只要有值，对应imageview就会显示出来
-// 顶部标图片宽度 默认等于设置的高度 最大不超过标 view高度 * 0.5
+// 顶部标图片与标的间距 默认 0
+@property (assign, nonatomic) CGFloat top_image_spacing;
+// 顶部标图片宽度 默认等于设置的高度 最大不超过标 view高度
 @property (assign, nonatomic) CGFloat top_image_width;
 // 顶部标图片高度 默认等于设置的宽度
 @property (assign, nonatomic) CGFloat top_image_height;
-// 底部标图片宽度 默认等于设置的高度 最大不超过标 view高度 * 0.5
+// 底部标图片与标的间距 默认 0
+@property (assign, nonatomic) CGFloat bottom_image_spacing;
+// 底部标图片宽度 默认等于设置的高度 最大不超过标 view高度
 @property (assign, nonatomic) CGFloat bottom_image_width;
 // 底部标图片高度 默认等于设置的宽度
 @property (assign, nonatomic) CGFloat bottom_image_height;
-// 左边标图片宽度 默认等于设置的高度 最大不超过标 view高度 * 1
+// 左边标图片与标的间距 默认 0
+@property (assign, nonatomic) CGFloat left_image_spacing;
+// 左边标图片宽度 默认等于设置的高度 最大不超过标 view高度
 @property (assign, nonatomic) CGFloat left_image_width;
 // 左边标图片高度 默认等于设置的宽度
 @property (assign, nonatomic) CGFloat left_image_height;
-// 右边标图片宽度 默认等于设置的高度 最大不超过标 view高度 * 1
+// 右边标图片与标的间距 默认 0
+@property (assign, nonatomic) CGFloat right_image_spacing;
+// 右边标图片宽度 默认等于设置的高度 最大不超过标 view高度
 @property (assign, nonatomic) CGFloat right_image_width;
 // 右边标图片高度 默认等于设置的宽度
 @property (assign, nonatomic) CGFloat right_image_height;

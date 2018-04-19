@@ -23,16 +23,27 @@
 // 有问题可以在github上提给我哦～
 //******************************************************
 
-#define Bundle [NSBundle bundleWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"LGFPageTitle" ofType:@"bundle"]] ?: [NSBundle mainBundle]
-#define RGB(A,B,C,D) [UIColor colorWithRed:A/255.0f green:B/255.0f blue:C/255.0f alpha:D]
-#define RandomColor RGB(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256), 1.0)
-#define MAIN(block) dispatch_async(dispatch_get_main_queue(),^{block});
-#define AFTER(time,block) dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{block});
+#define LGFBundle [NSBundle bundleWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"LGFPageTitle" ofType:@"bundle"]] ?: [NSBundle mainBundle]
+
+#define LGFRGB(A,B,C,D) [UIColor colorWithRed:A/255.0f green:B/255.0f blue:C/255.0f alpha:D]
+#define LGFRandomColor LGFRGB(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256), 1.0)
+#define LGFMAIN(block) dispatch_async(dispatch_get_main_queue(),^{block});
+#define LGFAFTER(time,block) dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{block});
 
 #ifdef DEBUG
 #define LGFLog(FORMAT, ...) fprintf(stderr,"%s:%d\t%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 #else
 #define LGFLog(FORMAT, ...) nil
+#endif
+
+#ifndef    LGFWeakify
+#define LGFWeakify( x ) \
+autoreleasepool{} __weak __typeof__(x) __weak_##x##__ = x;
+#endif
+
+#ifndef    LGFNormalize
+#define LGFNormalize( x ) \
+try{} @finally{} __typeof__(x) x = __weak_##x##__;
 #endif
 
 #endif /* LGFTitles_h */

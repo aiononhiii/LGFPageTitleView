@@ -14,7 +14,7 @@
 @implementation LGFTitleLine
 
 + (instancetype)style:(LGFPageTitleStyle *)style {
-    LGFTitleLine *line = [Bundle loadNibNamed:NSStringFromClass([LGFPageTitleView class]) owner:self options:nil][2];
+    LGFTitleLine *line = [LGFBundle loadNibNamed:NSStringFromClass([LGFPageTitleView class]) owner:self options:nil][2];
     line.clipsToBounds = YES;
     line.style = style;
     return line;

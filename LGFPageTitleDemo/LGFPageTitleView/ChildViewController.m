@@ -7,23 +7,32 @@
 //
 
 #import "ChildViewController.h"
+#import "MJRefresh.h"
 #import "LGFTitles.h"
 
 @interface ChildViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLab;
-
+@property (weak, nonatomic) IBOutlet UICollectionView *childViewControllerCV;
 @end
 
 @implementation ChildViewController
 
 + (instancetype)GETSBVC {
-    return [[UIStoryboard storyboardWithName:@"Main" bundle:Bundle] instantiateViewControllerWithIdentifier:@"ChildViewController"];
+    return [[UIStoryboard storyboardWithName:@"Main" bundle:LGFBundle] instantiateViewControllerWithIdentifier:@"ChildViewController"];
+}
+
+- (NSMutableArray *)datas {
+    if (!_datas) {
+        _datas = [NSMutableArray new];
+    }
+    return _datas;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = RandomColor;
+    self.view.backgroundColor = LGFRandomColor;
     _titleLab.text = [NSString stringWithFormat:@"当前选中: %@", self.title];
+    _childViewControllerCV.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,17 +40,36 @@
 }
 
 - (void)loadData {
-    
+    [self.childViewControllerCV.mj_header beginRefreshing];
+    // 模拟加载数据
+    LGFAFTER(1.0,
+             [self.childViewControllerCV.mj_header endRefreshing];
+             for (int i = 0; i < 30; i++) {
+                 [self.datas addObject:@""];
+             }
+             [self.childViewControllerCV reloadData];
+             );
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - Collection View 数据源 和 代理方法
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return self.datas.count;
 }
-*/
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    return CGSizeMake(collectionView.frame.size.width / 2, collectionView.frame.size.width / 2);
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"ChildViewControllerCell" forIndexPath:indexPath];
+    cell.layer.borderColor = LGFRGB(240, 240, 240, 1.0).CGColor;
+    cell.layer.borderWidth = 0.5;
+    return cell;
+}
+
+- (void)dealloc {
+    LGFLog(@"ChildViewController已经释放 ----- dealloc");
+}
 
 @end

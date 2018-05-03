@@ -2,8 +2,8 @@
 //  LGFMethod.m
 //  LGFPageTitleView
 //
-//  Created by 来国锋 on 2018/3/24.
-//  Copyright © 2018年 apple. All rights reserved.
+//  Created by apple on 2018/3/24.
+//  Copyright © 2018年 来国锋. All rights reserved.
 //
 
 #import "LGFMethod.h"

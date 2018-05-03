@@ -2,8 +2,8 @@
 //  LGFTitles.h
 //  LGFPageTitleView
 //
-//  Created by 来国锋 on 2018/3/24.
-//  Copyright © 2018年 apple. All rights reserved.
+//  Created by apple on 2018/3/24.
+//  Copyright © 2018年 来国锋. All rights reserved.
 //
 
 #ifndef LGFTitles_h
@@ -36,12 +36,12 @@
 #define LGFLog(FORMAT, ...) nil
 #endif
 
-#ifndef    LGFWeakify
+#ifndef LGFWeakify
 #define LGFWeakify( x ) \
 autoreleasepool{} __weak __typeof__(x) __weak_##x##__ = x;
 #endif
 
-#ifndef    LGFNormalize
+#ifndef LGFNormalize
 #define LGFNormalize( x ) \
 try{} @finally{} __typeof__(x) x = __weak_##x##__;
 #endif

@@ -2,23 +2,23 @@
 //  LGFPageTitleStyle.h
 //  LGFPageTitleView
 //
-//  Created by 来国锋 on 2018/3/23.
-//  Copyright © 2018年 apple. All rights reserved.
+//  Created by apple on 2018/3/23.
+//  Copyright © 2018年 来国锋. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 //#import "LGFTitles.h"
 
-typedef NS_OPTIONS(NSUInteger, LGFPageLineAnimation) {
-    LGFPageLineAnimationDefult = 1 << 0,
-    //LGFPageLineAnimationRight = 1 << 1,
+
+typedef NS_ENUM(NSUInteger, LGFPageLineAnimation) {
+    LGFPageLineAnimationDefult,
 };
 
-typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
-    EqualTitleSTR = 1 << 0,// 宽度等于字体宽度
-    EqualTitleSTRAndImage = 1 << 1,// 宽度等于字体宽度 + 图标宽度
-    EqualTitle = 1 << 2,// 宽度等于标view宽度
-    FixedWith = 1 << 3,// 宽度等于固定宽度
+typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
+    EqualTitleSTR,// 宽度等于字体宽度
+    EqualTitleSTRAndImage,// 宽度等于字体宽度 + 图标宽度
+    EqualTitle,// 宽度等于标view宽度
+    FixedWith,// 宽度等于固定宽度
 };
 
 @interface LGFPageTitleStyle : NSObject
@@ -34,6 +34,8 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 //------------------- 主view
 
 @property (weak, nonatomic) UIScrollView *page_title_view;
+// page_title_view滚动是否带有滚动动画 默认 有
+@property (assign, nonatomic) BOOL page_title_view_scroll_have_animation;
 
 //------------------- 主view在父控件上的frame 默认等于父控件
 
@@ -57,7 +59,6 @@ typedef NS_OPTIONS(NSUInteger, LGFTitleLineWidthType) {
 @property (assign, nonatomic) BOOL title_have_animation;
 // 标左右间距 默认 0.0
 @property (assign, nonatomic) CGFloat title_left_right_spacing;
-
 //------------------- 标图片设置
 
 // 图片Bundle 如果图片不在本控件bundel里请设置

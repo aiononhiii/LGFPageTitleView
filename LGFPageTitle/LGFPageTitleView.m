@@ -2,30 +2,57 @@
 //  LGFPageTitleView.m
 //  LGFPageTitleView
 //
-//  Created by 来国锋 on 2018/3/23.
-//  Copyright © 2018年 apple. All rights reserved.
+//  Created by apple on 2018/3/23.
+//  Copyright © 2018年 来国锋. All rights reserved.
 //
 
 #import "LGFPageTitleView.h"
 
 @interface LGFPageTitleView () <UIScrollViewDelegate>
-// 外部父视图控制器
+
+/**
+ 外部父视图控制器
+ */
 @property (weak, nonatomic) UIViewController *super_vc;
-// 外部父控件（用于确定添加的位置）
+
+/**
+ 外部父控件（用于确定添加的位置）
+ */
 @property (weak, nonatomic) UIView *super_view;
-// 外部分页控制器
+
+/**
+ 外部分页控制器
+ */
 @property (weak, nonatomic) UICollectionView *page_view;
-// 底部滚动条
+
+/**
+ 底部滚动条
+ */
 @property (weak, nonatomic) LGFTitleLine *title_line;
-// 将要选中下标
+
+/**
+ 将要选中下标
+ */
 @property (assign, nonatomic) NSInteger select_index;
-// 前一个选中下标
+
+/**
+ 前一个选中下标
+ */
 @property (assign, nonatomic) NSInteger un_select_index;
-// 前一个x坐标点
+
+/**
+ 前一个x坐标点
+ */
 @property (assign, nonatomic) NSInteger old_off_set_x;
-// 所有标数组
+
+/**
+ 所有标数组
+ */
 @property (strong, nonatomic) NSMutableArray *title_buttons;
-// title 字体渐变色
+
+/**
+ title 字体渐变色
+ */
 @property (strong, nonatomic) NSArray *deltaRGBA;
 @property (strong, nonatomic) NSArray *select_colorRGBA;
 @property (strong, nonatomic) NSArray *un_select_colorRGBA;
@@ -33,7 +60,21 @@
 
 @implementation LGFPageTitleView
 
-// 底部滚动条
+- (void)setPage_view:(UICollectionView *)page_view {
+    // 默认强制横向滚动 + 分页滚动
+    page_view.pagingEnabled = YES;
+    UICollectionViewFlowLayout *newLayout = [[UICollectionViewFlowLayout alloc] init];
+    newLayout.minimumLineSpacing = 0.0;
+    newLayout.minimumInteritemSpacing = 0.0;
+    newLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    [page_view setCollectionViewLayout:newLayout];
+    [page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    _page_view = page_view;
+}
+
+/**
+ 底部滚动条
+ */
 - (LGFTitleLine *)title_line {
     if (!self.style.is_show_line) {
         return nil;
@@ -43,7 +84,10 @@
     }
     return _title_line;
 }
-// 未选中颜色数组
+
+/**
+ 未选中颜色数组
+ */
 - (NSArray *)un_select_colorRGBA {
     if (!_un_select_colorRGBA) {
         NSArray *normal_colorRGBA = [LGFMethod getColorRGBA:self.style.un_select_color];
@@ -53,22 +97,26 @@
     }
     return  _un_select_colorRGBA;
 }
-// 选中颜色数组
+
+/**
+ 选中颜色数组
+ */
 - (NSArray *)select_colorRGBA {
     if (!_select_colorRGBA) {
         NSArray *select_colorRGBA = [LGFMethod getColorRGBA:self.style.select_color];
         NSAssert(select_colorRGBA, @"设置选中状态的文字颜色时 请使用RGBA空间的颜色值");
         _select_colorRGBA = select_colorRGBA;
-        
     }
     return  _select_colorRGBA;
 }
-// 中和颜色数组
+
+/**
+ 中和颜色数组
+ */
 - (NSArray *)deltaRGBA {
     if (_deltaRGBA == nil) {
         NSArray *un_select_colorRGBA = self.un_select_colorRGBA;
         NSArray *select_colorRGBA = self.select_colorRGBA;
-        
         NSArray *delta;
         if (un_select_colorRGBA && select_colorRGBA) {
             CGFloat deltaR = [un_select_colorRGBA[0] floatValue] - [select_colorRGBA[0] floatValue];
@@ -81,7 +129,10 @@
     }
     return _deltaRGBA;
 }
-// 标数组
+
+/**
+ 标数组
+ */
 - (NSMutableArray *)title_buttons {
     if (!_title_buttons) {
         _title_buttons = [NSMutableArray new];
@@ -100,6 +151,8 @@
 #pragma mark - 标view配置
 
 - (instancetype)initWithStyle:(LGFPageTitleStyle *)style super_vc:(UIViewController *)super_vc super_view:(UIView *)super_view page_view:(UICollectionView *)page_view {
+    NSAssert(super_vc, @"请在initWithStyle方法中传入父视图控制器! 否则将无法联动控件");
+    NSAssert(page_view, @"请在initWithStyle方法中传入分页控件! 否则将无法联动控件");
     [super_view setNeedsLayout];
     [super_view layoutIfNeeded];
     self.style = style;
@@ -107,9 +160,6 @@
     self.page_view = page_view;
     self.un_select_index = 0;
     self.style.page_title_view = self;
-    [self.page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
-    NSAssert(super_vc, @"请在initWithStyle方法中传入父视图控制器! 否则将无法联动控件");
-    NSAssert(page_view, @"请在initWithStyle方法中传入分页控件! 否则将无法联动控件");
     if (super_view) {
         if (CGRectEqualToRect(self.style.page_title_view_frame, CGRectZero)) {
             self.frame = super_view.bounds;
@@ -168,17 +218,13 @@
         return;
     }
     self.select_index = index;
-    
     // 外部分页控制器 滚动到对应下标
     if ([self.page_view numberOfItemsInSection:0] == 0 || [self.page_view numberOfItemsInSection:0] <= index) {
         return;
     }
-    
     // 更新标view的UI
     [self adjustUIWhenBtnOnClickWithAnimate:true taped:YES];
-    
     [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.select_index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-    
     NSAssert([_super_vc canPerformAction:@selector(scrollViewDidEndDecelerating:) withSender:_super_vc], @"父视图分页控制器请添加--scrollViewDidEndDecelerating--方法");
     [_super_vc performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.page_view afterDelay:0.31];
 }
@@ -202,7 +248,6 @@
     }
     self.select_index = (self.page_view.contentOffset.x / (NSInteger)self.page_view.bounds.size.width);
     [self adjustUIWithProgress:1.0 oldIndex:self.un_select_index currentIndex:self.select_index];
-    // 调整title位置 使其滚动到中间
     [self adjustTitleOffSetToSelectIndex:self.select_index];
     LGFLog(@"当前选中:%@", self.style.titles[self.select_index]);
 }
@@ -265,14 +310,12 @@
     if (offSetx > maxOffSetX) {
         offSetx = maxOffSetX;
     }
-    [self setContentOffset:CGPointMake(offSetx, 0.0) animated:YES];
+    [self setContentOffset:CGPointMake(offSetx, 0.0) animated:self.style.page_title_view_scroll_have_animation];
 }
 
 #pragma mark - 更新标view的UI(用于滚动外部分页控制器的时候)
 
 - (void)adjustUIWithProgress:(CGFloat)progress oldIndex:(NSInteger)oldIndex currentIndex:(NSInteger)currentIndex {
-    LGFLog(@"%f", progress);
-    LGFLog(@"%f", self.page_view.bounds.size.width);
     // 判断是否满足UI更新条件
     if (oldIndex < 0 || oldIndex >= self.title_buttons.count || currentIndex < 0 || currentIndex >= self.title_buttons.count) { return;
     }
@@ -280,8 +323,6 @@
     // 取得 前一个选中的标 和 将要选中的标
     LGFTitleButton *un_select_title = (LGFTitleButton *)self.title_buttons[oldIndex];
     LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[currentIndex];
-    LGFLog(@"%ld", un_select_title.tag);
-    LGFLog(@"%ld", select_title.tag);
     // 标颜色渐变
     if (self.style.select_color != self.style.un_select_color) {
         [un_select_title.title setTitleColor:[UIColor
@@ -295,7 +336,6 @@
                                      blue:[self.un_select_colorRGBA[2] floatValue] - [self.deltaRGBA[2] floatValue] * progress
                                      alpha:[self.un_select_colorRGBA[3] floatValue] - [self.deltaRGBA[3] floatValue] * progress] forState:UIControlStateNormal];
     }
-    
     // 字体改变
     if (![self.style.select_title_font isEqual:self.style.un_select_title_font]) {
         if (progress > 0.5) {
@@ -306,7 +346,6 @@
             select_title.title.titleLabel.font = self.style.un_select_title_font;
         }
     }
-    
     // 左边图标选中
     if (self.style.left_image_width > 0.0) {
         if (self.style.select_image_names && self.style.select_image_names.count > 0 && self.style.un_select_image_names && self.style.un_select_image_names.count > 0) {
@@ -319,7 +358,6 @@
             }
         }
     }
-    
     // 右边图标选中
     if (self.style.right_image_width > 0.0) {
         if (self.style.select_image_names && self.style.select_image_names.count > 0 && self.style.un_select_image_names && self.style.un_select_image_names.count > 0) {
@@ -332,7 +370,6 @@
             }
         }
     }
-    
     // 顶部图标选中
     if (self.style.top_image_height > 0.0) {
         if (self.style.select_image_names && self.style.select_image_names.count > 0 && self.style.un_select_image_names && self.style.un_select_image_names.count > 0) {
@@ -345,7 +382,6 @@
             }
         }
     }
-    
     // 底部图标选中
     if (self.style.bottom_image_height > 0.0) {
         if (self.style.select_image_names && self.style.select_image_names.count > 0 && self.style.un_select_image_names && self.style.un_select_image_names.count > 0) {
@@ -358,14 +394,12 @@
             }
         }
     }
-    
     // 标缩放大小改变
     if (self.style.title_big_scale != 0) {
         CGFloat deltaScale = self.style.title_big_scale - 1.0;
         un_select_title.currentTransformSx = self.style.title_big_scale - deltaScale * progress;
         select_title.currentTransformSx = 1.0 + deltaScale * progress;
     }
-    
     // 标底部滚动条 更新位置
     if (self.title_line && self.style.is_show_line) {
         if (self.style.line_width_type == EqualTitle) {
@@ -409,13 +443,11 @@
         // 标颜色渐变
         [un_select_title.title setTitleColor:weakSelf.style.un_select_color forState:UIControlStateNormal];
         [select_title.title setTitleColor:weakSelf.style.select_color forState:UIControlStateNormal];
-        
         // 字体改变
         if (![weakSelf.style.select_title_font isEqual:weakSelf.style.un_select_title_font]) {
             un_select_title.title.titleLabel.font = weakSelf.style.un_select_title_font;
             select_title.title.titleLabel.font = weakSelf.style.select_title_font ?: weakSelf.style.un_select_title_font;
         }
-        
         // 左边图标选中
         if (weakSelf.style.left_image_width > 0.0) {
             if (weakSelf.style.select_image_names && weakSelf.style.select_image_names.count > 0 && weakSelf.style.un_select_image_names && weakSelf.style.un_select_image_names.count > 0) {
@@ -423,7 +455,6 @@
                 [select_title.left_image setImage:[UIImage imageNamed:weakSelf.style.select_image_names[weakSelf.select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
             }
         }
-        
         // 右边图标选中
         if (weakSelf.style.right_image_width > 0.0) {
             if (weakSelf.style.select_image_names && weakSelf.style.select_image_names.count > 0 && weakSelf.style.un_select_image_names && weakSelf.style.un_select_image_names.count > 0) {
@@ -431,7 +462,6 @@
                 [select_title.right_image setImage:[UIImage imageNamed:weakSelf.style.select_image_names[weakSelf.select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
             }
         }
-        
         // 顶部图标选中
         if (weakSelf.style.top_image_height > 0.0) {
             if (weakSelf.style.select_image_names && weakSelf.style.select_image_names.count > 0 && weakSelf.style.un_select_image_names && weakSelf.style.un_select_image_names.count > 0) {
@@ -439,7 +469,6 @@
                 [select_title.top_image setImage:[UIImage imageNamed:weakSelf.style.select_image_names[weakSelf.select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
             }
         }
-        
         // 底部图标选中
         if (self.style.bottom_image_height > 0.0) {
             if (weakSelf.style.select_image_names && weakSelf.style.select_image_names.count > 0 && weakSelf.style.un_select_image_names && weakSelf.style.un_select_image_names.count > 0) {
@@ -447,13 +476,11 @@
                 [select_title.bottom_image setImage:[UIImage imageNamed:weakSelf.style.select_image_names[weakSelf.select_index] inBundle:weakSelf.style.title_image_bundel compatibleWithTraitCollection:nil]];
             }
         }
-        
         // 标缩放大小改变
         if (weakSelf.style.title_big_scale != 0) {
             un_select_title.currentTransformSx = 1.0;
             select_title.currentTransformSx = weakSelf.style.title_big_scale;
         }
-        
         // 标底部滚动条 更新位置
         if (weakSelf.title_line && weakSelf.style.is_show_line) {
             if (weakSelf.style.line_width_type == EqualTitle) {
@@ -473,6 +500,7 @@
     } completion:^(BOOL finished) {
         [weakSelf adjustTitleOffSetToSelectIndex:weakSelf.select_index];
     }];
+    
     // 下标反转
     self.un_select_index = self.select_index;
 }
@@ -482,7 +510,9 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    [self onProgress:self.page_view.contentOffset.x];
+    if ([keyPath isEqualToString:@"contentOffset"]) {
+        [self onProgress:self.page_view.contentOffset.x];
+    }
 }
 
 #pragma mark - 已销毁

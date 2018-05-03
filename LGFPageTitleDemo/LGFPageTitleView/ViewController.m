@@ -317,11 +317,7 @@
 }
 
 //----------------建立联动 UICollectionView 为防止title滚动错乱，请务必设置UICollectionView以下几项--------------
-// layout.minimumInteritemSpacing = 0.0f
-// layout.minimumLineSpacing = 0.0f
-// pageing = YES
 // cell请设置与 UICollectionView 同宽高
-// 设置横向滚动（竖向滚动暂时不支持）
 
 #pragma mark - Collection View 数据源 和 代理方法
 

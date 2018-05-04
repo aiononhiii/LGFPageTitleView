@@ -7,7 +7,6 @@
 //
 
 #import "LGFPageTitleView.h"
-#import "MJRefresh.h"
 
 @interface LGFPageTitleView () <UIScrollViewDelegate>
 

@@ -40,22 +40,17 @@
 }
 
 - (void)loadData {
-//    [self.childViewControllerCV.mj_header beginRefreshing];
+    [self.childViewControllerCV.mj_header beginRefreshing];
     // 模拟加载数据
     LGFAFTER(0.5,
-             @synchronized(self) {
-                 // 使用 mj endRefreshing 会占用主线程 可能导致title滚动切换带有轻微卡顿， 属于正常
-//                 [self.childViewControllerCV.mj_header endRefreshing];
-                 for (int i = 0; i < 30; i++) {
-                     [self.datas addObject:@""];
-                 }
-                 [UIView performWithoutAnimation:^{
-                     //刷新界面
-                     [self.childViewControllerCV reloadData];
-                 }];
+             [self.childViewControllerCV.mj_header endRefreshing];
+             for (int i = 0; i < 30; i++) {
+                 [self.datas addObject:@""];
              }
-             
-             );
+             //刷新界面
+             [self.childViewControllerCV reloadData];
+             )
+    
 }
 
 #pragma mark - Collection View 数据源 和 代理方法

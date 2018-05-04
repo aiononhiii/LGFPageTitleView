@@ -34,8 +34,8 @@ typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
 //------------------- 主view
 
 @property (weak, nonatomic) UIScrollView *page_title_view;
-// page_title_view滚动是否带有滚动动画 默认 有
-@property (assign, nonatomic) BOOL page_title_view_scroll_have_animation;
+// page_title_view 选中某个标的动画 默认 有
+@property (assign, nonatomic) BOOL page_title_view_select_animation;
 
 //------------------- 主view在父控件上的frame 默认等于父控件
 

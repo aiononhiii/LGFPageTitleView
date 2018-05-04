@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "ChildViewController.h"
 #import "LGFTitles.h"
+#import "MJRefresh.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UICollectionView *pageView;
@@ -230,11 +231,11 @@
     self.threeTitleView.style.titles = self.oneTitles;
     [self.threeTitleView reloadAllTitles];
     [self.threeTitleView selectTitleForIndex:10];
-    
+
     self.fourTitleView.style.titles = self.oneTitles;
     [self.fourTitleView reloadAllTitles];
     [self.fourTitleView selectTitleForIndex:10];
-    
+
     self.naviTitleView.style.titles = self.oneTitles;
     [self.naviTitleView reloadAllTitles];
     [self.naviTitleView selectTitleForIndex:10];

@@ -13,7 +13,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         self.titles = [NSArray new];
-        self.page_title_view_scroll_have_animation = YES;
+        self.page_title_view_select_animation = YES;
         self.un_select_color = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
         self.select_color = [UIColor colorWithRed:0.3 green:0.5 blue:0.8 alpha:1.0];
         self.title_big_scale = 1.0;

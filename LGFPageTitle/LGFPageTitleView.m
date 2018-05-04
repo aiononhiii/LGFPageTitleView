@@ -7,6 +7,7 @@
 //
 
 #import "LGFPageTitleView.h"
+#import "MJRefresh.h"
 
 @interface LGFPageTitleView () <UIScrollViewDelegate>
 
@@ -93,7 +94,6 @@
         NSArray *normal_colorRGBA = [LGFMethod getColorRGBA:self.style.un_select_color];
         NSAssert(normal_colorRGBA, @"设置普通状态的文字颜色时 请使用RGBA空间的颜色值");
         _un_select_colorRGBA = normal_colorRGBA;
-        
     }
     return  _un_select_colorRGBA;
 }
@@ -232,23 +232,30 @@
 #pragma mark - 滚动到指定index位置
 
 - (void)selectTitleForIndex:(NSInteger)index {
-    dispatch_async(dispatch_get_main_queue(),^{
-        if ([self.page_view numberOfItemsInSection:0] != 0 || [self.page_view numberOfItemsInSection:0] > index) {
-            [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index < 0 || index - 1 > self.style.titles.count ? 0 : index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-        }
-        [self autoScrollTitle];
-    });
+    if ([self.page_view numberOfItemsInSection:0] != 0 || [self.page_view numberOfItemsInSection:0] > index) {
+        dispatch_queue_t queue = dispatch_get_main_queue();
+        dispatch_async(queue, ^{
+            [self.page_view setContentOffset:CGPointMake(self.page_view.bounds.size.width * (index < 0 || (index >= self.style.titles.count) ? 0 : index), 0)];
+        });
+        dispatch_async(queue, ^{
+            [self autoSelectWithAnimated:self.style.page_title_view_select_animation];
+        });
+    }
 }
 
 #pragma mark - 标自动滚动
 
 - (void)autoScrollTitle {
-    if (self.style.titles.count == 0) {
+    [self autoSelectWithAnimated:YES];
+}
+
+- (void)autoSelectWithAnimated:(BOOL)animated {
+    self.select_index = (self.page_view.contentOffset.x / (NSInteger)self.page_view.bounds.size.width);
+    if (self.style.titles.count == 0 || self.select_index >= self.style.titles.count) {
         return;
     }
-    self.select_index = (self.page_view.contentOffset.x / (NSInteger)self.page_view.bounds.size.width);
     [self adjustUIWithProgress:1.0 oldIndex:self.un_select_index currentIndex:self.select_index];
-    [self adjustTitleOffSetToSelectIndex:self.select_index];
+    [self adjustTitleOffSetToSelectIndex:self.select_index animated:animated];
     LGFLog(@"当前选中:%@", self.style.titles[self.select_index]);
 }
 
@@ -279,8 +286,8 @@
 
 #pragma mark - 调整title位置 使其滚动到中间
 
-- (void)adjustTitleOffSetToSelectIndex:(NSInteger)select_index {
-    if (self.title_buttons.count == 0) {
+- (void)adjustTitleOffSetToSelectIndex:(NSInteger)select_index animated:(BOOL)animated {
+    if (self.title_buttons.count == 0 || select_index >= self.title_buttons.count) {
         return;
     }
     self.un_select_index = select_index;
@@ -310,7 +317,7 @@
     if (offSetx > maxOffSetX) {
         offSetx = maxOffSetX;
     }
-    [self setContentOffset:CGPointMake(offSetx, 0.0) animated:self.style.page_title_view_scroll_have_animation];
+    [self setContentOffset:CGPointMake(offSetx, 0.0) animated:animated];
 }
 
 #pragma mark - 更新标view的UI(用于滚动外部分页控制器的时候)
@@ -498,7 +505,7 @@
             }
         }
     } completion:^(BOOL finished) {
-        [weakSelf adjustTitleOffSetToSelectIndex:weakSelf.select_index];
+        [weakSelf adjustTitleOffSetToSelectIndex:weakSelf.select_index animated:YES];
     }];
     
     // 下标反转

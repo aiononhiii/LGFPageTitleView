@@ -38,15 +38,9 @@
 
 /**
  刷新所有标
+ @param index 选中下标位置
  */
-- (void)reloadAllTitles;
-
-/**
- 滚动到指定index位置
- 
- @param index 下标位置
- */
-- (void)selectTitleForIndex:(NSInteger)index;
+- (void)reloadAllTitlesSelectIndex:(NSInteger)index;
 
 /**
  配置

@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "LGFTitles.h"
-
 
 typedef NS_ENUM(NSUInteger, LGFPageLineAnimation) {
-    LGFPageLineAnimationDefult,
+    LGFPageLineAnimationDefult,// 标底部线平滑改变大小
+    // 后续推出下面的 仿爱奇艺底部线动画效果 现暂时不可用 请勿设置
+    LGFPageLineAnimationSmallToBig,// 标底部线先右边伸出变宽致标和下一个标的总宽度, 再左边收回恢复到下一个标的宽度
+};
+
+typedef NS_ENUM(NSUInteger, LGFTitleScrollFollowType) {
+    LGFTitleScrollFollowDefult,// 在可滚动的情况下, 选中标默认滚动到 page_title_view 中间
+    // 后续推出下面的 仿腾讯新闻, 天天快报选中标滚动效果 现暂时不可用 请勿设置
+    LGFTitleScrollFollowLeftRight,// 向左滚动选中标永远出现在最右边可见位置, 反之向右滚动选中标永远出现在最左边可见位置（此效果不会像上面的效果那样滚到中间）
 };
 
 typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
@@ -34,16 +40,20 @@ typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
 //------------------- 主view
 
 @property (weak, nonatomic) UIScrollView *page_title_view;
-// page_title_view 选中某个标的动画 默认 有
-@property (assign, nonatomic) BOOL page_title_view_select_animation;
 
 //------------------- 主view在父控件上的frame 默认等于父控件
 
 @property (assign, nonatomic) CGRect page_title_view_frame;
 
+//------------------- 整体序列设置
+// 当所有标总宽度加起来小于 page_title_view 宽度时 是否居中显示 默认 NO - 不居中(从左边开始显示)
+@property (assign, nonatomic) BOOL is_title_center;
+// 选中标滚动类型 默认 LGFTitleScrollFollowDefult
+@property (assign, nonatomic) LGFTitleScrollFollowType title_scroll_follow_type;
+
 //------------------- 标设置
 // 标固定宽度 默认等于 0.0 如果此属性大于 0.0 那么标宽度将为固定值
-// 如果设置此项（title_fixed_width） LGFTitleLineWidthType 将只支持 EqualTitleSTR 和 FixedWith
+// 如果设置此项（title_fixed_width） LGFTitleLineWidthType 将只支持 FixedWith 固定底部线宽度
 @property (assign, nonatomic) CGFloat title_fixed_width;
 // 未选中标 字体颜色 默认 lightGrayColor 淡灰色 (对应select_color两个颜色一样则取消渐变效果)
 @property (strong, nonatomic) UIColor *un_select_color;
@@ -117,13 +127,9 @@ typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
 @property (assign, nonatomic) CGFloat line_height;
 // 标底部滚动线相对于底部位置 默认 0 - 贴于底部
 @property (assign, nonatomic) CGFloat line_bottom;
-// 标底部滚动线是否有滑动动画 默认 LGFPageLineAnimationFollow 有跟随动画
+// 标底部滚动线滑动动画 默认 LGFPageLineAnimationDefult 有跟随动画
 @property (assign, nonatomic) LGFPageLineAnimation line_animation;
 
-//------------------- 整体序列设置
-
-// 当标总宽度小于View宽度时 是否居中显示 默认 NO - 不居中(从左边开始显示)
-//@property (assign, nonatomic) BOOL is_title_center;
 
 @end
 

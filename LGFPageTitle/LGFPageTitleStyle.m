@@ -7,13 +7,13 @@
 //
 
 #import "LGFPageTitleStyle.h"
+#import "LGFMethod.h"
 
 @implementation LGFPageTitleStyle
 
 - (instancetype)init {
     if (self = [super init]) {
         self.titles = [NSArray new];
-        self.page_title_view_select_animation = YES;
         self.un_select_color = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
         self.select_color = [UIColor colorWithRed:0.3 green:0.5 blue:0.8 alpha:1.0];
         self.title_big_scale = 1.0;
@@ -30,20 +30,31 @@
         self.line_cornerRadius = 0.0;
         self.line_back_image = nil;
         self.line_animation = LGFPageLineAnimationDefult;
+        self.title_scroll_follow_type = LGFTitleScrollFollowDefult;
         self.line_width_type = EqualTitleSTR;
-        //        self.is_title_center = NO;
-        
+        self.is_title_center = NO;
         self.top_image_spacing = 0.0;
         self.bottom_image_spacing = 0.0;
         self.left_image_spacing = 0.0;
         self.right_image_spacing = 0.0;
-        
         self.left_image_height = 0.0;
         self.left_image_width = 0.0;
         self.right_image_height = 0.0;
         self.right_image_width = 0.0;
     }
     return self;
+}
+
+- (void)setSelect_color:(UIColor *)select_color {
+    _select_color = [LGFMethod getColorRGBA:select_color] ? select_color : [LGFMethod changeUIColorToRGB:select_color];
+}
+
+- (void)setUn_select_color:(UIColor *)un_select_color {
+    _un_select_color = [LGFMethod getColorRGBA:un_select_color] ? un_select_color : [LGFMethod changeUIColorToRGB:un_select_color];
+}
+
+- (void)setLine_color:(UIColor *)line_color {
+    _line_color = [LGFMethod getColorRGBA:line_color] ? line_color : [LGFMethod changeUIColorToRGB:line_color];
 }
 
 - (void)setTop_image_spacing:(CGFloat)top_image_spacing {

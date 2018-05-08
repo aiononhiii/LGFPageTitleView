@@ -73,27 +73,27 @@
 
 - (NSMutableArray *)twoTitles {
     if (!_twoTitles) {
-        _twoTitles = [NSMutableArray arrayWithObjects:@"鲨鱼", @"鲸鱼", @"小丑鱼", @"海龟", @"一条大金枪鱼", @"沙丁鱼", @"河豚", @"包头鱼", @"草鱼", @"鳊鱼", nil];
+        _twoTitles = [NSMutableArray arrayWithObjects:@"鲨鱼", @"鲸鱼", @"鲸鱼", nil];
     }
     return _twoTitles;
 }
 
-// 固定宽度title，下划线圆角添加，右边title图片添加，每个title添加不同图片效果展示
+// 固定宽度title, 下划线圆角添加, 右边title图片添加, 每个title添加不同图片效果展示, 少量title时title居中显示
 - (LGFPageTitleView *)oneTitleView {
     if (!_oneTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
         // 固定宽度title 必要属性 （如果值为titleview宽度 ／ title数组count，titleview将取消滚动）
         style.title_fixed_width = self.view.width / 4;
         style.line_width_type = FixedWith;
-        style.line_width = self.view.width / 4;
-        style.title_big_scale = 1.05;
+        style.line_width = self.view.width;
+        style.title_big_scale = 1.0;
         style.line_height = 5.0;
         style.line_bottom = 1.0;
         style.line_cornerRadius = style.line_height / 2;
         style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
         style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Light" size:14];
         style.line_color = LGFRGB(155, 150, 255, 1.0);
-        style.select_color = LGFRGB(210, 29, 89, 1.0);
+        style.select_color = [UIColor greenColor];
         //-----如果添加不同图片使用这个属性---
         style.un_select_image_names = self.oneTitleUnSelectImages;
         style.select_image_names = self.oneTitleSelectImages;
@@ -103,6 +103,9 @@
         //-----这些属性直接决定图片相对于title位置----
         style.right_image_spacing = 5.0;
         //----------------------------------
+        //----少量title时title居中显示----
+        style.is_title_center = YES;
+        //--------------------------
         _oneTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.oneTitleSuperView page_view:self.pageView];
     }
     return _oneTitleView;
@@ -125,7 +128,7 @@
     return _twoTitleView;
 }
 
-// 多面添加title图片，每个title添加相同图片，选中缩放，选中字体加粗效果展示
+// 多面添加title图片, 每个title添加相同图片, 选中缩放, 选中字体加粗效果展示, 每张图片位置可自定义
 - (LGFPageTitleView *)threeTitleView {
     if (!_threeTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
@@ -159,7 +162,7 @@
     return _threeTitleView;
 }
 
-// title下划线替换成图片，下划线圆角添加，选中缩放效果展示
+// title下划线替换成图片, 下划线圆角添加, 选中缩放效果展示, 少量title时title居中显示
 - (LGFPageTitleView *)fourTitleView {
     if (!_fourTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
@@ -169,19 +172,22 @@
         style.line_bottom = 3.0;
         style.line_cornerRadius = 3.0;
         style.line_color = LGFRGB(255, 255, 255, 1.0);
-        //----title下划线替换成图片---
+        //----title下划线替换成图片----
         style.line_back_image = [UIImage imageNamed:@"狮子" inBundle:LGFBundle compatibleWithTraitCollection:nil];
-        //-------------------------
+        //--------------------------
         style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
         style.un_select_color = LGFRGB(240, 240, 20, 1.0);
         style.select_color = LGFRGB(255, 255, 255, 1.0);
         style.line_width_type = EqualTitleSTR;
+        //----少量title时title居中显示----
+        style.is_title_center = YES;
+        //--------------------------
         _fourTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.fourTitleSuperView page_view:self.pageView];
     }
     return _fourTitleView;
 }
 
-// 没有title下划线，选中字体加粗效果展示
+// 没有title下划线, 选中字体加粗效果展示
 - (LGFPageTitleView *)naviTitleView {
     if (!_naviTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
@@ -221,24 +227,20 @@
     [self.pageView reloadData];
     // 刷新title数组
     self.oneTitleView.style.titles = self.oneTitles;
-    [self.oneTitleView reloadAllTitles];
-    [self.oneTitleView selectTitleForIndex:10];
+    [self.oneTitleView reloadAllTitlesSelectIndex:10];
     
-    self.twoTitleView.style.titles = self.oneTitles;
-    [self.twoTitleView reloadAllTitles];
-    [self.twoTitleView selectTitleForIndex:10];
+//    self.twoTitleView.style.titles = self.oneTitles;
+//    [self.twoTitleView reloadAllTitlesSelectIndex:10];
+//
+//    self.threeTitleView.style.titles = self.oneTitles;
+//    [self.threeTitleView reloadAllTitlesSelectIndex:10];
+//
+//    self.fourTitleView.style.titles = self.oneTitles;
+//    [self.fourTitleView reloadAllTitlesSelectIndex:10];
+//
+//    self.naviTitleView.style.titles = self.oneTitles;
+//    [self.naviTitleView reloadAllTitlesSelectIndex:10];
     
-    self.threeTitleView.style.titles = self.oneTitles;
-    [self.threeTitleView reloadAllTitles];
-    [self.threeTitleView selectTitleForIndex:10];
-
-    self.fourTitleView.style.titles = self.oneTitles;
-    [self.fourTitleView reloadAllTitles];
-    [self.fourTitleView selectTitleForIndex:10];
-
-    self.naviTitleView.style.titles = self.oneTitles;
-    [self.naviTitleView reloadAllTitles];
-    [self.naviTitleView selectTitleForIndex:10];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -265,24 +267,20 @@
         [self.pageView reloadData];
         // 刷新title数组
         self.oneTitleView.style.titles = self.oneTitles;
-        [self.oneTitleView reloadAllTitles];
-        [self.oneTitleView selectTitleForIndex:10];
+        [self.oneTitleView reloadAllTitlesSelectIndex:10];
         
-        self.twoTitleView.style.titles = self.oneTitles;
-        [self.twoTitleView reloadAllTitles];
-        [self.twoTitleView selectTitleForIndex:10];
-        
-        self.threeTitleView.style.titles = self.oneTitles;
-        [self.threeTitleView reloadAllTitles];
-        [self.threeTitleView selectTitleForIndex:10];
-        
-        self.fourTitleView.style.titles = self.oneTitles;
-        [self.fourTitleView reloadAllTitles];
-        [self.fourTitleView selectTitleForIndex:10];
-        
-        self.naviTitleView.style.titles = self.oneTitles;
-        [self.naviTitleView reloadAllTitles];
-        [self.naviTitleView selectTitleForIndex:10];
+//        self.twoTitleView.style.titles = self.oneTitles;
+//        [self.twoTitleView reloadAllTitlesSelectIndex:10];
+//
+//        self.threeTitleView.style.titles = self.oneTitles;
+//        [self.threeTitleView reloadAllTitlesSelectIndex:10];
+//
+//        self.fourTitleView.style.titles = self.oneTitles;
+//        [self.fourTitleView reloadAllTitlesSelectIndex:10];
+//
+//        self.naviTitleView.style.titles = self.oneTitles;
+//        [self.naviTitleView reloadAllTitlesSelectIndex:10];
+
     } else {
         // 重新添加子控制器
         for (NSString *title in self.twoTitles) {
@@ -295,24 +293,19 @@
         [self.pageView reloadData];
         // 刷新title数组
         self.oneTitleView.style.titles = self.twoTitles;
-        [self.oneTitleView reloadAllTitles];
-        [self.oneTitleView selectTitleForIndex:3];
+        [self.oneTitleView reloadAllTitlesSelectIndex:0];
         
-        self.twoTitleView.style.titles = self.twoTitles;
-        [self.twoTitleView reloadAllTitles];
-        [self.twoTitleView selectTitleForIndex:3];
-        
-        self.threeTitleView.style.titles = self.twoTitles;
-        [self.threeTitleView reloadAllTitles];
-        [self.threeTitleView selectTitleForIndex:3];
-        
-        self.fourTitleView.style.titles = self.twoTitles;
-        [self.fourTitleView reloadAllTitles];
-        [self.fourTitleView selectTitleForIndex:3];
-        
-        self.naviTitleView.style.titles = self.twoTitles;
-        [self.naviTitleView reloadAllTitles];
-        [self.naviTitleView selectTitleForIndex:3];
+//        self.twoTitleView.style.titles = self.twoTitles;
+//        [self.twoTitleView reloadAllTitlesSelectIndex:0];
+//
+//        self.threeTitleView.style.titles = self.twoTitles;
+//        [self.threeTitleView reloadAllTitlesSelectIndex:0];
+//
+//        self.fourTitleView.style.titles = self.twoTitles;
+//        [self.fourTitleView reloadAllTitlesSelectIndex:0];
+//
+//        self.naviTitleView.style.titles = self.twoTitles;
+//        [self.naviTitleView reloadAllTitlesSelectIndex:0];
     }
     sender.selected = !sender.selected;
 }
@@ -345,6 +338,7 @@
     // 在此代理方法中作子控制器首次加载数据的操作 防止多余未出现的控制器加载数据而导致的卡顿 (只对将要出现的cell上的子控制器作加载数据操作，其余只加载控制器)
     ChildViewController *vc = self.childVCs[indexPath.item];
     if (vc.datas.count == 0) {// 如果该子控制器数据源数组为空那么执行请求数据
+        LGFLog(@"正在刷新第%ld页", indexPath.row);
         [vc loadData];
     }
 }
@@ -352,11 +346,10 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     // titleview与pageview分离关联关键方法,必须设置 (此方法作用:关联titleview和外部pageview, 使其可以联动)
     [self.oneTitleView autoScrollTitle];
-    [self.twoTitleView autoScrollTitle];
-    [self.threeTitleView autoScrollTitle];
-    [self.fourTitleView autoScrollTitle];
-    
-    [self.naviTitleView autoScrollTitle];
+//    [self.twoTitleView autoScrollTitle];
+//    [self.threeTitleView autoScrollTitle];
+//    [self.fourTitleView autoScrollTitle];
+//    [self.naviTitleView autoScrollTitle];
 }
 
 - (void)dealloc {

@@ -29,4 +29,13 @@
  @return 颜色数组
  */
 + (NSArray *)getColorRGBA:(UIColor *)color;
+
+
+/**
+ UIColor 转 RGBUIColor
+
+ @param color UIColor
+ @return RGBUIColor
+ */
++ (UIColor *)changeUIColorToRGB:(UIColor *)color;
 @end

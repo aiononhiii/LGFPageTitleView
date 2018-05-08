@@ -31,4 +31,16 @@
     return rgbaComponents;
 }
 
++ (UIColor *)changeUIColorToRGB:(UIColor *)color {
+    //获得RGB值描述
+    NSString *RGBValue = [NSString stringWithFormat:@"%@",color];
+    //将RGB值描述分隔成字符串
+    NSArray *RGBArr = [RGBValue componentsSeparatedByString:@" "];
+    int r = [[RGBArr objectAtIndex:1] intValue];
+    int g = [[RGBArr objectAtIndex:2] intValue];
+    int b = [[RGBArr objectAtIndex:3] intValue];
+    //返回保存RGB值的数组
+    return [UIColor colorWithRed:r green:g blue:b alpha:1.0];
+}
+
 @end

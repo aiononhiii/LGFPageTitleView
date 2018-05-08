@@ -139,6 +139,15 @@
                                     <constraint firstAttribute="height" constant="40" id="EPc-Bj-1yF"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本代码提供了5中效果, 看其他效果请解开 UIViewController 中的注释" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jwB-eQ-KwH">
+                                <rect key="frame" x="5" y="269" width="365" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="oU8-UC-J7D"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.62981703367875652" green="0.62981703367875652" blue="0.62981703367875652" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -151,15 +160,18 @@
                             <constraint firstItem="CSp-ZW-QYx" firstAttribute="leading" secondItem="eEm-9f-0YM" secondAttribute="trailing" id="GLd-4V-NdN"/>
                             <constraint firstItem="YLt-09-j9u" firstAttribute="top" secondItem="Em8-7N-Neu" secondAttribute="bottom" id="Ji1-4A-nHv"/>
                             <constraint firstItem="eEm-9f-0YM" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="LTU-U5-gib"/>
+                            <constraint firstItem="jwB-eQ-KwH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="5" id="Lf9-P7-JC3"/>
                             <constraint firstItem="Em8-7N-Neu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="N92-Ou-VwJ"/>
                             <constraint firstItem="lEm-Dn-2e9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="NPf-Bj-evo"/>
                             <constraint firstItem="eEm-9f-0YM" firstAttribute="top" secondItem="5Nf-LW-aHm" secondAttribute="bottom" id="PiG-b9-Rye"/>
                             <constraint firstAttribute="trailing" secondItem="eEm-9f-0YM" secondAttribute="trailing" constant="50" id="TkA-GC-aWq"/>
                             <constraint firstItem="YLt-09-j9u" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Y9k-gE-9ED"/>
+                            <constraint firstAttribute="trailing" secondItem="jwB-eQ-KwH" secondAttribute="trailing" constant="5" id="ZRw-mi-zL5"/>
                             <constraint firstItem="Em8-7N-Neu" firstAttribute="top" secondItem="eEm-9f-0YM" secondAttribute="bottom" id="cgQ-93-htc"/>
                             <constraint firstAttribute="trailing" secondItem="gx9-Pt-kGK" secondAttribute="trailing" constant="50" id="dMF-ZE-Cir"/>
                             <constraint firstAttribute="bottom" secondItem="gx9-Pt-kGK" secondAttribute="bottom" constant="50" id="doY-dU-m8b"/>
                             <constraint firstItem="gx9-Pt-kGK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="50" id="fZP-cX-sby"/>
+                            <constraint firstItem="jwB-eQ-KwH" firstAttribute="top" secondItem="lEm-Dn-2e9" secondAttribute="bottom" constant="5" id="id0-71-tHj"/>
                             <constraint firstItem="CSp-ZW-QYx" firstAttribute="bottom" secondItem="eEm-9f-0YM" secondAttribute="bottom" id="mjk-2O-3AD"/>
                             <constraint firstAttribute="trailing" secondItem="Em8-7N-Neu" secondAttribute="trailing" id="tsD-c1-PgX"/>
                         </constraints>

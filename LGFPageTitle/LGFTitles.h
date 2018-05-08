@@ -23,27 +23,53 @@
 // 有问题可以在github上提给我哦～
 //******************************************************
 
+#undef LGFBundle
 #define LGFBundle [NSBundle bundleWithPath:[[NSBundle bundleForClass:[self class]] pathForResource:@"LGFPageTitle" ofType:@"bundle"]] ?: [NSBundle mainBundle]
-
+#undef LGFRGB
 #define LGFRGB(A,B,C,D) [UIColor colorWithRed:A/255.0f green:B/255.0f blue:C/255.0f alpha:D]
+#undef LGFRandomColor
 #define LGFRandomColor LGFRGB(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256), 1.0)
-#define LGFMAIN(block) dispatch_async(dispatch_get_main_queue(),^{block});
+#undef LGFAFTER
 #define LGFAFTER(time,block) dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(time * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{block});
 
+#undef LGFLog
 #ifdef DEBUG
 #define LGFLog(FORMAT, ...) fprintf(stderr,"%s:%d\t%s\n",[[[NSString stringWithUTF8String:__FILE__] lastPathComponent] UTF8String], __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
 #else
 #define LGFLog(FORMAT, ...) nil
 #endif
 
-#ifndef LGFWeakify
-#define LGFWeakify( x ) \
-autoreleasepool{} __weak __typeof__(x) __weak_##x##__ = x;
+#undef lgf_Weak
+#ifndef lgf_Weak
+#if DEBUG
+#if __has_feature(objc_arc)
+#define lgf_Weak(object) autoreleasepool{} __weak __typeof__(object) weak##_##object = object;
+#else
+#define lgf_Weak(object) autoreleasepool{} __block __typeof__(object) block##_##object = object;
 #endif
-
-#ifndef LGFNormalize
-#define LGFNormalize( x ) \
-try{} @finally{} __typeof__(x) x = __weak_##x##__;
+#else
+#if __has_feature(objc_arc)
+#define lgf_Weak(object) try{} @finally{} {} __weak __typeof__(object) weak##_##object = object;
+#else
+#define lgf_Weak(object) try{} @finally{} {} __block __typeof__(object) block##_##object = object;
+#endif
+#endif
+#endif
+#undef lgf_Strong
+#ifndef lgf_Strong
+#if DEBUG
+#if __has_feature(objc_arc)
+#define lgf_Strong(object) autoreleasepool{} __typeof__(object) object = weak##_##object;
+#else
+#define lgf_Strong(object) autoreleasepool{} __typeof__(object) object = block##_##object;
+#endif
+#else
+#if __has_feature(objc_arc)
+#define lgf_Strong(object) try{} @finally{} __typeof__(object) object = weak##_##object;
+#else
+#define lgf_Strong(object) try{} @finally{} __typeof__(object) object = block##_##object;
+#endif
+#endif
 #endif
 
 #endif /* LGFTitles_h */

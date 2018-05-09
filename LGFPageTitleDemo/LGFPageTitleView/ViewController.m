@@ -226,15 +226,15 @@
     // 刷新数据源
     [self.pageView reloadData];
     // 刷新title数组
-    self.oneTitleView.style.titles = self.oneTitles;
-    [self.oneTitleView reloadAllTitlesSelectIndex:10];
-    
+//    self.oneTitleView.style.titles = self.oneTitles;
+//    [self.oneTitleView reloadAllTitlesSelectIndex:10];
+//
 //    self.twoTitleView.style.titles = self.oneTitles;
 //    [self.twoTitleView reloadAllTitlesSelectIndex:10];
-//
-//    self.threeTitleView.style.titles = self.oneTitles;
-//    [self.threeTitleView reloadAllTitlesSelectIndex:10];
-//
+
+    self.threeTitleView.style.titles = self.oneTitles;
+    [self.threeTitleView reloadAllTitlesSelectIndex:10];
+
 //    self.fourTitleView.style.titles = self.oneTitles;
 //    [self.fourTitleView reloadAllTitlesSelectIndex:10];
 //
@@ -266,15 +266,15 @@
         // 重新刷新数据源
         [self.pageView reloadData];
         // 刷新title数组
-        self.oneTitleView.style.titles = self.oneTitles;
-        [self.oneTitleView reloadAllTitlesSelectIndex:10];
-        
+//        self.oneTitleView.style.titles = self.oneTitles;
+//        [self.oneTitleView reloadAllTitlesSelectIndex:10];
+//
 //        self.twoTitleView.style.titles = self.oneTitles;
 //        [self.twoTitleView reloadAllTitlesSelectIndex:10];
-//
-//        self.threeTitleView.style.titles = self.oneTitles;
-//        [self.threeTitleView reloadAllTitlesSelectIndex:10];
-//
+
+        self.threeTitleView.style.titles = self.oneTitles;
+        [self.threeTitleView reloadAllTitlesSelectIndex:10];
+
 //        self.fourTitleView.style.titles = self.oneTitles;
 //        [self.fourTitleView reloadAllTitlesSelectIndex:10];
 //
@@ -292,15 +292,15 @@
         // 重新刷新数据源
         [self.pageView reloadData];
         // 刷新title数组
-        self.oneTitleView.style.titles = self.twoTitles;
-        [self.oneTitleView reloadAllTitlesSelectIndex:0];
-        
+//        self.oneTitleView.style.titles = self.twoTitles;
+//        [self.oneTitleView reloadAllTitlesSelectIndex:0];
+//
 //        self.twoTitleView.style.titles = self.twoTitles;
 //        [self.twoTitleView reloadAllTitlesSelectIndex:0];
-//
-//        self.threeTitleView.style.titles = self.twoTitles;
-//        [self.threeTitleView reloadAllTitlesSelectIndex:0];
-//
+
+        self.threeTitleView.style.titles = self.twoTitles;
+        [self.threeTitleView reloadAllTitlesSelectIndex:0];
+
 //        self.fourTitleView.style.titles = self.twoTitles;
 //        [self.fourTitleView reloadAllTitlesSelectIndex:0];
 //
@@ -345,9 +345,9 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     // titleview与pageview分离关联关键方法,必须设置 (此方法作用:关联titleview和外部pageview, 使其可以联动)
-    [self.oneTitleView autoScrollTitle];
+//    [self.oneTitleView autoScrollTitle];
 //    [self.twoTitleView autoScrollTitle];
-//    [self.threeTitleView autoScrollTitle];
+    [self.threeTitleView autoScrollTitle];
 //    [self.fourTitleView autoScrollTitle];
 //    [self.naviTitleView autoScrollTitle];
 }

@@ -239,12 +239,14 @@
 
 - (void)selectTitleForIndex:(NSInteger)index {
     if ([self.page_view numberOfItemsInSection:0] != 0 || [self.page_view numberOfItemsInSection:0] > index) {
-        self.un_select_index = index;
-        self.select_index = index < 0 || (index >= self.style.titles.count) ? 0 : index;;
-        [self autoSelectWithAnimated:NO];
         dispatch_queue_t queue = dispatch_get_main_queue();
         dispatch_async(queue, ^{
-            [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.select_index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+            [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
+        });
+        dispatch_async(queue, ^{
+            self.un_select_index = index;
+            self.select_index = index < 0 || (index >= self.style.titles.count) ? 0 : index;
+            [self autoSelectWithAnimated:NO];
         });
     }
 }

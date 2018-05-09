@@ -43,12 +43,12 @@
 //    [self.childViewControllerCV.mj_header beginRefreshing];
 //    // 模拟加载数据
 //    LGFAFTER(1.0,
-             [self.childViewControllerCV.mj_header endRefreshing];
-             for (int i = 0; i < 30; i++) {
-                 [self.datas addObject:@""];
-             }
+//             [self.childViewControllerCV.mj_header endRefreshing];
+//             for (int i = 0; i < 30; i++) {
+//                 [self.datas addObject:@""];
+//             }
              //刷新界面
-             [self.childViewControllerCV reloadData];
+//             [self.childViewControllerCV reloadData];
 //             )
     
 }

@@ -220,35 +220,44 @@
 #pragma mark - 滚动到指定tag位置
 
 - (void)selectTitleForTag:(NSInteger)index {
-    if (self.style.titles.count == 0) {
+    if ([self.page_view numberOfItemsInSection:0] == 0 || [self.page_view numberOfItemsInSection:0] <= index || self.style.titles.count == 0 || self.select_index == index) {
         return;
     }
     self.select_index = index;
-    // 外部分页控制器 滚动到对应下标
-    if ([self.page_view numberOfItemsInSection:0] == 0 || [self.page_view numberOfItemsInSection:0] <= index) {
-        return;
-    }
-    // 更新标view的UI
-    [self adjustUIWhenBtnOnClickWithAnimate:true taped:YES];
-    [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.select_index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-    NSAssert([_super_vc canPerformAction:@selector(scrollViewDidEndDecelerating:) withSender:_super_vc], @"父视图分页控制器请添加--scrollViewDidEndDecelerating--方法");
-    [_super_vc performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.page_view afterDelay:0.31];
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    dispatch_async(queue, ^{
+        // 更新标view的UI
+        [self adjustUIWhenBtnOnClickWithAnimate:true taped:YES];
+    });
+    dispatch_async(queue, ^{
+        // 外部分页控制器 滚动到对应下标
+        [self.page_view setContentOffset:CGPointMake(self.page_view.width * self.select_index, 0)];
+    });
 }
 
 #pragma mark - 滚动到指定index位置
 
 - (void)selectTitleForIndex:(NSInteger)index {
-    if ([self.page_view numberOfItemsInSection:0] != 0 || [self.page_view numberOfItemsInSection:0] > index) {
-        dispatch_queue_t queue = dispatch_get_main_queue();
-        dispatch_async(queue, ^{
-            [self.page_view scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:NO];
-        });
-        dispatch_async(queue, ^{
-            self.un_select_index = index;
-            self.select_index = index < 0 || (index >= self.style.titles.count) ? 0 : index;
-            [self autoSelectWithAnimated:NO];
-        });
+    if ([self.page_view numberOfItemsInSection:0] == 0 || [self.page_view numberOfItemsInSection:0] <= index) {
+        return;
     }
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    dispatch_async(queue, ^{
+        [self.page_view setContentOffset:CGPointMake(self.page_view.width * index, 0)];
+    });
+    dispatch_async(queue, ^{
+        self.un_select_index = index;
+        self.select_index = index < 0 || (index >= self.style.titles.count) ? 0 : index;
+    });
+    dispatch_async(queue, ^{
+        [self autoSelectWithAnimated:NO];
+    });
+    
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
 }
 
 #pragma mark - 标自动滚动
@@ -263,8 +272,13 @@
         return;
     }
     LGFLog(@"当前选中:%@", self.style.titles[self.select_index]);
-    [self adjustUIWithProgress:1.0 oldIndex:self.un_select_index currentIndex:self.select_index];
-    [self adjustTitleOffSetToSelectIndex:self.select_index animated:animated];
+    dispatch_queue_t queue = dispatch_get_main_queue();
+    dispatch_async(queue, ^{
+        [self adjustUIWithProgress:1.0 oldIndex:self.un_select_index currentIndex:self.select_index];
+    });
+    dispatch_async(queue, ^{
+        [self adjustTitleOffSetToSelectIndex:self.select_index animated:animated];
+    });
 }
 
 #pragma mark - 调整title位置 使其滚动到中间
@@ -273,20 +287,21 @@
     if (self.title_buttons.count == 0 || select_index >= self.title_buttons.count) {
         return;
     }
-    // 重置渐变/缩放效果附近其他item的缩放和颜色
-    int index = 0;
-    for (LGFTitleButton *title in self.title_buttons) {
-        if (index != select_index) {
-            [title.title setTitleColor:self.style.un_select_color forState:UIControlStateNormal];
-            title.currentTransformSx = 1.0;
-        } else {
-            [title.title setTitleColor:self.style.select_color forState:UIControlStateNormal];
-            if (self.style.title_big_scale != 0) {
-                title.currentTransformSx = self.style.title_big_scale;
-            }
-        }
-        index++;
-    }
+//    self.un_select_index = select_index;
+//    // 重置渐变/缩放效果附近其他item的缩放和颜色
+//    int index = 0;
+//    for (LGFTitleButton *title in self.title_buttons) {
+//        if (index != select_index) {
+//            [title.title setTitleColor:self.style.un_select_color forState:UIControlStateNormal];
+//            title.currentTransformSx = 1.0;
+//        } else {
+//            [title.title setTitleColor:self.style.select_color forState:UIControlStateNormal];
+//            if (self.style.title_big_scale != 0) {
+//                title.currentTransformSx = self.style.title_big_scale;
+//            }
+//        }
+//        index++;
+//    }
     
     if (self.style.title_scroll_follow_type == LGFTitleScrollFollowDefult) {
         LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[select_index];
@@ -322,6 +337,9 @@
         self.select_index = tempIndex + 1;
         self.un_select_index = tempIndex;
     } else if (deltaX < 0) {
+        if (progress == 0.0) {
+            return;
+        }
         progress = 1.0 - progress;
         self.un_select_index = tempIndex + 1;
         self.select_index = tempIndex;
@@ -338,10 +356,9 @@
     if (oldIndex < 0 || oldIndex >= self.title_buttons.count || currentIndex < 0 || currentIndex >= self.title_buttons.count) {
         return;
     }
-    
     NSAssert(self.style.un_select_image_names.count == self.style.select_image_names.count, @"选中图片数组和未选中图片数组count必须一致");
     self.un_select_index = currentIndex;
-    // 取得 前一个选中的标 和 将要选中的标
+    // 取得 前一个选中的标 和ś将要选中的标
     LGFTitleButton *un_select_title = (LGFTitleButton *)self.title_buttons[oldIndex];
     LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[currentIndex];
     // 标颜色渐变

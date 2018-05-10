@@ -73,7 +73,7 @@
 
 - (NSMutableArray *)twoTitles {
     if (!_twoTitles) {
-        _twoTitles = [NSMutableArray arrayWithObjects:@"鲨鱼", @"鲸鱼", @"鲸鱼", nil];
+        _twoTitles = [NSMutableArray arrayWithObjects:@"鲨鱼", @"鲸鱼", @"鳄鱼", nil];
     }
     return _twoTitles;
 }

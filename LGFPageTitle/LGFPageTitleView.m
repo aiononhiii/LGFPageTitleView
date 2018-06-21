@@ -287,21 +287,21 @@
     if (self.title_buttons.count == 0 || select_index >= self.title_buttons.count) {
         return;
     }
-//    self.un_select_index = select_index;
-//    // 重置渐变/缩放效果附近其他item的缩放和颜色
-//    int index = 0;
-//    for (LGFTitleButton *title in self.title_buttons) {
-//        if (index != select_index) {
-//            [title.title setTitleColor:self.style.un_select_color forState:UIControlStateNormal];
-//            title.currentTransformSx = 1.0;
-//        } else {
-//            [title.title setTitleColor:self.style.select_color forState:UIControlStateNormal];
-//            if (self.style.title_big_scale != 0) {
-//                title.currentTransformSx = self.style.title_big_scale;
-//            }
-//        }
-//        index++;
-//    }
+    //    self.un_select_index = select_index;
+    //    // 重置渐变/缩放效果附近其他item的缩放和颜色
+    //    int index = 0;
+    //    for (LGFTitleButton *title in self.title_buttons) {
+    //        if (index != select_index) {
+    //            [title.title setTitleColor:self.style.un_select_color forState:UIControlStateNormal];
+    //            title.currentTransformSx = 1.0;
+    //        } else {
+    //            [title.title setTitleColor:self.style.select_color forState:UIControlStateNormal];
+    //            if (self.style.title_big_scale != 0) {
+    //                title.currentTransformSx = self.style.title_big_scale;
+    //            }
+    //        }
+    //        index++;
+    //    }
     
     if (self.style.title_scroll_follow_type == LGFTitleScrollFollowDefult) {
         LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[select_index];
@@ -328,18 +328,15 @@
     CGFloat tempProgress = contentOffset_x / self.page_view.bounds.size.width;
     NSInteger tempIndex = tempProgress;
     CGFloat progress = tempProgress - floor(tempProgress);
+    if (progress == 0.0) {
+        return;
+    }
     CGFloat deltaX = contentOffset_x - _old_off_set_x;
     if (contentOffset_x < 0) { return; }
     if (deltaX > 0) {// 向左
-        if (progress == 0.0) {
-            return;
-        }
         self.select_index = tempIndex + 1;
         self.un_select_index = tempIndex;
     } else if (deltaX < 0) {
-        if (progress == 0.0) {
-            return;
-        }
         progress = 1.0 - progress;
         self.un_select_index = tempIndex + 1;
         self.select_index = tempIndex;
@@ -577,6 +574,8 @@
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self removeFromSuperview];
     [self.page_view removeObserver:self forKeyPath:@"contentOffset"];
+    [self.super_vc.childViewControllers makeObjectsPerformSelector:@selector(willMoveToParentViewController:)];
+    [self.super_vc.childViewControllers makeObjectsPerformSelector:@selector(removeFromParentViewController)];
     [self.title_buttons removeAllObjects];
     self.title_buttons = nil;
     self.deltaRGBA = nil;
@@ -588,4 +587,5 @@
 
 
 @end
- 
+
+

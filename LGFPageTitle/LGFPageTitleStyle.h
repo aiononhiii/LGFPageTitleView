@@ -72,6 +72,10 @@ typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
 // 标背景色
 @property (strong, nonatomic) UIColor *title_backgroundColor;
 
+@property (strong, nonatomic) UIColor *title_borderColor;
+
+@property (assign, nonatomic) CGFloat title_borderWidth;
+
 @property (nonatomic, assign) BOOL title_line_break_by_word_wrapping;
 
 //------------------- 标图片设置

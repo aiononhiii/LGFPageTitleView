@@ -63,6 +63,10 @@
     [self.title setTitleColor:style.un_select_color forState:UIControlStateNormal];
     self.title.titleLabel.font = style.un_select_title_font;
     self.backgroundColor = style.title_backgroundColor;
+    if (style.title_borderWidth > 0) {
+        self.layer.borderColor = style.title_borderColor.CGColor;
+        self.layer.borderWidth = style.title_borderWidth;
+    }
     
     // 如果设置了都是相同标图片, 那么就强制转成全部相同图片
     if (style.same_select_image_name && style.same_select_image_name.length > 0 && style.same_un_select_image_name && style.same_un_select_image_name.length > 0) {

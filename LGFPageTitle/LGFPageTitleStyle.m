@@ -21,6 +21,8 @@
         self.title_have_animation = YES;
         self.title_left_right_spacing = 0.0;
         self.title_fixed_width = 0.0;
+        self.title_backgroundColor = [UIColor clearColor];
+        self.title_line_break_by_word_wrapping = NO;
         self.is_show_line = YES;
         self.line_color = [UIColor blueColor];
         self.line_width = 0;

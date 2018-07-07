@@ -17,6 +17,9 @@
     LGFTitleButton *button = [LGFBundle loadNibNamed:NSStringFromClass([LGFPageTitleView class]) owner:self options:nil][1];
     button.title.tag = index;
     button.style = style;
+    if (style.title_line_break_by_word_wrapping) {
+        button.title.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    }
     [button.title setTitle:title forState:UIControlStateNormal];
     // 获取字体宽度
     CGSize title_size = [LGFMethod sizeWithString:button.title.titleLabel.text font:button.title.titleLabel.font maxSize:CGSizeMake(CGFLOAT_MAX, style.page_title_view.height)];
@@ -59,6 +62,7 @@
     _style = style;
     [self.title setTitleColor:style.un_select_color forState:UIControlStateNormal];
     self.title.titleLabel.font = style.un_select_title_font;
+    self.backgroundColor = style.title_backgroundColor;
     
     // 如果设置了都是相同标图片, 那么就强制转成全部相同图片
     if (style.same_select_image_name && style.same_select_image_name.length > 0 && style.same_un_select_image_name && style.same_un_select_image_name.length > 0) {

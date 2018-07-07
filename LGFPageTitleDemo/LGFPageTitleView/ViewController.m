@@ -51,7 +51,7 @@
 
 - (NSMutableArray *)oneTitles {
     if (!_oneTitles) {
-        _oneTitles = [NSMutableArray arrayWithObjects:@"鹈鹕", @"鳄鱼", @"鲸鱼", @"一只大狮子", @"巨嘴鸟", @"麋鹿", @"绵羊", @"螃蟹", @"鸵鸟", @"大象", @"蛇", @"鱼", @"一只大公鸡", @"长颈鹿", @"猪", nil];
+        _oneTitles = [NSMutableArray arrayWithObjects:@"鹈鹕", @"鳄鱼", @"鲸鱼", @" 12.30\n已开抢", @"巨嘴鸟", @"麋鹿", @"绵羊", @"螃蟹", @"鸵鸟", @"大象", @"蛇", @"鱼", @"一只大公鸡", @"长颈鹿", @"猪", nil];
     }
     return _oneTitles;
 }
@@ -172,6 +172,7 @@
         style.line_bottom = 3.0;
         style.line_cornerRadius = 3.0;
         style.line_color = LGFRGB(255, 255, 255, 1.0);
+        style.title_line_break_by_word_wrapping = YES;
         //----title下划线替换成图片----
         style.line_back_image = [UIImage imageNamed:@"狮子" inBundle:LGFBundle compatibleWithTraitCollection:nil];
         //--------------------------

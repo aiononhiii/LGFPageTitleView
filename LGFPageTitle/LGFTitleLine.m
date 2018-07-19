@@ -39,6 +39,11 @@
     self.backgroundColor = style.line_color;
     CGFloat Y = style.page_title_view.height - ((style.line_height + style.line_bottom) > style.page_title_view.height ? style.page_title_view.height : (style.line_height + style.line_bottom));
     CGFloat H = (style.line_height + style.line_bottom) > style.page_title_view.height ? (style.page_title_view.height - style.line_bottom) : style.line_height;
+    if (style.line_width_type == FixedWith) {
+        self.width = style.line_width;
+    } else if (style.line_width_type == EqualTitle) {
+        self.width = style.title_fixed_width;
+    }
     self.y = Y;
     self.height = H;
     self.alpha = style.line_alpha;

@@ -23,12 +23,12 @@
 /**
  外部分页控制器
  */
-@property (weak, nonatomic) UICollectionView *page_view;
+@property (strong, nonatomic) UICollectionView *page_view;
 
 /**
  底部滚动条
  */
-@property (weak, nonatomic) LGFTitleLine *title_line;
+@property (strong, nonatomic) LGFTitleLine *title_line;
 
 /**
  将要选中下标
@@ -197,7 +197,7 @@
         contentWidth += title.frame.size.width;
     }];
     // 标view 滚动区域配置
-    [self setContentSize:CGSizeMake(contentWidth + self.style.title_left_right_spacing * 2, 0.0)];
+    [self setContentSize:CGSizeMake(contentWidth + self.style.title_left_right_spacing * 2, -self.frame.size.height)];
     if (self.style.is_title_center) {
         if (self.contentSize.width < self.width) {
             self.x = (self.width / 2) - (self.contentSize.width / 2);
@@ -207,6 +207,8 @@
     }
     // 添加底部滚动线
     [self addScrollLine];
+    LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[index];
+    [select_title.title setTitleColor:self.style.select_color forState:UIControlStateNormal];
     [self selectTitleForIndex:index];
 }
 
@@ -559,7 +561,9 @@
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    self.old_off_set_x = scrollView.contentOffset.x;
+    if (scrollView == self) {
+        self.old_off_set_x = scrollView.contentOffset.x;
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
@@ -571,11 +575,12 @@
 #pragma mark - 已销毁
 
 - (void)dealloc {
+    [self.super_vc.childViewControllers makeObjectsPerformSelector:@selector(willMoveToParentViewController:)];
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self removeFromSuperview];
     [self.page_view removeObserver:self forKeyPath:@"contentOffset"];
-    [self.super_vc.childViewControllers makeObjectsPerformSelector:@selector(willMoveToParentViewController:)];
-    [self.super_vc.childViewControllers makeObjectsPerformSelector:@selector(removeFromParentViewController)];
+    [self.super_vc.childViewControllers
+     makeObjectsPerformSelector:@selector(removeFromParentViewController)];
     [self.title_buttons removeAllObjects];
     self.title_buttons = nil;
     self.deltaRGBA = nil;

@@ -23,6 +23,7 @@
         self.title_fixed_width = 0.0;
         self.title_backgroundColor = [UIColor clearColor];
         self.title_line_break_by_word_wrapping = NO;
+        self.title_cornerRadius = 0.0;
         self.title_borderColor = [UIColor whiteColor];
         self.title_borderWidth = 0.0;
         self.is_show_line = YES;

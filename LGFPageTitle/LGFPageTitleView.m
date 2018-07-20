@@ -159,6 +159,7 @@
     self.page_view = page_view;
     self.un_select_index = 0;
     self.style.page_title_view = self;
+    [self.page_view.panGestureRecognizer requireGestureRecognizerToFail:super_vc.navigationController.interactivePopGestureRecognizer];
     if (super_view) {
         if (CGRectEqualToRect(self.style.page_title_view_frame, CGRectZero)) {
             self.frame = super_view.bounds;
@@ -588,8 +589,6 @@
     self.un_select_colorRGBA = nil;
     LGFLog(@"%@_____dealloc_已销毁", self);
 }
-
-
 
 @end
 

@@ -14,7 +14,7 @@
 /**
  标按钮
  */
-@property (weak, nonatomic) IBOutlet UIButton *title;
+@property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_width;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_height;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_center_x;
@@ -61,7 +61,7 @@
 
 /**
  标初始化
-
+ 
  @param title 标文字
  @param index 在LGFPageTitleView中的位置下标
  @param style 配置用模型

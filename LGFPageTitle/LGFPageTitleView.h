@@ -7,10 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "LGFTitles.h"
 #import "LGFPageTitleStyle.h"
 
+@protocol LGFPageTitleViewDelegate <NSObject>
+/**
+ 返回选中的标
+ */
+- (void)lgf_SelectPageTitle:(NSInteger)selectIndex;
+@end
+
 @interface LGFPageTitleView : UIScrollView
+
+
+/**
+ 代理方法
+ */
+@property (weak, nonatomic) id<LGFPageTitleViewDelegate>lgf_PageTitleViewDelegate;
 
 /**
  配置用模型

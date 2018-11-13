@@ -15,14 +15,11 @@
     [style.page_title_view layoutIfNeeded];
     // 初始化标
     LGFTitleButton *button = [LGFBundle loadNibNamed:NSStringFromClass([LGFPageTitleView class]) owner:self options:nil][1];
-    button.title.tag = index;
+    button.tag = index;
     button.style = style;
-    if (style.title_line_break_by_word_wrapping) {
-        button.title.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    }
-    [button.title setTitle:title forState:UIControlStateNormal];
+    button.title.text = title;
     // 获取字体宽度
-    CGSize title_size = [LGFMethod sizeWithString:button.title.titleLabel.text font:button.title.titleLabel.font maxSize:CGSizeMake(CGFLOAT_MAX, style.page_title_view.height)];
+    CGSize title_size = [LGFMethod sizeWithString:button.title.text font:button.title.font maxSize:CGSizeMake(CGFLOAT_MAX, style.page_title_view.height)];
     CGFloat title_x = 0.0;
     if (index > 0) {
         UIView *subview = style.page_title_view.subviews[index - 1];
@@ -60,16 +57,8 @@
 
 - (void)setStyle:(LGFPageTitleStyle *)style {
     _style = style;
-    [self.title setTitleColor:style.un_select_color forState:UIControlStateNormal];
-    self.title.titleLabel.font = style.un_select_title_font;
-    self.backgroundColor = style.title_backgroundColor;
-    if (style.title_borderWidth > 0) {
-        self.layer.borderColor = style.title_borderColor.CGColor;
-        self.layer.borderWidth = style.title_borderWidth;
-    }
-    if (style.title_cornerRadius > 0) {
-        self.layer.cornerRadius = style.title_cornerRadius;
-    }
+    self.title.textColor = style.un_select_color;
+    self.title.font = style.un_select_title_font;
     
     // 如果设置了都是相同标图片, 那么就强制转成全部相同图片
     if (style.same_select_image_name && style.same_select_image_name.length > 0 && style.same_un_select_image_name && style.same_un_select_image_name.length > 0) {
@@ -110,7 +99,7 @@
         self.left_image_spacing.constant = style.left_image_spacing;
         self.left_image_width.constant = MIN(style.left_image_width ?: 0.0, style.page_title_view.height);
         self.left_image_height.constant = MIN(style.left_image_height ?: 0.0, style.page_title_view.height);
-        [self.left_image setImage:[UIImage imageNamed:style.un_select_image_names[self.title.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
+        [self.left_image setImage:[UIImage imageNamed:style.un_select_image_names[self.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
         self.title_center_x.constant = self.title_center_x.constant + (style.left_image_width / 2);
         if (style.left_image_spacing > 0.0) {
             self.title_center_x.constant = self.title_center_x.constant + (style.left_image_spacing / 2);
@@ -123,7 +112,7 @@
         self.right_image_spacing.constant = style.right_image_spacing;
         self.right_image_width.constant = MIN(style.right_image_width ?: 0.0, style.page_title_view.height);
         self.right_image_height.constant = MIN(style.right_image_height ?: 0.0, style.page_title_view.height);
-        [self.right_image setImage:[UIImage imageNamed:style.un_select_image_names[self.title.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
+        [self.right_image setImage:[UIImage imageNamed:style.un_select_image_names[self.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
         self.title_center_x.constant = self.title_center_x.constant - (style.right_image_width / 2);
         if (style.right_image_spacing > 0.0) {
             self.title_center_x.constant = self.title_center_x.constant - (style.right_image_spacing / 2);
@@ -136,7 +125,7 @@
         self.top_image_spacing.constant = style.top_image_spacing;
         self.top_image_width.constant = MIN(style.top_image_width ?: 0.0, style.page_title_view.width);
         self.top_image_height.constant = MIN(style.top_image_height ?: 0.0, style.page_title_view.height);
-        [self.top_image setImage:[UIImage imageNamed:style.un_select_image_names[self.title.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
+        [self.top_image setImage:[UIImage imageNamed:style.un_select_image_names[self.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
         self.title_center_y.constant = self.title_center_y.constant + (style.top_image_height / 2);
         if (style.top_image_spacing > 0.0) {
             self.title_center_y.constant = self.title_center_y.constant + (style.top_image_spacing / 2);
@@ -149,7 +138,7 @@
         self.bottom_image_spacing.constant = style.bottom_image_spacing;
         self.bottom_image_width.constant = MIN(style.bottom_image_width ?: 0.0, style.page_title_view.width);
         self.bottom_image_height.constant = MIN(style.bottom_image_height ?: 0.0, style.page_title_view.height);
-        [self.bottom_image setImage:[UIImage imageNamed:style.un_select_image_names[self.title.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
+        [self.bottom_image setImage:[UIImage imageNamed:style.un_select_image_names[self.tag] inBundle:style.title_image_bundel compatibleWithTraitCollection:nil]];
         self.title_center_y.constant = self.title_center_y.constant - (style.bottom_image_height / 2);
         if (style.bottom_image_spacing > 0.0) {
             self.title_center_y.constant = self.title_center_y.constant - (style.bottom_image_spacing / 2);

@@ -39,18 +39,6 @@
 + (instancetype)na;
 
 /**
- 外部分页控件 传入 contentOffset.x
- 
- @param contentOffset_x 外部分页控件的contentOffset.x
- */
-- (void)onProgress:(CGFloat)contentOffset_x;
-
-/**
- 标自动滚动到指定位置
- */
-- (void)autoScrollTitle;
-
-/**
  刷新所有标
  @param index 选中下标位置
  */

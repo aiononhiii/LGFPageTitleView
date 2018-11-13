@@ -151,7 +151,6 @@
     // 添加底部滚动线
     [self addScrollLine];
     // 默认选中
-    LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[index];
     [self adjustUIWhenBtnOnClickWithAnimate:YES taped:YES];
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.lgf_PageTitleViewDelegate && [self.lgf_PageTitleViewDelegate respondsToSelector:@selector(lgf_SelectPageTitle:)]) {

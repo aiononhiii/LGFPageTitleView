@@ -287,15 +287,6 @@
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    // titleview与pageview分离关联关键方法,必须设置 (此方法作用:关联titleview和外部pageview, 使其可以联动)
-    [self.oneTitleView autoScrollTitle];
-//    [self.twoTitleView autoScrollTitle];
-//    [self.threeTitleView autoScrollTitle];
-//    [self.fourTitleView autoScrollTitle];
-//    [self.naviTitleView autoScrollTitle];
-}
-
 - (void)dealloc {
     LGFLog(@"ViewController已经释放 ----- dealloc");
 }

@@ -151,7 +151,7 @@
     // 添加底部滚动线
     [self addScrollLine];
     // 默认选中
-    [self adjustUIWhenBtnOnClickWithAnimate:YES taped:YES];
+    [self adjustUIWhenBtnOnClickWithAnimate:NO taped:YES];
     dispatch_async(dispatch_get_main_queue(), ^{
         if (self.lgf_PageTitleViewDelegate && [self.lgf_PageTitleViewDelegate respondsToSelector:@selector(lgf_SelectPageTitle:)]) {
             LGFLog(@"当前选中:%@", self.style.titles[self.select_index]);

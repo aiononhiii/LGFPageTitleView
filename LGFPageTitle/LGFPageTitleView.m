@@ -148,6 +148,8 @@
             self.x = 0.0;
         }
     }
+    // 初始化 select_index
+    self.select_index = index;
     // 添加底部滚动线
     [self addScrollLine];
     // 默认选中

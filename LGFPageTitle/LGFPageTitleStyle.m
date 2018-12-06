@@ -36,6 +36,7 @@
         self.line_back_image = nil;
         self.line_animation = LGFPageLineAnimationDefult;
         self.title_scroll_follow_type = LGFTitleScrollFollowDefult;
+        self.page_view_animation_type = LGFPageViewAnimationNone;
         self.line_width_type = EqualTitleSTR;
         self.is_title_center = NO;
         self.top_image_spacing = 0.0;

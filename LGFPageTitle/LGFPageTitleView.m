@@ -7,6 +7,7 @@
 //
 
 #import "LGFPageTitleView.h"
+#import "LGFPageTitleLayout.h"
 
 @interface LGFPageTitleView () <UIScrollViewDelegate>
 
@@ -58,10 +59,8 @@
 - (void)setPage_view:(UICollectionView *)page_view {
     // 默认强制横向滚动 + 分页滚动
     page_view.pagingEnabled = YES;
-    UICollectionViewFlowLayout *newLayout = [[UICollectionViewFlowLayout alloc] init];
-    newLayout.minimumLineSpacing = 0.0;
-    newLayout.minimumInteritemSpacing = 0.0;
-    newLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    LGFPageTitleLayout *newLayout = [[LGFPageTitleLayout alloc] init];
+    newLayout.page_view_animation_type = self.style.page_view_animation_type;
     [page_view setCollectionViewLayout:newLayout];
     [page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
     _page_view = page_view;
@@ -120,13 +119,14 @@
 #pragma mark - 添加所有标
 
 - (void)reloadAllTitles {
-    [self reloadAllTitlesSelectIndex:0];
+    [self reloadAllTitlesSelectIndex:self.select_index];
 }
 
 - (void)reloadAllTitlesSelectIndex:(NSInteger)index {
     if (self.style.titles.count == 0 || !self.style.titles) {
         return;
     }
+    [self.page_view reloadData];
     [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [self.title_line removeFromSuperview];
     [self.title_buttons removeAllObjects];
@@ -148,7 +148,6 @@
             self.x = 0.0;
         }
     }
-    // 初始化 select_index
     self.select_index = index;
     // 添加底部滚动线
     [self addScrollLine];

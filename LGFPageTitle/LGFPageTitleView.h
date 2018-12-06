@@ -43,6 +43,7 @@
  @param index 选中下标位置
  */
 - (void)reloadAllTitlesSelectIndex:(NSInteger)index;
+- (void)reloadAllTitles;
 
 /**
  配置

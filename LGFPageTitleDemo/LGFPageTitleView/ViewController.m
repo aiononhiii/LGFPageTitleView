@@ -89,6 +89,7 @@
         style.title_big_scale = 1.0;
         style.line_height = 5.0;
         style.line_bottom = 1.0;
+        style.page_view_animation_type = LGFPageViewAnimationTopToBottom;
         style.line_cornerRadius = style.line_height / 2;
         style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:14];
         style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Light" size:14];
@@ -224,11 +225,9 @@
         [self addChildViewController:vc];
         [self.childVCs addObject:vc];
     }
-    // 刷新数据源
-    [self.pageView reloadData];
     // 刷新title数组
     self.oneTitleView.style.titles = self.oneTitles;
-    [self.oneTitleView reloadAllTitlesSelectIndex:0];
+    [self.oneTitleView reloadAllTitles];
 
 //    self.twoTitleView.style.titles = self.oneTitles;
 //    [self.twoTitleView reloadAllTitlesSelectIndex:10];

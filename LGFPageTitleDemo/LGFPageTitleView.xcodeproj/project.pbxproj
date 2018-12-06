@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		183734CC21B8FA67003131DB /* LGFPageTitleLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 183734CB21B8FA67003131DB /* LGFPageTitleLayout.m */; };
 		1837B7C92064D67000E69C4D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1837B7C82064D67000E69C4D /* AppDelegate.m */; };
 		1837B7CC2064D67000E69C4D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1837B7CB2064D67000E69C4D /* ViewController.m */; };
 		1837B7CF2064D67000E69C4D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1837B7CD2064D67000E69C4D /* Main.storyboard */; };
@@ -65,6 +66,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		183734CA21B8FA67003131DB /* LGFPageTitleLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LGFPageTitleLayout.h; sourceTree = "<group>"; };
+		183734CB21B8FA67003131DB /* LGFPageTitleLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LGFPageTitleLayout.m; sourceTree = "<group>"; };
 		1837B7C42064D67000E69C4D /* LGFPageTitleView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LGFPageTitleView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1837B7C72064D67000E69C4D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1837B7C82064D67000E69C4D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -336,6 +339,8 @@
 				18BE611720842FE100EF87B3 /* LGFMethod.m */,
 				18BE611820842FE100EF87B3 /* LGFPageTitleStyle.h */,
 				18BE611920842FE100EF87B3 /* LGFPageTitleStyle.m */,
+				183734CA21B8FA67003131DB /* LGFPageTitleLayout.h */,
+				183734CB21B8FA67003131DB /* LGFPageTitleLayout.m */,
 				18BE611A20842FE100EF87B3 /* LGFPageTitleView.h */,
 				18BE611B20842FE100EF87B3 /* LGFPageTitleView.m */,
 				18BE611C20842FE100EF87B3 /* LGFPageTitleView.xib */,
@@ -495,6 +500,7 @@
 				185624D22088656B0084D51A /* UIScrollView+MJRefresh.m in Sources */,
 				18BE612920842FE100EF87B3 /* LGFTitleLine.m in Sources */,
 				18BE612820842FE100EF87B3 /* LGFTitleButton.m in Sources */,
+				183734CC21B8FA67003131DB /* LGFPageTitleLayout.m in Sources */,
 				18BE612A20842FE100EF87B3 /* UIView+LGF.m in Sources */,
 				185624C92088656B0084D51A /* MJRefreshBackNormalFooter.m in Sources */,
 				18BE612620842FE100EF87B3 /* LGFPageTitleView.m in Sources */,

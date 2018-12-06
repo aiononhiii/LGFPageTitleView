@@ -8,7 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSUInteger, LGFPageLineAnimation) {
+typedef NS_ENUM(NSUInteger, LGFPageViewAnimationType) {
+    LGFPageViewAnimationNone,// 没有分页动画
+    LGFPageViewAnimationTopToBottom,// 从上往下进入的分页动画
+    LGFPageViewAnimationSmallToBig,// 从小到大进入的分页动画
+};
+
+typedef NS_ENUM(NSUInteger, LGFPageLineAnimationType) {
     LGFPageLineAnimationDefult,// 标底部线平滑改变大小
     // 后续推出下面的 仿爱奇艺底部线动画效果 现暂时不可用 请勿设置
     LGFPageLineAnimationSmallToBig,// 标底部线先右边伸出变宽致标和下一个标的总宽度, 再左边收回恢复到下一个标的宽度
@@ -37,13 +43,17 @@ typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
 // 标数组
 @property (strong, nonatomic) NSArray *titles;
 
-//------------------- 主view
+//------------------- 主page_title_view
 
 @property (weak, nonatomic) UIScrollView *page_title_view;
 
-//------------------- 主view在父控件上的frame 默认等于父控件
+//------------------- 主page_title_view在父控件上的frame 默认等于父控件
 
 @property (assign, nonatomic) CGRect page_title_view_frame;
+
+//------------------- 分页控件是否带分页动画
+
+@property (assign, nonatomic) LGFPageViewAnimationType page_view_animation_type;
 
 //------------------- 整体序列设置
 // 当所有标总宽度加起来小于 page_title_view 宽度时 是否居中显示 默认 NO - 不居中(从左边开始显示)
@@ -139,7 +149,7 @@ typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
 // 标底部滚动线相对于底部位置 默认 0 - 贴于底部
 @property (assign, nonatomic) CGFloat line_bottom;
 // 标底部滚动线滑动动画 默认 LGFPageLineAnimationDefult 有跟随动画
-@property (assign, nonatomic) LGFPageLineAnimation line_animation;
+@property (assign, nonatomic) LGFPageLineAnimationType line_animation;
 
 
 @end

@@ -153,12 +153,14 @@
     [self addScrollLine];
     // 默认选中
     [self adjustUIWhenBtnOnClickWithAnimate:NO taped:YES];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    if (self.select_index == 0) {
         if (self.lgf_PageTitleViewDelegate && [self.lgf_PageTitleViewDelegate respondsToSelector:@selector(lgf_SelectPageTitle:)]) {
             LGFLog(@"当前选中:%@", self.style.titles[self.select_index]);
-            [self.lgf_PageTitleViewDelegate lgf_SelectPageTitle:self.select_index];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.lgf_PageTitleViewDelegate lgf_SelectPageTitle:self.select_index];
+            });
         }
-    });
+    }
 }
 
 #pragma mark - 标点击事件 滚动到指定tag位置

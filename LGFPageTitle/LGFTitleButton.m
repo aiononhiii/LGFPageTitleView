@@ -27,11 +27,11 @@
     } else {
         title_x = style.title_fixed_width > 0.0 ? 0.0 : button.style.title_left_right_spacing;
     }
-    button.title_width.constant = title_size.width;
+    button.title_width.constant = title_size.width + 2;
     button.title_height.constant = title_size.height;
     
     // 设置每一个标宽度
-    button.frame = CGRectMake(title_x, 0, style.title_fixed_width > 0.0 ? style.title_fixed_width : (title_size.width + (style.title_left_right_spacing * 2) + style.left_image_width + style.right_image_width + style.left_image_spacing + style.right_image_spacing), style.page_title_view.height);
+    button.frame = CGRectMake(title_x, 0, style.title_fixed_width > 0.0 ? style.title_fixed_width : (title_size.width + 2 + (style.title_left_right_spacing * 2) + style.left_image_width + style.right_image_width + style.left_image_spacing + style.right_image_spacing), style.page_title_view.height);
     [style.page_title_view addSubview:button];
     return button;
 }
@@ -59,6 +59,12 @@
     _style = style;
     self.title.textColor = style.un_select_color;
     self.title.font = style.un_select_title_font;
+    
+    if (style.title_borderWidth > 0.0) {
+        self.layer.borderWidth = style.title_borderWidth;
+        self.layer.borderColor = style.title_borderColor.CGColor;
+        self.clipsToBounds = YES;
+    }
     
     // 如果设置了都是相同标图片, 那么就强制转成全部相同图片
     if (style.same_select_image_name && style.same_select_image_name.length > 0 && style.same_un_select_image_name && style.same_un_select_image_name.length > 0) {

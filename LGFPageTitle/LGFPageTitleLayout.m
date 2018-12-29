@@ -28,9 +28,9 @@
         CGFloat contentOffsetX = self.collectionView.contentOffset.x;
         CGFloat collectionViewCenterX = self.collectionView.bounds.size.width * 0.5;
         for (UICollectionViewLayoutAttributes *attr in attrs) {
-            CGFloat alpha = (1 - ABS(attr.center.x - contentOffsetX - collectionViewCenterX) /self.collectionView.bounds.size.width);
-            CGFloat scale = -(ABS(attr.center.x - contentOffsetX - collectionViewCenterX) /self.collectionView.bounds.size.width * 0.5) * 100;
-            NSInteger index = ABS(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
+            CGFloat alpha = fabs(1 - fabs(attr.center.x - contentOffsetX - collectionViewCenterX) /self.collectionView.bounds.size.width);
+            CGFloat scale = -fabs(fabs(attr.center.x - contentOffsetX - collectionViewCenterX) /self.collectionView.bounds.size.width) * 50;
+            NSInteger index = fabs(self.collectionView.contentOffset.x / self.collectionView.bounds.size.width);
             // 判断滑动方向
             if ([self.collectionView.panGestureRecognizer translationInView:self.collectionView].x < 0) {
                 if (attr.indexPath.item != index) {
@@ -41,15 +41,14 @@
                     attr.alpha = alpha;
                 }
             }
-            //        attr.transform = CGAffineTransformMakeScale(scale, scale);
-            attr.transform = CGAffineTransformMakeTranslation(1, scale);
+            attr.transform = CGAffineTransformMakeTranslation(0, scale);
         }
         return attrs;
     } else if (self.page_view_animation_type == LGFPageViewAnimationSmallToBig) {
         CGFloat contentOffsetX = self.collectionView.contentOffset.x;
         CGFloat collectionViewCenterX = self.collectionView.bounds.size.width * 0.5;
         for (UICollectionViewLayoutAttributes *attr in attrs) {
-            CGFloat scale = (1 - ABS(attr.center.x - contentOffsetX - collectionViewCenterX) /self.collectionView.bounds.size.width * 0.5);
+            CGFloat scale = (1 - fabs(attr.center.x - contentOffsetX - collectionViewCenterX) /self.collectionView.bounds.size.width * 0.8);
             attr.transform = CGAffineTransformMakeScale(scale, scale);
         }
         return attrs;

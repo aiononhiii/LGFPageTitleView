@@ -16,7 +16,6 @@
     // 初始化标
     LGFTitleButton *button = [LGFBundle loadNibNamed:NSStringFromClass([LGFPageTitleView class]) owner:self options:nil][1];
     button.tag = index;
-    button.backgroundColor = [LGFRandomColor colorWithAlphaComponent:0.3];
     button.title.textColor = style.un_select_color;
     button.title.font = style.un_select_title_font;
     button.title.textAlignment = NSTextAlignmentCenter;

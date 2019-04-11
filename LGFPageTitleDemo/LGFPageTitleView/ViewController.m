@@ -205,6 +205,7 @@
         style.un_select_color = LGFRGB(0, 0, 0, 1.0);
         style.select_color = LGFRGB(255, 255, 255, 1.0);
         style.un_select_title_font = [UIFont systemFontOfSize:14];
+        style.page_view_animation_type = LGFPageViewAnimationTopToBottom;
         style.line_width_type = FixedWith;
         style.line_animation = LGFPageLineAnimationSmallToBig;
         _twoTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.twoTitleSuperView page_view:self.pageView];

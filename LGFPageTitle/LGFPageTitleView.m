@@ -64,19 +64,6 @@
 
 @implementation LGFPageTitleView
 
-- (void)setPage_view:(UICollectionView *)page_view {
-    // 默认强制横向滚动 + 分页滚动
-    if (page_view) {
-        page_view.pagingEnabled = YES;
-        LGFPageTitleLayout *newLayout = [[LGFPageTitleLayout alloc] init];
-        newLayout.page_view_animation_type = self.style.page_view_animation_type;
-        [page_view setCollectionViewLayout:newLayout];
-        [page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
-        page_view.tag = 333333;
-    }
-    _page_view = page_view;
-}
-
 #pragma mark - 初始化标view
 
 + (instancetype)na {
@@ -202,7 +189,7 @@
 #pragma mark - 调整title位置 使其滚动到中间
 
 - (void)adjustTitleOffSetToSelectIndex:(NSInteger)select_index animated:(BOOL)animated {
-    if (select_index > self.title_buttons.count - 1) { return; }
+    if (select_index > self.title_buttons.count - 1 || self.title_buttons.count == 0) { return; }
     if (self.style.title_scroll_follow_type == LGFTitleScrollFollowDefult) {
         LGFTitleButton *select_title = (LGFTitleButton *)self.title_buttons[select_index];
         CGFloat offSetx = select_title.center.x - self.width * 0.5;
@@ -247,7 +234,7 @@
 #pragma mark - 更新标view的UI(用于滚动外部分页控制器的时候)
 
 - (void)adjustUIWithProgress:(CGFloat)progress unselectIndex:(NSInteger)unselectIndex selectIndex:(NSInteger)selectIndex {
-    if (unselectIndex > self.title_buttons.count - 1 || selectIndex > self.title_buttons.count - 1) {
+    if (unselectIndex > self.title_buttons.count - 1 || selectIndex > self.title_buttons.count - 1 || self.title_buttons.count == 0) {
         return;
     }
     NSAssert(self.style.un_select_image_names.count == self.style.select_image_names.count, @"选中图片数组和未选中图片数组count必须一致");
@@ -441,7 +428,7 @@
         self.page_view.userInteractionEnabled = NO;
         self.page_view.panGestureRecognizer.view.userInteractionEnabled = NO;
         // 外部分页控制器 滚动到对应下标
-        [self.page_view setContentOffset:CGPointMake(self.page_view.width * self.select_index, 0) animated:NO];
+        [self.page_view setContentOffset:CGPointMake(self.page_view.width * self.select_index, 0)];
     }
     // 取得 前一个选中的标 和 将要选中的标
     LGFTitleButton *un_select_title = (LGFTitleButton *)self.title_buttons[self.un_select_index];
@@ -541,26 +528,33 @@
 #pragma mark - 已销毁
 
 - (void)dealloc {
+    [self.page_view removeObserver:self forKeyPath:@"contentOffset"];
     [self.super_vc.childViewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj willMoveToParentViewController:self.super_vc];
         [obj removeFromParentViewController];
         [obj.view removeFromSuperview];
         obj = nil;
     }];
-    [self.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [self.title_buttons removeAllObjects];
-    [self removeFromSuperview];
-    [self.page_view removeObserver:self forKeyPath:@"contentOffset"];
-    self.title_buttons = nil;
-    self.deltaRGBA = nil;
-    self.select_colorRGBA = nil;
-    self.un_select_colorRGBA = nil;
-    self.sub_select_colorRGBA = nil;
-    self.sub_un_select_colorRGBA = nil;
     LGFLog(@"LGF的分页控件:LGFPageTitleView --- 已经释放");
 }
 
 #pragma mark - 懒加载
+
+/**
+ 外部分页CV
+ */
+- (void)setPage_view:(UICollectionView *)page_view {
+    // 默认强制横向滚动 + 分页滚动
+    if (page_view) {
+        page_view.pagingEnabled = YES;
+        LGFPageTitleLayout *newLayout = [[LGFPageTitleLayout alloc] init];
+        newLayout.page_view_animation_type = self.style.page_view_animation_type;
+        [page_view setCollectionViewLayout:newLayout];
+        [page_view addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+        page_view.tag = 333333;
+    }
+    _page_view = page_view;
+}
 
 /**
  底部滚动条

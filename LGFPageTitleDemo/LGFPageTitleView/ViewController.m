@@ -49,6 +49,80 @@
     [self.naviTitleView removeFromSuperview];
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // 添加子控制器
+    for (NSString *title in self.oneTitles) {
+        ChildViewController *vc = [ChildViewController GETSBVC];
+        vc.title = title;
+        [self addChildViewController:vc];
+        [self.childVCs addObject:vc];
+    }
+    // 刷新title数组
+//    self.oneTitleView.style.titles = self.oneTitles;
+//    [self.oneTitleView reloadAllTitles];
+
+    self.twoTitleView.style.titles = self.oneTitles;
+    [self.twoTitleView reloadAllTitlesSelectIndex:10];
+
+//    self.threeTitleView.style.titles = self.oneTitles;
+//    [self.threeTitleView reloadAllTitlesSelectIndex:2];
+//
+//    self.fourTitleView.style.titles = self.oneTitles;
+//    [self.fourTitleView reloadAllTitlesSelectIndex:10];
+//
+//    self.naviTitleView.style.titles = self.oneTitles;
+//    [self.naviTitleView reloadAllTitlesSelectIndex:10];
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+/**
+ 如何切换数据源 代码和展示
+ */
+- (IBAction)more:(UIButton *)sender {
+    
+}
+
+//----------------建立联动 UICollectionView 为防止title滚动错乱，请务必设置UICollectionView以下几项--------------
+// cell请设置与 UICollectionView 同宽高
+
+#pragma mark - Collection View 数据源 和 代理方法
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return self.childVCs.count;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    // cell请设置与 UICollectionView 同宽高
+    return CGSizeMake(collectionView.frame.size.width, collectionView.frame.size.height);
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"testcell" forIndexPath:indexPath];
+    // 在cell上添加子控制器
+    [cell.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    ChildViewController *vc = self.childVCs[indexPath.item];
+    vc.view.frame = cell.bounds;
+    [cell addSubview:vc.view];
+    return cell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    // 在此代理方法中作子控制器首次加载数据的操作 防止多余未出现的控制器加载数据而导致的卡顿 (只对将要出现的cell上的子控制器作加载数据操作，其余只加载控制器)
+    ChildViewController *vc = self.childVCs[indexPath.item];
+    if (vc.datas.count == 0) {// 如果该子控制器数据源数组为空那么执行请求数据
+        LGFLog(@"正在刷新第%ld页", indexPath.row);
+        [vc loadData];
+    }
+}
+
+#pragma mark - 懒加载
+
 - (NSMutableArray *)oneTitles {
     if (!_oneTitles) {
         _oneTitles = [NSMutableArray arrayWithObjects:@"鹈鹕", @"鳄鱼", @"鲸鱼", @" 12.30\n已开抢", @"巨嘴鸟", @"麋鹿", @"绵羊", @"螃蟹", @"鸵鸟", @"大象", @"蛇", @"鱼", @"一只大公鸡一只", @"长颈鹿", @"猪", nil];
@@ -83,15 +157,15 @@
     if (!_oneTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
         // 固定宽度title 必要属性 （如果值为titleview宽度 ／ title数组count，titleview将取消滚动）
-//        style.title_fixed_width = self.view.width / 4;
-//        style.line_width_type = EqualTitleSTRAndImage;
-//        style.line_width_type = FixedWith;
-//        style.line_width_type = EqualTitle;
+        //        style.title_fixed_width = self.view.width / 4;
+        //        style.line_width_type = EqualTitleSTRAndImage;
+        //        style.line_width_type = FixedWith;
+        //        style.line_width_type = EqualTitle;
         style.line_width_type = EqualTitleSTR;
         
-//        style.line_width = 5;
+        //        style.line_width = 5;
         style.title_left_right_spacing = 10;
-//        style.left_image_width = 20;
+        //        style.left_image_width = 20;
         style.title_big_scale = 1.8;
         style.line_height = 5.0;
         style.line_bottom = 1.0;
@@ -163,7 +237,7 @@
         style.right_image_spacing = 20.0;
         style.left_image_spacing = 20.0;
         style.top_image_spacing = 10.0;
-//        style.bottom_image_spacing = 10.0;
+        //        style.bottom_image_spacing = 10.0;
         //--------------------------------
         style.title_left_right_spacing = 10.0;
         style.line_animation = LGFPageLineAnimationSmallToBig;
@@ -224,77 +298,6 @@
         _childVCs = [NSMutableArray new];
     }
     return _childVCs;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    // 添加子控制器
-    for (NSString *title in self.oneTitles) {
-        ChildViewController *vc = [ChildViewController GETSBVC];
-        vc.title = title;
-        [self addChildViewController:vc];
-        [self.childVCs addObject:vc];
-    }
-    // 刷新title数组
-//    self.oneTitleView.style.titles = self.oneTitles;
-//    [self.oneTitleView reloadAllTitles];
-
-    self.twoTitleView.style.titles = self.oneTitles;
-    [self.twoTitleView reloadAllTitlesSelectIndex:10];
-
-//    self.threeTitleView.style.titles = self.oneTitles;
-//    [self.threeTitleView reloadAllTitlesSelectIndex:2];
-//
-//    self.fourTitleView.style.titles = self.oneTitles;
-//    [self.fourTitleView reloadAllTitlesSelectIndex:10];
-//
-//    self.naviTitleView.style.titles = self.oneTitles;
-//    [self.naviTitleView reloadAllTitlesSelectIndex:10];
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-/**
- 如何切换数据源 代码和展示
- */
-- (IBAction)more:(UIButton *)sender {
-}
-
-//----------------建立联动 UICollectionView 为防止title滚动错乱，请务必设置UICollectionView以下几项--------------
-// cell请设置与 UICollectionView 同宽高
-
-#pragma mark - Collection View 数据源 和 代理方法
-
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.childVCs.count;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    // cell请设置与 UICollectionView 同宽高
-    return CGSizeMake(collectionView.frame.size.width, collectionView.frame.size.height);
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"testcell" forIndexPath:indexPath];
-    // 在cell上添加子控制器
-    [cell.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    ChildViewController *vc = self.childVCs[indexPath.item];
-    vc.view.frame = cell.bounds;
-    [cell addSubview:vc.view];
-    return cell;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
-    // 在此代理方法中作子控制器首次加载数据的操作 防止多余未出现的控制器加载数据而导致的卡顿 (只对将要出现的cell上的子控制器作加载数据操作，其余只加载控制器)
-    ChildViewController *vc = self.childVCs[indexPath.item];
-    if (vc.datas.count == 0) {// 如果该子控制器数据源数组为空那么执行请求数据
-        LGFLog(@"正在刷新第%ld页", indexPath.row);
-        [vc loadData];
-    }
 }
 
 - (void)dealloc {

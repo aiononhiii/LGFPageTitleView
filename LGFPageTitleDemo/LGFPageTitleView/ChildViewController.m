@@ -31,8 +31,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = LGFRandomColor;
-    _titleLab.text = [NSString stringWithFormat:@"当前选中: %@", self.title];
-    _childViewControllerCV.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
+    self.childViewControllerCV.layer.cornerRadius = 10.0;
+    self.titleLab.text = [NSString stringWithFormat:@"当前选中: %@", self.title];
+    self.childViewControllerCV.mj_header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadData)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -47,15 +48,14 @@
 - (void)loadData {
     [self.childViewControllerCV.mj_header beginRefreshing];
     // 模拟加载数据
-    LGFAFTER(1.0,
-             [self.childViewControllerCV.mj_header endRefreshing];
-             for (int i = 0; i < 30; i++) {
-                 [self.datas addObject:@""];
-             }
-//             刷新界面
-             [self.childViewControllerCV reloadData];
-             )
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.childViewControllerCV.mj_header endRefreshing];
+        for (int i = 0; i < 30; i++) {
+            [self.datas addObject:@""];
+        }
+        // 刷新界面
+        [self.childViewControllerCV reloadData];
+    });
 }
 
 #pragma mark - Collection View 数据源 和 代理方法

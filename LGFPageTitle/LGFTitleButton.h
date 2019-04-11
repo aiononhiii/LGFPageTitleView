@@ -15,8 +15,10 @@
  标按钮
  */
 @property (weak, nonatomic) IBOutlet UILabel *title;
+@property (weak, nonatomic) IBOutlet UILabel *subTitle;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_width;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_height;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sub_title_height;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_center_x;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *title_center_y;
 

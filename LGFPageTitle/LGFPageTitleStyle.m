@@ -16,39 +16,38 @@
         self.titles = [NSArray new];
         self.un_select_color = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
         self.select_color = [UIColor colorWithRed:0.3 green:0.5 blue:0.8 alpha:1.0];
-        self.title_big_scale = 1.0;
+        self.select_title_font = [UIFont systemFontOfSize:14];
         self.un_select_title_font = [UIFont systemFontOfSize:14];
+        self.sub_select_color = self.select_color;
+        self.sub_un_select_color = self.un_select_color;
+        self.sub_select_title_font = self.select_title_font;
+        self.sub_un_select_title_font = self.un_select_title_font;
+        self.title_big_scale = 1.0;
         self.title_have_animation = YES;
-        self.title_left_right_spacing = 0.0;
-        self.title_fixed_width = 0.0;
         self.title_backgroundColor = [UIColor clearColor];
         self.title_line_break_by_word_wrapping = NO;
-        self.title_cornerRadius = 0.0;
         self.title_borderColor = [UIColor whiteColor];
-        self.title_borderWidth = 0.0;
         self.is_show_line = YES;
         self.line_color = [UIColor blueColor];
-        self.line_width = 0;
         self.line_height = 1.0;
         self.line_alpha = 1.0;
-        self.line_bottom = 0.0;
-        self.line_cornerRadius = 0.0;
         self.line_back_image = nil;
         self.line_animation = LGFPageLineAnimationDefult;
         self.title_scroll_follow_type = LGFTitleScrollFollowDefult;
         self.page_view_animation_type = LGFPageViewAnimationNone;
         self.line_width_type = EqualTitleSTR;
         self.is_title_center = NO;
-        self.top_image_spacing = 0.0;
-        self.bottom_image_spacing = 0.0;
-        self.left_image_spacing = 0.0;
-        self.right_image_spacing = 0.0;
-        self.left_image_height = 0.0;
-        self.left_image_width = 0.0;
-        self.right_image_height = 0.0;
-        self.right_image_width = 0.0;
+        self.is_double_title = NO;
     }
     return self;
+}
+
+- (void)setSub_select_color:(UIColor *)sub_select_color {
+    _sub_select_color = [LGFMethod getColorRGBA:sub_select_color] ? sub_select_color : [LGFMethod changeUIColorToRGB:sub_select_color];
+}
+
+- (void)setSub_un_select_color:(UIColor *)sub_un_select_color {
+    _sub_un_select_color = [LGFMethod getColorRGBA:sub_un_select_color] ? sub_un_select_color : [LGFMethod changeUIColorToRGB:sub_un_select_color];
 }
 
 - (void)setSelect_color:(UIColor *)select_color {

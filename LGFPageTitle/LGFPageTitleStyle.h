@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
 //------------------- 数据源设置
 
 // 标数组
-@property (strong, nonatomic) NSArray *titles;
+@property (copy, nonatomic) NSArray *titles;
 
 //------------------- 主page_title_view
 
@@ -60,21 +60,29 @@ typedef NS_ENUM(NSUInteger, LGFTitleLineWidthType) {
 @property (assign, nonatomic) BOOL is_title_center;
 // 选中标滚动类型 默认 LGFTitleScrollFollowDefult
 @property (assign, nonatomic) LGFTitleScrollFollowType title_scroll_follow_type;
-
+// page左右间距 默认 0.0
+@property (assign, nonatomic) CGFloat page_left_right_spacing;
 //------------------- 标设置
+// 支持副标题
+@property (assign, nonatomic) BOOL is_double_title;
 // 标固定宽度 默认等于 0.0 如果此属性大于 0.0 那么标宽度将为固定值
 // 如果设置此项（title_fixed_width） LGFTitleLineWidthType 将只支持 FixedWith 固定底部线宽度
 @property (assign, nonatomic) CGFloat title_fixed_width;
-// 未选中标 字体颜色 默认 lightGrayColor 淡灰色 (对应select_color两个颜色一样则取消渐变效果)
-@property (strong, nonatomic) UIColor *un_select_color;
 // 选中标 字体颜色 默认 blackColor 黑色 (对应un_select_color两个颜色一样则取消渐变效果)
 @property (strong, nonatomic) UIColor *select_color;
-// 选中标 放大缩小倍数 默认 1.0(不放大缩小)
-@property (assign, nonatomic) CGFloat title_big_scale;
+// 未选中标 字体颜色 默认 lightGrayColor 淡灰色 (对应select_color两个颜色一样则取消渐变效果)
+@property (strong, nonatomic) UIColor *un_select_color;
 // 标 选中字体 默认 [UIFont systemFontOfSize:14]
 @property (strong, nonatomic) UIFont *select_title_font;
 // 标 未选中字体 默认 和选中字体一样
 @property (strong, nonatomic) UIFont *un_select_title_font;
+// 子标题 默认和标一样
+@property (strong, nonatomic) UIColor *sub_select_color;
+@property (strong, nonatomic) UIColor *sub_un_select_color;
+@property (strong, nonatomic) UIFont *sub_select_title_font;
+@property (strong, nonatomic) UIFont *sub_un_select_title_font;
+// 选中标 放大缩小倍数 默认 1.0(不放大缩小)
+@property (assign, nonatomic) CGFloat title_big_scale;
 // 标是否有滑动动画 默认 YES 有动画
 @property (assign, nonatomic) BOOL title_have_animation;
 // 标左右间距 默认 0.0

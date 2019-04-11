@@ -13,12 +13,10 @@
 + (CGSize)sizeWithString:(NSString *)str font:(UIFont *)font maxSize:(CGSize)maxSize {
     NSDictionary *dict = @{NSFontAttributeName: font};
     CGSize size = [str boundingRectWithSize:maxSize
-                                    options:NSStringDrawingTruncatesLastVisibleLine |
-                   NSStringDrawingUsesLineFragmentOrigin |
-                   NSStringDrawingUsesFontLeading
+                                    options:NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading
                                  attributes:dict
                                     context:nil].size;
-    return CGSizeMake(size.width + 1, size.height);
+    return CGSizeMake(size.width + 2, size.height);
 }
 
 + (NSArray *)getColorRGBA:(UIColor *)color {

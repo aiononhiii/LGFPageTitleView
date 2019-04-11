@@ -16,22 +16,43 @@
     // 初始化标
     LGFTitleButton *button = [LGFBundle loadNibNamed:NSStringFromClass([LGFPageTitleView class]) owner:self options:nil][1];
     button.tag = index;
-    button.style = style;
-    button.title.text = title;
+    button.backgroundColor = [LGFRandomColor colorWithAlphaComponent:0.3];
+    button.title.textColor = style.un_select_color;
+    button.title.font = style.un_select_title_font;
+    button.title.textAlignment = NSTextAlignmentCenter;
+    // 需要显示子标题
+    if (style.is_double_title) {
+        button.subTitle.textColor = style.sub_un_select_color;
+        button.subTitle.font = style.sub_un_select_title_font;
+        button.subTitle.textAlignment = NSTextAlignmentCenter;
+        button.title.text = [title componentsSeparatedByString:@"/"].firstObject;
+        button.subTitle.text = [title componentsSeparatedByString:@"/"].lastObject;
+    } else {
+        button.title.text = title;
+    }
+    
     // 获取字体宽度
-    CGSize title_size = [LGFMethod sizeWithString:button.title.text font:button.title.font maxSize:CGSizeMake(CGFLOAT_MAX, style.page_title_view.height)];
+    CGSize title_size = [LGFMethod sizeWithString:button.title.text font:style.select_title_font maxSize:CGSizeMake(CGFLOAT_MAX, style.page_title_view.height)];
+    CGSize sub_title_size = CGSizeZero;
+    if (style.is_double_title) {
+        sub_title_size = [LGFMethod sizeWithString:button.subTitle.text font:style.sub_select_title_font maxSize:CGSizeMake(CGFLOAT_MAX, style.page_title_view.height)];
+        button.sub_title_height.constant = sub_title_size.height;
+        button.title_center_y.constant = button.title_center_y.constant - sub_title_size.height / 2;
+    }
+    CGFloat maxWidth = MAX(title_size.width, sub_title_size.width);
+    button.title_width.constant = maxWidth;
+    button.title_height.constant = title_size.height;
     CGFloat title_x = 0.0;
     if (index > 0) {
         UIView *subview = style.page_title_view.subviews[index - 1];
         title_x = subview.x + subview.width;
     } else {
-        title_x = style.title_fixed_width > 0.0 ? 0.0 : button.style.title_left_right_spacing;
+        title_x = style.title_fixed_width > 0.0 ? 0.0 : style.page_left_right_spacing;
     }
-    button.title_width.constant = title_size.width + 2;
-    button.title_height.constant = title_size.height;
-    
     // 设置每一个标宽度
-    button.frame = CGRectMake(title_x, 0, style.title_fixed_width > 0.0 ? style.title_fixed_width : (title_size.width + 2 + (style.title_left_right_spacing * 2) + style.left_image_width + style.right_image_width + style.left_image_spacing + style.right_image_spacing), style.page_title_view.height);
+    button.frame = CGRectMake(title_x, 0, style.title_fixed_width > 0.0 ? style.title_fixed_width : (maxWidth + (style.title_left_right_spacing * 2) + style.left_image_width + style.right_image_width + style.left_image_spacing + style.right_image_spacing), style.page_title_view.height);
+    
+    button.style = style;
     [style.page_title_view addSubview:button];
     return button;
 }
@@ -57,8 +78,6 @@
 
 - (void)setStyle:(LGFPageTitleStyle *)style {
     _style = style;
-    self.title.textColor = style.un_select_color;
-    self.title.font = style.un_select_title_font;
     
     if (style.title_borderWidth > 0.0) {
         self.layer.borderWidth = style.title_borderWidth;

@@ -13,7 +13,7 @@
 
 /**
  获取文字size
-
+ 
  @param str 传入文字
  @param font 传入文字字体
  @param maxSize 最大size
@@ -24,7 +24,7 @@
 
 /**
  UIColorRGB 转颜色数组
-
+ 
  @param color UIColorRGB
  @return 颜色数组
  */
@@ -33,7 +33,7 @@
 
 /**
  UIColor 转 RGBUIColor
-
+ 
  @param color UIColor
  @return RGBUIColor
  */

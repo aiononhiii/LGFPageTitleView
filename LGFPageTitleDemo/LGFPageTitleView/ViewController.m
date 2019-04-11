@@ -51,7 +51,7 @@
 
 - (NSMutableArray *)oneTitles {
     if (!_oneTitles) {
-        _oneTitles = [NSMutableArray arrayWithObjects:@"鹈鹕", @"鳄鱼", @"鲸鱼", @" 12.30\n已开抢", @"巨嘴鸟", @"麋鹿", @"绵羊", @"螃蟹", @"鸵鸟", @"大象", @"蛇", @"鱼", @"一只大公鸡", @"长颈鹿", @"猪", nil];
+        _oneTitles = [NSMutableArray arrayWithObjects:@"鹈鹕", @"鳄鱼", @"鲸鱼", @" 12.30\n已开抢", @"巨嘴鸟", @"麋鹿", @"绵羊", @"螃蟹", @"鸵鸟", @"大象", @"蛇", @"鱼", @"一只大公鸡一只", @"长颈鹿", @"猪", nil];
     }
     return _oneTitles;
 }
@@ -83,10 +83,16 @@
     if (!_oneTitleView) {
         LGFPageTitleStyle *style = [LGFPageTitleStyle na];
         // 固定宽度title 必要属性 （如果值为titleview宽度 ／ title数组count，titleview将取消滚动）
-        style.title_fixed_width = self.view.width / 4;
-        style.line_width_type = FixedWith;
-        style.line_width = self.view.width;
-        style.title_big_scale = 1.0;
+//        style.title_fixed_width = self.view.width / 4;
+//        style.line_width_type = EqualTitleSTRAndImage;
+//        style.line_width_type = FixedWith;
+//        style.line_width_type = EqualTitle;
+        style.line_width_type = EqualTitleSTR;
+        
+//        style.line_width = 5;
+        style.title_left_right_spacing = 10;
+//        style.left_image_width = 20;
+        style.title_big_scale = 1.8;
         style.line_height = 5.0;
         style.line_bottom = 1.0;
         style.page_view_animation_type = LGFPageViewAnimationTopToBottom;
@@ -101,8 +107,10 @@
         style.title_image_bundel = LGFBundle;
         //-----这些属性直接决定展示哪边图片----
         style.right_image_width = 20;
+        style.left_image_width = 10;
         //-----这些属性直接决定图片相对于title位置----
         style.right_image_spacing = 5.0;
+        style.left_image_spacing = 10.0;
         //----------------------------------
         //----少量title时title居中显示----
         style.is_title_center = YES;
@@ -124,6 +132,7 @@
         style.select_color = LGFRGB(255, 255, 255, 1.0);
         style.un_select_title_font = [UIFont systemFontOfSize:14];
         style.line_width_type = FixedWith;
+        style.line_animation = LGFPageLineAnimationSmallToBig;
         _twoTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.twoTitleSuperView page_view:self.pageView];
     }
     return _twoTitleView;
@@ -157,7 +166,7 @@
 //        style.bottom_image_spacing = 10.0;
         //--------------------------------
         style.title_left_right_spacing = 10.0;
-        
+        style.line_animation = LGFPageLineAnimationSmallToBig;
         _threeTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.threeTitleSuperView page_view:self.pageView];
     }
     return _threeTitleView;
@@ -177,13 +186,14 @@
         //----title下划线替换成图片----
         style.line_back_image = [UIImage imageNamed:@"狮子" inBundle:LGFBundle compatibleWithTraitCollection:nil];
         //--------------------------
-        style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
+        style.select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
         style.un_select_color = LGFRGB(240, 240, 20, 1.0);
         style.select_color = LGFRGB(255, 255, 255, 1.0);
         style.line_width_type = EqualTitleSTR;
         //----少量title时title居中显示----
         style.is_title_center = YES;
         //--------------------------
+        style.line_animation = LGFPageLineAnimationSmallToBig;
         _fourTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.fourTitleSuperView page_view:self.pageView];
     }
     return _fourTitleView;
@@ -198,10 +208,11 @@
         style.title_left_right_spacing = 5.0;
         style.un_select_color = LGFRGB(50, 50, 50, 1.0);
         style.select_color = LGFRGB(255, 55, 55, 1.0);
-        style.un_select_title_font = [UIFont systemFontOfSize:18];
+        style.select_title_font = [UIFont systemFontOfSize:18];
         style.un_select_title_font = [UIFont fontWithName:@"Helvetica-Bold" size:18];
         style.line_width_type = FixedWith;
         style.page_title_view_frame = CGRectMake(80, 0, self.navigationController.navigationBar.width - 80, self.navigationController.navigationBar.height);
+        style.line_animation = LGFPageLineAnimationSmallToBig;
         _naviTitleView = [[LGFPageTitleView na] initWithStyle:style super_vc:self super_view:self.navigationController.navigationBar page_view:self.pageView];
         [self.navigationController.navigationBar addSubview:self.naviTitleView];
     }
@@ -226,14 +237,14 @@
         [self.childVCs addObject:vc];
     }
     // 刷新title数组
-    self.oneTitleView.style.titles = self.oneTitles;
-    [self.oneTitleView reloadAllTitles];
+//    self.oneTitleView.style.titles = self.oneTitles;
+//    [self.oneTitleView reloadAllTitles];
 
-//    self.twoTitleView.style.titles = self.oneTitles;
-//    [self.twoTitleView reloadAllTitlesSelectIndex:10];
+    self.twoTitleView.style.titles = self.oneTitles;
+    [self.twoTitleView reloadAllTitlesSelectIndex:10];
 
 //    self.threeTitleView.style.titles = self.oneTitles;
-//    [self.threeTitleView reloadAllTitlesSelectIndex:10];
+//    [self.threeTitleView reloadAllTitlesSelectIndex:2];
 //
 //    self.fourTitleView.style.titles = self.oneTitles;
 //    [self.fourTitleView reloadAllTitlesSelectIndex:10];

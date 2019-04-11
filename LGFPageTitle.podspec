@@ -2,7 +2,7 @@
 Pod::Spec.new do |s|
 
 s.name        = "LGFPageTitle"
-s.version     = "1.2.5"
+s.version     = "1.2.6"
 s.summary     = "LGFPageTitle"
 s.homepage    = "https://github.com/aiononhiii/LGFPageTitleView"
 s.license     = { :type => 'MIT', :file => 'LICENSE' }
